@@ -1,14 +1,14 @@
 # run_simulation.py
 import tkinter as tk
 from safehome.configuration.configuration_manager import ConfigurationManager
-from interface.safehome_control_panel import SafeHomeControlPanel
+from safehome.interface.safehome_control_panel import SafeHomeControlPanel
 # 导入摄像头监控窗口
-from interface.camera_monitor import CameraMonitor
+from safehome.interface.camera_monitor import CameraMonitor
 
 # 导入你提供的虚拟硬件 API
-from device.device_windoor_sensor import DeviceWinDoorSensor
-from device.device_motion_detector import DeviceMotionDetector
-from device.device_sensor_tester import DeviceSensorTester
+from safehome.device.sensor.device_windoor_sensor import DeviceWinDoorSensor
+from safehome.device.sensor.device_motion_detector import DeviceMotionDetector
+from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
 
 def setup_virtual_hardware():
     """创建一些虚拟传感器用于测试"""
