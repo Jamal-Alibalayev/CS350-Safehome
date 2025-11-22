@@ -1,0 +1,5 @@
+[2025-11-22 21:44:47] [INFO] ConfigManager: System configuration loaded
+[2025-11-22 21:45:07] [INFO] ConfigManager: System mode changed to ARMED_AWAY
+[2025-11-22 21:45:18] [INFO] ConfigManager: System mode changed to ARMED_STAY
+[2025-11-22 21:45:24] [INFO] ConfigManager: System mode changed to DISARMED
+[2025-11-22 21:46:02] [INFO] ConfigManager: Configuration saved manually

@@ -1,0 +1,6 @@
+{
+    "master_password": "1234",
+    "entry_delay": 30,
+    "exit_delay": 45,
+    "alarm_duration": 180
+}
