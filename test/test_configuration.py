@@ -1,6 +1,24 @@
 import unittest
 import os
 import time
+import sys
+
+# ---------------------------------------------------------
+# [关键修复] 将项目根目录加入 Python 搜索路径
+# ---------------------------------------------------------
+# 1. 获取当前文件 (test_configuration.py) 的绝对路径
+current_file_path = os.path.abspath(__file__)
+# 2. 获取当前文件所在的目录 (.../CS350-Safehome/test)
+current_dir = os.path.dirname(current_file_path)
+# 3. 获取项目根目录 (.../CS350-Safehome) - 即上一级目录
+project_root = os.path.dirname(current_dir)
+
+# 4. 如果根目录不在搜索路径中，则插入到最前面
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+# ---------------------------------------------------------
+
+# 现在 Python 就能找到 safehome 包了
 from safehome.configuration.configuration_manager import ConfigurationManager
 from safehome.configuration.safehome_mode import SafeHomeMode
 from safehome.configuration.safety_zone import SafetyZone
