@@ -1,9 +1,9 @@
 import unittest
 import os
 import time
-from configuration.configuration_manager import ConfigurationManager
-from configuration.safehome_mode import SafeHomeMode
-from configuration.safety_zone import SafetyZone
+from safehome.configuration.configuration_manager import ConfigurationManager
+from safehome.configuration.safehome_mode import SafeHomeMode
+from safehome.configuration.safety_zone import SafetyZone
 
 class TestSafeHomeConfiguration(unittest.TestCase):
     """

@@ -1,12 +1,14 @@
 # run_simulation.py
 import tkinter as tk
-from configuration.configuration_manager import ConfigurationManager
-from safehome_control_panel import SafeHomeControlPanel
+from safehome.configuration.configuration_manager import ConfigurationManager
+from interface.safehome_control_panel import SafeHomeControlPanel
+# 导入摄像头监控窗口
+from interface.camera_monitor import CameraMonitor
 
 # 导入你提供的虚拟硬件 API
-from virtual_device_v3.virtual_device_v3.device.device_windoor_sensor import DeviceWinDoorSensor
-from virtual_device_v3.virtual_device_v3.device.device_motion_detector import DeviceMotionDetector
-from virtual_device_v3.virtual_device_v3.device.device_sensor_tester import DeviceSensorTester
+from device.device_windoor_sensor import DeviceWinDoorSensor
+from device.device_motion_detector import DeviceMotionDetector
+from device.device_sensor_tester import DeviceSensorTester
 
 def setup_virtual_hardware():
     """创建一些虚拟传感器用于测试"""
@@ -45,6 +47,11 @@ def main():
     # 5. 启动 Control Panel GUI (模拟墙上的键盘)
     print("[GUI] Launching Control Panel...")
     control_panel = SafeHomeControlPanel(master=root, config_manager=config)
+
+    # F. Launch [Camera Monitor] Window
+    print("[GUI] Launching Camera Monitor...")
+    # Ensure 'camera1.jpg' exists in the root directory
+    camera_monitor = CameraMonitor(master=root, camera_id=1)
     
     # 窗口关闭处理
     def on_close():
@@ -52,7 +59,14 @@ def main():
         config.save_configuration()
         root.destroy()
         exit()
-        
+
+        # cleanup camera resources 
+        try:
+            if hasattr(camera_monitor, 'camera'):
+                camera_monitor.camera.stop()
+        except Exception as e:
+            print(f"Camera cleanup warning: {e}")
+
     control_panel.protocol("WM_DELETE_WINDOW", on_close)
     
     print("\n" + "="*50)

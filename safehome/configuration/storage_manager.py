@@ -24,7 +24,7 @@ class StorageManager:
             print(f"Error saving settings: {e}")
 
     def load_settings(self) -> dict:
-        """从 JSON 加载设置"""
+        """从 JSON 加载设置 loasd settings from JSON"""
         if not os.path.exists(self.CONFIG_FILE):
             return {}
         
