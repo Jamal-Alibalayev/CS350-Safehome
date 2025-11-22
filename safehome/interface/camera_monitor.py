@@ -20,7 +20,7 @@ class CameraMonitor(tk.Toplevel):
     def __init__(self, master=None, camera_id=1):
         super().__init__(master)
         self.title(f"SafeHome Monitor - Cam {camera_id}")
-        self.geometry("520x600")
+        self.geometry("520x750")
         self.resizable(False, False)
         
         # 1. 初始化虚拟摄像头
