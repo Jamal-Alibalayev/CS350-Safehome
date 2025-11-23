@@ -32,7 +32,7 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
         """Set the camera ID and load associated image (synchronized)."""
         with self._lock:
             self.cameraId = id_
-            fileName = f"camera{id_}.jpg"
+            fileName = f"assets/images/camera{id_}.jpg"
             
             try:
                 self.imgSource = Image.open(fileName)

@@ -6,7 +6,7 @@ class LogManager:
     """
     def __init__(self):
         self.logs = []  # 内存日志缓存
-        self.log_file = "safehome_events.log"
+        self.log_file = "data/safehome_events.log"
 
     def add_log(self, message: str, level: str = "INFO", source: str = "System"):
         """添加一条新日志"""

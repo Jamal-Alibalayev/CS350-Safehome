@@ -1,9 +1,9 @@
 # run_simulation.py
 import tkinter as tk
 from safehome.configuration.configuration_manager import ConfigurationManager
-from safehome.interface.safehome_control_panel import SafeHomeControlPanel
+from safehome.interface.control_panel.safehome_control_panel import SafeHomeControlPanel
 # 导入摄像头监控窗口
-from safehome.interface.camera_monitor import CameraMonitor
+from safehome.interface.control_panel.camera_monitor import CameraMonitor
 
 # 导入你提供的虚拟硬件 API
 from safehome.device.sensor.device_windoor_sensor import DeviceWinDoorSensor

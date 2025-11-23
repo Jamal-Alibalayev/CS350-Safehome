@@ -6,7 +6,7 @@ class StorageManager:
     """
     负责配置和数据的持久化存储
     """
-    CONFIG_FILE = "safehome_config.json"
+    CONFIG_FILE = "data/safehome_config.json"
 
     def save_settings(self, settings: SystemSettings):
         """将 SystemSettings 保存到 JSON"""

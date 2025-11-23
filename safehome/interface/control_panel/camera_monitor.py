@@ -4,14 +4,7 @@ from PIL import ImageTk
 import sys
 
 # 引入老师的 Camera API
-# 根据你的结构，这里可能需要调整 import 路径
-try:
-    from device.camera.device_camera import DeviceCamera
-except ImportError:
-    # 备用方案：尝试直接从 device 导入
-    import os
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
-    from virtual_device_v3.virtual_device_v3.device.device_camera import DeviceCamera
+from safehome.device.camera.device_camera import DeviceCamera
 
 class CameraMonitor(tk.Toplevel):
     """

@@ -26,7 +26,7 @@ class TestSafeHomeConfiguration(unittest.TestCase):
 
     def clean_up_files(self):
         """辅助方法：清理测试产生的文件"""
-        files_to_remove = ["safehome_config.json", "safehome_events.log"]
+        files_to_remove = ["data/safehome_config.json", "data/safehome_events.log"]
         for f in files_to_remove:
             if os.path.exists(f):
                 try:
@@ -59,7 +59,7 @@ class TestSafeHomeConfiguration(unittest.TestCase):
         
         # 2. 保存
         self.config_manager.save_configuration()
-        self.assertTrue(os.path.exists("safehome_config.json"), "Config file should be created")
+        self.assertTrue(os.path.exists("data/safehome_config.json"), "Config file should be created")
 
         # 3. 重新创建一个 Manager (模拟重启系统)
         new_manager = ConfigurationManager()
@@ -137,8 +137,8 @@ class TestSafeHomeConfiguration(unittest.TestCase):
         self.assertEqual(recent_logs[-1].level, "WARNING")
         
         # 验证文件写入
-        self.assertTrue(os.path.exists("safehome_events.log"))
-        with open("safehome_events.log", "r", encoding="utf-8") as f:
+        self.assertTrue(os.path.exists("data/safehome_events.log"))
+        with open("data/safehome_events.log", "r", encoding="utf-8") as f:
             content = f.read()
             self.assertIn("WARNING", content)
             self.assertIn(msg, content)
