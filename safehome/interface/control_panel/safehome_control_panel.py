@@ -52,9 +52,12 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
             self.set_display_not_ready(False)
 
         # Update Security Zone display
-        current_zone = self.system.config.get_current_zone()
-        if current_zone:
-            self.set_security_zone_number(current_zone.zone_id)
+        try:
+            current_zone = self.system.config.get_current_zone()
+            if current_zone:
+                self.set_security_zone_number(current_zone.zone_id)
+        except Exception as e:
+            print(f"Warning: Could not set security zone number: {e}")
 
     def _reset_interaction(self):
         """Reset interaction state"""
