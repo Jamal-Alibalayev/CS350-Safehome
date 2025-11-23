@@ -391,3 +391,21 @@
 [2025-11-23 23:44:10] [INFO] CameraController: All cameras stopped
 [2025-11-23 23:44:10] [INFO] ConfigManager: Configuration saved
 [2025-11-23 23:44:10] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-24 00:03:48] [INFO] ConfigManager: System configuration loaded
+[2025-11-24 00:03:48] [INFO] SensorController: Loaded 33 sensors from storage
+[2025-11-24 00:03:54] [INFO] CameraController: Loaded 5 cameras from storage
+[2025-11-24 00:03:54] [INFO] SensorController: Sensor 34 (WINDOOR) added at Living Room Window
+[2025-11-24 00:03:54] [INFO] SensorController: Sensor 35 (WINDOOR) added at Front Door
+[2025-11-24 00:03:54] [INFO] SensorController: Sensor 36 (MOTION) added at Living Room
+[2025-11-24 00:03:54] [INFO] SensorController: Sensor 37 (MOTION) added at Bedroom
+[2025-11-24 00:03:54] [INFO] SensorController: Sensor 38 (WINDOOR) added at Bedroom Window
+[2025-11-24 00:03:54] [INFO] SensorController: Sensor 39 (WINDOOR) added at Back Door
+[2025-11-24 00:03:56] [INFO] CameraController: Camera 6 (Living Room Camera) added at Living Room
+[2025-11-24 00:03:58] [INFO] CameraController: Camera 7 (Front Door Camera) added at Front Door
+[2025-11-24 00:03:58] [INFO] System: System turned ON
+[2025-11-24 00:05:06] [INFO] ConfigManager: Configuration saved
+[2025-11-24 00:05:06] [INFO] ConfigManager: Configuration saved
+[2025-11-24 00:05:06] [INFO] System: System turned OFF
+[2025-11-24 00:05:06] [INFO] CameraController: All cameras stopped
+[2025-11-24 00:05:06] [INFO] ConfigManager: Configuration saved
+[2025-11-24 00:05:06] [INFO] ConfigManager: Configuration Manager shutdown
