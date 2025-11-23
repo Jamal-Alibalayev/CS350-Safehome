@@ -1,21 +1,143 @@
-[2025-11-22 21:44:47] [INFO] ConfigManager: System configuration loaded
-[2025-11-22 21:45:07] [INFO] ConfigManager: System mode changed to ARMED_AWAY
-[2025-11-22 21:45:18] [INFO] ConfigManager: System mode changed to ARMED_STAY
-[2025-11-22 21:45:24] [INFO] ConfigManager: System mode changed to DISARMED
-[2025-11-22 21:46:02] [INFO] ConfigManager: Configuration saved manually
-[2025-11-22 23:49:49] [INFO] ConfigManager: System configuration loaded
-[2025-11-22 23:50:11] [INFO] ConfigManager: Configuration saved manually
-[2025-11-22 23:31:17] [INFO] ConfigManager: System configuration loaded
-[2025-11-22 23:31:41] [INFO] ConfigManager: System mode changed to ARMED_AWAY
-[2025-11-22 23:31:56] [INFO] ConfigManager: System mode changed to ARMED_AWAY
-[2025-11-22 23:32:00] [INFO] ConfigManager: Configuration saved manually
-[2025-11-23 00:15:26] [INFO] ConfigManager: System configuration loaded
-[2025-11-23 00:15:29] [INFO] ConfigManager: Configuration saved manually
-[2025-11-23 00:26:22] [INFO] ConfigManager: System configuration loaded
-[2025-11-23 00:26:25] [INFO] ConfigManager: Configuration saved manually
-[2025-11-23 00:49:02] [INFO] ConfigManager: System configuration loaded
-[2025-11-23 00:50:10] [INFO] ConfigManager: System mode changed to ARMED_AWAY
-[2025-11-23 00:50:25] [INFO] ConfigManager: System mode changed to ARMED_STAY
-[2025-11-23 00:50:36] [INFO] ConfigManager: Configuration saved manually
-[2025-11-23 20:54:11] [INFO] ConfigManager: System configuration loaded
-[2025-11-23 20:54:17] [INFO] ConfigManager: Configuration saved manually
+[2025-11-23 23:19:16] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:19:16] [INFO] SensorController: Loaded 0 sensors from storage
+[2025-11-23 23:19:16] [INFO] CameraController: Loaded 0 cameras from storage
+[2025-11-23 23:19:16] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:19:16] [INFO] System: System turned OFF
+[2025-11-23 23:19:16] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:19:16] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:19:16] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-23 23:19:16] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:19:16] [INFO] SensorController: Loaded 0 sensors from storage
+[2025-11-23 23:19:16] [INFO] CameraController: Loaded 0 cameras from storage
+[2025-11-23 23:19:16] [INFO] SensorController: Sensor 1 (WINDOOR) added at Front Door
+[2025-11-23 23:19:16] [INFO] SensorController: Sensor 2 (MOTION) added at Living Room
+[2025-11-23 23:19:16] [INFO] SensorController: Sensor 1 armed
+[2025-11-23 23:19:16] [INFO] SensorController: All 2 sensors disarmed
+[2025-11-23 23:19:16] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:19:16] [INFO] System: System turned OFF
+[2025-11-23 23:19:16] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:19:16] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:19:16] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-23 23:19:16] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:19:16] [INFO] SensorController: Loaded 2 sensors from storage
+[2025-11-23 23:19:16] [INFO] CameraController: Loaded 0 cameras from storage
+[2025-11-23 23:19:16] [INFO] CameraController: Camera 1 (Front Entrance) added at Front Door
+[2025-11-23 23:19:16] [INFO] CameraController: Camera 2 (Back Yard) added at Back Door
+[2025-11-23 23:20:45] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:20:45] [INFO] SensorController: Loaded 2 sensors from storage
+[2025-11-23 23:20:45] [INFO] CameraController: Loaded 2 cameras from storage
+[2025-11-23 23:20:45] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:20:45] [INFO] System: System turned OFF
+[2025-11-23 23:20:45] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:20:45] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:20:45] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-23 23:20:45] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:20:45] [INFO] SensorController: Loaded 2 sensors from storage
+[2025-11-23 23:20:45] [INFO] CameraController: Loaded 2 cameras from storage
+[2025-11-23 23:20:45] [INFO] SensorController: Sensor 3 (WINDOOR) added at Front Door
+[2025-11-23 23:20:45] [INFO] SensorController: Sensor 4 (MOTION) added at Living Room
+[2025-11-23 23:20:45] [INFO] SensorController: Sensor 3 armed
+[2025-11-23 23:20:45] [INFO] SensorController: All 4 sensors disarmed
+[2025-11-23 23:20:45] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:20:45] [INFO] System: System turned OFF
+[2025-11-23 23:20:45] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:20:45] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:20:45] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-23 23:20:45] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:20:45] [INFO] SensorController: Loaded 4 sensors from storage
+[2025-11-23 23:20:45] [INFO] CameraController: Loaded 2 cameras from storage
+[2025-11-23 23:20:45] [INFO] CameraController: Camera 3 (Front Entrance) added at Front Door
+[2025-11-23 23:23:23] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:23:23] [INFO] SensorController: Loaded 4 sensors from storage
+[2025-11-23 23:23:23] [INFO] CameraController: Loaded 3 cameras from storage
+[2025-11-23 23:23:23] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:23:23] [INFO] System: System turned OFF
+[2025-11-23 23:23:23] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:23:23] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:23:23] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-23 23:23:23] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:23:23] [INFO] SensorController: Loaded 4 sensors from storage
+[2025-11-23 23:23:23] [INFO] CameraController: Loaded 3 cameras from storage
+[2025-11-23 23:23:23] [INFO] SensorController: Sensor 5 (WINDOOR) added at Front Door
+[2025-11-23 23:23:23] [INFO] SensorController: Sensor 6 (MOTION) added at Living Room
+[2025-11-23 23:23:23] [INFO] SensorController: Sensor 5 armed
+[2025-11-23 23:23:23] [INFO] SensorController: All 6 sensors disarmed
+[2025-11-23 23:23:23] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:23:23] [INFO] System: System turned OFF
+[2025-11-23 23:23:23] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:23:23] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:23:23] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-23 23:23:23] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:23:23] [INFO] SensorController: Loaded 6 sensors from storage
+[2025-11-23 23:23:23] [INFO] CameraController: Loaded 3 cameras from storage
+[2025-11-23 23:23:57] [INFO] CameraController: Camera 4 (Front Entrance) added at Front Door
+[2025-11-23 23:23:58] [INFO] CameraController: Camera 5 (Back Yard) added at Back Door
+[2025-11-23 23:23:58] [WARNING] CameraController: Camera 4 access denied: Invalid password
+[2025-11-23 23:23:58] [INFO] CameraController: Camera 4 view accessed
+[2025-11-23 23:23:58] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:23:58] [INFO] System: System turned OFF
+[2025-11-23 23:23:58] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:23:58] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:23:58] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-23 23:23:58] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:23:58] [INFO] SensorController: Loaded 6 sensors from storage
+[2025-11-23 23:24:00] [INFO] CameraController: Loaded 5 cameras from storage
+[2025-11-23 23:24:01] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:24:01] [INFO] System: System turned OFF
+[2025-11-23 23:24:01] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:24:01] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:24:01] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-23 23:24:01] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:24:01] [INFO] SensorController: Loaded 6 sensors from storage
+[2025-11-23 23:25:08] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:25:08] [INFO] SensorController: Loaded 0 sensors from storage
+[2025-11-23 23:25:08] [INFO] CameraController: Loaded 0 cameras from storage
+[2025-11-23 23:25:08] [INFO] SensorController: Sensor 1 (WINDOOR) added at Front Door
+[2025-11-23 23:25:08] [INFO] SensorController: Sensor 2 (MOTION) added at Living Room
+[2025-11-23 23:25:08] [INFO] System: System turned ON
+[2025-11-23 23:25:08] [INFO] ConfigManager: System mode changed to HOME
+[2025-11-23 23:25:08] [INFO] System: System ARMED in HOME mode
+[2025-11-23 23:25:08] [INFO] SensorController: All 2 sensors disarmed
+[2025-11-23 23:25:08] [INFO] ConfigManager: System mode changed to DISARMED
+[2025-11-23 23:25:08] [INFO] System: System DISARMED
+[2025-11-23 23:25:09] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:25:09] [INFO] System: System turned OFF
+[2025-11-23 23:25:09] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:25:09] [INFO] System: System turned OFF
+[2025-11-23 23:25:09] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:25:09] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:25:09] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-23 23:31:15] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:31:15] [INFO] SensorController: Loaded 0 sensors from storage
+[2025-11-23 23:31:15] [INFO] CameraController: Loaded 0 cameras from storage
+[2025-11-23 23:31:15] [INFO] SensorController: Sensor 1 (WINDOOR) added at Front Door
+[2025-11-23 23:31:15] [INFO] SensorController: Sensor 2 (MOTION) added at Living Room
+[2025-11-23 23:31:15] [INFO] SensorController: Sensor 3 (WINDOOR) added at Bedroom Window
+[2025-11-23 23:31:15] [INFO] CameraController: Camera 1 (Main Camera) added at Living Room
+[2025-11-23 23:31:15] [INFO] CameraController: Camera 2 (Secured Camera) added at Bedroom
+[2025-11-23 23:31:15] [INFO] System: System turned ON
+[2025-11-23 23:31:15] [INFO] ConfigManager: System mode changed to HOME
+[2025-11-23 23:31:15] [INFO] System: System ARMED in HOME mode
+[2025-11-23 23:31:15] [INFO] SensorController: All 3 sensors disarmed
+[2025-11-23 23:31:15] [INFO] ConfigManager: System mode changed to DISARMED
+[2025-11-23 23:31:15] [INFO] System: System DISARMED
+[2025-11-23 23:31:35] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:31:35] [INFO] SensorController: Loaded 3 sensors from storage
+[2025-11-23 23:31:35] [INFO] CameraController: Loaded 2 cameras from storage
+[2025-11-23 23:31:35] [INFO] SensorController: Sensor 4 (WINDOOR) added at Front Door
+[2025-11-23 23:31:35] [INFO] SensorController: Sensor 5 (MOTION) added at Living Room
+[2025-11-23 23:31:35] [INFO] SensorController: Sensor 6 (WINDOOR) added at Bedroom Window
+[2025-11-23 23:31:35] [INFO] CameraController: Camera 3 (Main Camera) added at Living Room
+[2025-11-23 23:33:00] [INFO] ConfigManager: System configuration loaded
+[2025-11-23 23:33:00] [INFO] SensorController: Loaded 0 sensors from storage
+[2025-11-23 23:33:00] [INFO] CameraController: Loaded 0 cameras from storage
+[2025-11-23 23:33:00] [INFO] SensorController: Sensor 1 (WINDOOR) added at Front Door
+[2025-11-23 23:33:00] [INFO] SensorController: Sensor 2 (MOTION) added at Living Room
+[2025-11-23 23:33:00] [INFO] System: System turned ON
+[2025-11-23 23:33:00] [INFO] ConfigManager: System mode changed to HOME
+[2025-11-23 23:33:00] [INFO] System: System ARMED in HOME mode
+[2025-11-23 23:33:01] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:33:01] [INFO] System: System turned OFF
+[2025-11-23 23:33:01] [INFO] CameraController: All cameras stopped
+[2025-11-23 23:33:01] [INFO] ConfigManager: Configuration saved
+[2025-11-23 23:33:01] [INFO] ConfigManager: Configuration Manager shutdown

@@ -16,7 +16,8 @@ class TestSafeHomeConfiguration(unittest.TestCase):
         """
         # 为了保证测试环境干净，先清理可能存在的配置文件
         self.clean_up_files()
-        self.config_manager = ConfigurationManager()
+        # Use test database
+        self.config_manager = ConfigurationManager(db_path="data/test_safehome_config.db")
 
     def tearDown(self):
         """
@@ -26,7 +27,11 @@ class TestSafeHomeConfiguration(unittest.TestCase):
 
     def clean_up_files(self):
         """辅助方法：清理测试产生的文件"""
-        files_to_remove = ["data/safehome_config.json", "data/safehome_events.log"]
+        files_to_remove = [
+            "data/safehome_config.json",
+            "data/safehome_events.log",
+            "data/test_safehome_config.db"
+        ]
         for f in files_to_remove:
             if os.path.exists(f):
                 try:
@@ -42,31 +47,38 @@ class TestSafeHomeConfiguration(unittest.TestCase):
         print("\n[Test] Default Settings")
         settings = self.config_manager.settings
         self.assertEqual(settings.master_password, "1234")
-        self.assertEqual(settings.entry_delay, 30)
+        self.assertEqual(settings.entry_delay, 300)  # Updated to 5 minutes = 300 seconds
+        self.assertEqual(settings.web_password_1, "webpass1")
+        self.assertEqual(settings.web_password_2, "webpass2")
         self.assertEqual(self.config_manager.get_mode(), SafeHomeMode.DISARMED)
 
     def test_update_and_save_settings(self):
-        """测试更新设置并持久化到 JSON 文件"""
+        """测试更新设置并持久化到数据库"""
         print("\n[Test] Persistence (Save/Load)")
-        
+
         # 1. 修改设置
         new_pass = "9999"
-        new_delay = 60
+        new_delay = 600
         self.config_manager.settings.update_settings(
-            master_password=new_pass, 
+            master_password=new_pass,
             entry_delay=new_delay
         )
-        
+
         # 2. 保存
         self.config_manager.save_configuration()
-        self.assertTrue(os.path.exists("data/safehome_config.json"), "Config file should be created")
+
+        # Cleanup database connection
+        self.config_manager.shutdown()
 
         # 3. 重新创建一个 Manager (模拟重启系统)
-        new_manager = ConfigurationManager()
-        
+        new_manager = ConfigurationManager(db_path="data/test_safehome_config.db")
+
         # 4. 验证新 Manager 是否读取了保存的值
         self.assertEqual(new_manager.settings.master_password, new_pass)
         self.assertEqual(new_manager.settings.entry_delay, new_delay)
+
+        # Cleanup
+        new_manager.shutdown()
 
     def test_mode_change(self):
         """测试系统模式切换"""
@@ -80,42 +92,43 @@ class TestSafeHomeConfiguration(unittest.TestCase):
     def test_login_success(self):
         """测试正确的密码登录"""
         print("\n[Test] Login Success")
-        # 默认密码是 1234
-        result = self.config_manager.login_manager.validate_credentials("admin", "1234")
+        # 默认密码是 1234, interface_type added
+        result = self.config_manager.login_manager.validate_credentials("admin", "1234", "CONTROL_PANEL")
         self.assertTrue(result)
 
     def test_login_failure_and_lockout(self):
         """测试密码错误多次后的系统锁定逻辑"""
         print("\n[Test] Login Lockout")
         lm = self.config_manager.login_manager
-        
+        interface = "CONTROL_PANEL"
+
         # 1. 尝试错误密码 (默认最大尝试次数为 3)
-        self.assertFalse(lm.validate_credentials("admin", "wrong"))
-        self.assertFalse(lm.validate_credentials("admin", "wrong"))
-        self.assertFalse(lm.validate_credentials("admin", "wrong"))
-        
+        self.assertFalse(lm.validate_credentials("admin", "wrong", interface))
+        self.assertFalse(lm.validate_credentials("admin", "wrong", interface))
+        self.assertFalse(lm.validate_credentials("admin", "wrong", interface))
+
         # 2. 确认此时系统已锁定
-        self.assertTrue(lm.is_locked, "System should be locked after 3 failed attempts")
+        self.assertTrue(lm.is_interface_locked(interface), "System should be locked after 3 failed attempts")
 
         # 3. 即使输入正确密码，也应被拒绝
-        self.assertFalse(lm.validate_credentials("admin", "1234"), "Should reject correct password when locked")
+        self.assertFalse(lm.validate_credentials("admin", "1234", interface), "Should reject correct password when locked")
 
         # 4. 解锁
-        lm.unlock_system()
-        self.assertFalse(lm.is_locked)
-        self.assertTrue(lm.validate_credentials("admin", "1234"))
+        lm.unlock_system(interface)
+        self.assertFalse(lm.is_interface_locked(interface))
+        self.assertTrue(lm.validate_credentials("admin", "1234", interface))
 
     def test_change_password(self):
         """测试修改密码"""
         print("\n[Test] Change Password")
         lm = self.config_manager.login_manager
-        
+
         # 验证旧密码失败，无法修改
-        success = lm.change_password("wrong_old", "new_pass")
+        success = lm.change_password("wrong_old", "new_pass", "CONTROL_PANEL")
         self.assertFalse(success)
-        
+
         # 验证旧密码成功，修改密码
-        success = lm.change_password("1234", "5678")
+        success = lm.change_password("1234", "5678", "CONTROL_PANEL")
         self.assertTrue(success)
         self.assertEqual(self.config_manager.settings.master_password, "5678")
 

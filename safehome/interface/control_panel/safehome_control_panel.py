@@ -1,151 +1,169 @@
-# safehome/interfaces/control_panel/safehome_control_panel.py
+# safehome/interface/control_panel/safehome_control_panel.py
 
-from safehome.configuration.configuration_manager import ConfigurationManager
+from safehome.core.system import System
 from safehome.configuration.safehome_mode import SafeHomeMode
 from .device_control_panel_abstract import DeviceControlPanelAbstract
 
+
 class SafeHomeControlPanel(DeviceControlPanelAbstract):
     """
-    SafeHome 控制面板的具体实现。
-    连接 GUI 按钮事件与 ConfigurationManager 的业务逻辑。
+    SafeHome Control Panel implementation
+    Connects GUI button events with System business logic
+    Integrates with Core System Layer for full functionality
     """
 
-    def __init__(self, master=None, config_manager: ConfigurationManager = None):
+    def __init__(self, master=None, system: System = None):
         super().__init__(master)
-        
-        # 注入配置管理器
-        self.config_manager = config_manager if config_manager else ConfigurationManager()
-        
-        # 内部状态
+
+        # Inject System instance
+        self.system = system if system else System()
+
+        # Internal state
         self.input_buffer = ""
         self.is_authenticated = False
-        
-        # [新增] 修改密码模式的状态标志
+
+        # Password change mode state
         self.is_changing_password = False
-        # [新增] 暂存当前登录成功的旧密码，用于授权修改
-        self.current_valid_password = None 
-        
-        # 初始化界面状态
+        # Store current valid password for change authorization
+        self.current_valid_password = None
+
+        # Initialize UI state
         self._refresh_status_display()
         self._reset_interaction()
 
     def _refresh_status_display(self):
-        """根据 ConfigurationManager 的状态刷新 LED 和 LCD"""
-        mode = self.config_manager.get_mode()
-        
-        # 1. 更新 LED 状态
-        is_armed = mode in [SafeHomeMode.ARMED_AWAY, SafeHomeMode.ARMED_STAY]
+        """Refresh LED and LCD based on System state"""
+        mode = self.system.config.current_mode
+
+        # 1. Update LED status
+        is_armed = mode in [SafeHomeMode.ARMED_AWAY, SafeHomeMode.ARMED_STAY,
+                           SafeHomeMode.HOME, SafeHomeMode.AWAY,
+                           SafeHomeMode.OVERNIGHT, SafeHomeMode.EXTENDED]
         self.set_armed_led(is_armed)
-        self.set_powered_led(True)
-        
-        # 2. 更新 LCD 状态文字
-        self.set_display_away(mode == SafeHomeMode.ARMED_AWAY)
-        self.set_display_stay(mode == SafeHomeMode.ARMED_STAY)
-        
+        self.set_powered_led(self.system.is_running)
+
+        # 2. Update LCD status text
+        self.set_display_away(mode in [SafeHomeMode.ARMED_AWAY, SafeHomeMode.AWAY, SafeHomeMode.EXTENDED])
+        self.set_display_stay(mode in [SafeHomeMode.ARMED_STAY, SafeHomeMode.HOME, SafeHomeMode.OVERNIGHT])
+
         if mode == SafeHomeMode.DISARMED:
             self.set_display_not_ready(True)
         else:
             self.set_display_not_ready(False)
 
-        # [新增] 更新 Security Zone 显示
-        current_zone = self.config_manager.get_current_zone()
-        # 调用父类方法设置左上角的数字
-        self.set_security_zone_number(current_zone.zone_id)
+        # Update Security Zone display
+        current_zone = self.system.config.get_current_zone()
+        if current_zone:
+            self.set_security_zone_number(current_zone.zone_id)
 
     def _reset_interaction(self):
-        """重置交互状态"""
+        """Reset interaction state"""
         self.input_buffer = ""
         self.is_authenticated = False
-        self.is_changing_password = False # 重置修改模式
+        self.is_changing_password = False
         self.current_valid_password = None
-        
-        self.set_display_short_message1("Welcome To SafeHome System(Testing)")
+
+        self.set_display_short_message1("Welcome To SafeHome System")
         self.set_display_short_message2("Enter Code + #")
 
     def _handle_key_input(self, key):
-        """处理数字键输入"""
-        # 场景 1: 正在修改密码模式下，输入的是新密码
+        """Handle numeric key input"""
+        # Scenario 1: In password change mode, input is new password
         if self.is_changing_password:
             self.input_buffer += key
             mask = "*" * len(self.input_buffer)
             self.set_display_short_message2(f"New: {mask}")
-            
-        # 场景 2: 已登录，输入的是菜单指令
+
+        # Scenario 2: Already logged in, input is menu command
         elif self.is_authenticated:
             self._handle_command(key)
-            
-        # 场景 3: 未登录，输入的是登录密码
+
+        # Scenario 3: Not logged in, input is login password
         else:
             self.input_buffer += key
             mask = "*" * len(self.input_buffer)
             self.set_display_short_message2(f"Code: {mask}")
 
     def _handle_command(self, key):
-        """处理指令 (仅在登录后有效)"""
+        """Handle commands (only valid after login)"""
         msg = ""
         success = False
-        
-        if key == "1":   # 1 = 外出布防
-            self.config_manager.set_mode(SafeHomeMode.ARMED_AWAY)
-            msg = "ARMED (AWAY)"
-            success = True
-        elif key == "2": # 2 = 在家布防
-            self.config_manager.set_mode(SafeHomeMode.ARMED_STAY)
-            msg = "ARMED (STAY)"
-            success = True
-        elif key == "0": # 0 = 撤防
-            self.config_manager.set_mode(SafeHomeMode.DISARMED)
+
+        if key == "1":   # 1 = Arm Away
+            arm_success = self.system.arm_system(SafeHomeMode.AWAY)
+            if arm_success:
+                msg = "ARMED (AWAY)"
+                success = True
+            else:
+                msg = "Cannot Arm"
+                self.set_display_short_message2("Windows/Doors Open")
+
+        elif key == "2": # 2 = Arm Stay (Home)
+            arm_success = self.system.arm_system(SafeHomeMode.HOME)
+            if arm_success:
+                msg = "ARMED (HOME)"
+                success = True
+            else:
+                msg = "Cannot Arm"
+                self.set_display_short_message2("Windows/Doors Open")
+
+        elif key == "0": # 0 = Disarm
+            self.system.disarm_system()
             msg = "DISARMED"
             success = True
-        elif key == "3": # [新增] 3 = 修改密码
+
+        elif key == "3": # 3 = Change Password
             self.is_changing_password = True
-            self.input_buffer = "" # 清空缓存以输入新密码
+            self.input_buffer = ""
             self.set_display_short_message1("CHANGE PASSWORD")
             self.set_display_short_message2("Enter New Password + #")
-        elif key == "9": 
-            new_zone = self.config_manager.next_zone()
+            return  # Don't end session, enter change mode
+
+        elif key == "9":  # 9 = Change Zone
+            new_zone = self.system.config.next_zone()
             self.set_display_short_message1(f"Zone Changed:")
-            self.set_display_short_message2(new_zone.name)
+            self.set_display_short_message2(new_zone.zone_name if new_zone else "None")
             self._refresh_status_display()
-            return # 此时不结束会话，进入修改模式
+            return  # Don't end session
+
         else:
             msg = "Invalid Cmd"
-        
+
         self.set_display_short_message1(msg)
-        
+
         if success:
             self.set_display_short_message2("Session Ended")
             self._refresh_status_display()
-            # 只有布防/撤防操作完成后自动退出，修改密码不在这里退出
-            self.is_authenticated = False 
+            # Logout after arm/disarm operation
+            self.is_authenticated = False
             self.input_buffer = ""
         else:
-            # 如果指令无效，保持菜单显示
-            self.set_display_short_message2("1:Away armed 2:Stay armed 3:Set Password 0:Disarm")
+            # If command invalid, keep menu displayed
+            self.set_display_short_message2("1:Away 2:Home 3:Set 0:Disarm 9:Zone")
 
     def _attempt_login(self):
-        """尝试登录"""
+        """Attempt login"""
         if not self.input_buffer:
             return
 
         user_id = "admin"
         password = self.input_buffer
-        
-        success = self.config_manager.login_manager.validate_credentials(user_id, password)
-        
+
+        success = self.system.login(user_id, password, "CONTROL_PANEL")
+
         if success:
             self.is_authenticated = True
-            self.current_valid_password = password # [重要] 保存旧密码用于修改验证
+            self.current_valid_password = password  # Save old password for change verification
             self.set_display_short_message1("Login Success")
-            # [修改] 更新菜单提示，增加 3:Set
-            self.set_display_short_message2("1:Away armed 2:Stay armed 3:Set Password 0:Disarm") 
-            self.input_buffer = "" 
+            self.set_display_short_message2("1:Away 2:Home 3:Set 0:Disarm 9:Zone")
+            self.input_buffer = ""
         else:
             self.is_authenticated = False
             self.current_valid_password = None
             self.input_buffer = ""
-            
-            if self.config_manager.login_manager.is_locked:
+
+            # Check if system is locked
+            if self.system.config.login_manager.is_locked.get("CONTROL_PANEL", False):
                 self.set_display_short_message1("SYSTEM LOCKED")
                 self.set_display_short_message2("Too many attempts")
             else:
@@ -153,43 +171,42 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
                 self.set_display_short_message2("Try Again")
 
     def _attempt_change_password(self):
-        """[新增] 尝试执行修改密码逻辑"""
+        """Attempt to change password"""
         new_password = self.input_buffer
-        
-        # 简单校验：密码不能为空且必须是数字
+
+        # Simple validation: password must not be empty and must be digits
         if not new_password or not new_password.isdigit():
             self.set_display_short_message1("Invalid Format")
             self.set_display_short_message2("Digits Only")
             self.input_buffer = ""
             return
 
-        # 调用 LoginManager 修改密码
-        # 注意：我们需要传入旧密码 (self.current_valid_password)
-        result = self.config_manager.login_manager.change_password(
-            self.current_valid_password, 
-            new_password
+        # Call System to change password
+        result = self.system.change_password(
+            self.current_valid_password,
+            new_password,
+            "CONTROL_PANEL"
         )
-        
+
         if result:
             self.set_display_short_message1("PASSWORD CHANGED")
             self.set_display_short_message2("Please Relogin")
-            
-            # 保存配置到文件
-            self.config_manager.save_configuration()
-            
-            # 强制登出，重置所有状态
+
+            # Save configuration
+            self.system.config.save_configuration()
+
+            # Force logout, reset all state
             self.is_authenticated = False
             self.is_changing_password = False
             self.current_valid_password = None
             self.input_buffer = ""
         else:
-            # 理论上不应该走到这里，因为我们是登录后操作的
             self.set_display_short_message1("Change Failed")
             self.set_display_short_message2("System Error")
             self.is_changing_password = False
             self.input_buffer = ""
 
-    # --- 按钮事件实现 ---
+    # --- Button event implementations ---
 
     def button1(self): self._handle_key_input("1")
     def button2(self): self._handle_key_input("2")
@@ -203,20 +220,23 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
     def button0(self): self._handle_key_input("0")
 
     def button_star(self):
-        """ * 键：取消/重置 """
+        """* key: Cancel/Reset"""
         self._reset_interaction()
 
     def button_sharp(self):
-        """ # 键：确认 """
+        """# key: Confirm"""
         if self.is_changing_password:
-            # 如果在修改密码模式，# 号代表确认新密码
+            # In password change mode, # confirms new password
             self._attempt_change_password()
         elif not self.is_authenticated:
-            # 如果未登录，# 号代表确认登录
+            # Not logged in, # confirms login
             self._attempt_login()
-        # 如果已登录且不是修改模式，# 号暂无功能（或者可以作为登出键）
+        # If logged in and not in change mode, # has no function (or could be logout)
 
     def button_panic(self):
-        self.config_manager.set_mode(SafeHomeMode.PANIC)
-        self.set_display_short_message1("ALARM TRIGGERED!")
+        """Panic button: Trigger alarm immediately"""
+        self.system.config.set_mode(SafeHomeMode.PANIC)
+        self.system.alarm.ring()
+        self.set_display_short_message1("PANIC ALARM!")
+        self.set_display_short_message2("Emergency Services Called")
         self._refresh_status_display()
