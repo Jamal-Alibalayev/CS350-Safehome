@@ -203,26 +203,34 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         tk.Button(
             btn_frame1,
-            text="🟢 Arm Sensor",
+            text="🟢 ARM SENSOR",
             bg="#27ae60",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 11, "bold"),
             width=15,
+            height=2,
             command=lambda: self._handle_windoor_sensor("arm"),
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#229954",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
         tk.Button(
             btn_frame1,
-            text="🔴 Disarm Sensor",
+            text="🔴 DISARM SENSOR",
             bg="#e74c3c",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 11, "bold"),
             width=15,
+            height=2,
             command=lambda: self._handle_windoor_sensor("disarm"),
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#c0392b",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
         # Door/Window 제어
@@ -233,26 +241,34 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         tk.Button(
             btn_frame2,
-            text="🚪 Open",
+            text="🚪 OPEN",
             bg="#3498db",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 11, "bold"),
             width=15,
+            height=2,
             command=lambda: self._handle_windoor("open"),
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#2980b9",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
         tk.Button(
             btn_frame2,
-            text="🚪 Close",
+            text="🚪 CLOSE",
             bg="#95a5a6",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 11, "bold"),
             width=15,
+            height=2,
             command=lambda: self._handle_windoor("close"),
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#7f8c8d",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
         # Motion Detector 제어
@@ -285,26 +301,34 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         tk.Button(
             btn_frame3,
-            text="🟢 Arm Sensor",
+            text="🟢 ARM SENSOR",
             bg="#27ae60",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 11, "bold"),
             width=15,
+            height=2,
             command=lambda: self._handle_motion_sensor("arm"),
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#229954",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
         tk.Button(
             btn_frame3,
-            text="🔴 Disarm Sensor",
+            text="🔴 DISARM SENSOR",
             bg="#e74c3c",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 11, "bold"),
             width=15,
+            height=2,
             command=lambda: self._handle_motion_sensor("disarm"),
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#c0392b",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
         # Motion 제어
@@ -315,26 +339,34 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         tk.Button(
             btn_frame4,
-            text="👁️ Detect Motion",
+            text="👁️ DETECT MOTION",
             bg="#9b59b6",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 11, "bold"),
             width=15,
+            height=2,
             command=lambda: self._handle_motion("detect"),
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#8e44ad",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
         tk.Button(
             btn_frame4,
-            text="⚪ Clear Motion",
+            text="⚪ CLEAR MOTION",
             bg="#95a5a6",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 11, "bold"),
             width=15,
+            height=2,
             command=lambda: self._handle_motion("clear"),
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#7f8c8d",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
         # Quick Actions
@@ -352,38 +384,50 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         tk.Button(
             quick_content,
-            text="🟢 Arm All Sensors",
+            text="🟢 ARM ALL SENSORS",
             bg="#27ae60",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 12, "bold"),
             width=32,
+            height=2,
             command=self._arm_all,
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#229954",
+            activeforeground="black"
         ).pack(pady=5)
 
         tk.Button(
             quick_content,
-            text="🔴 Disarm All Sensors",
+            text="🔴 DISARM ALL SENSORS",
             bg="#e74c3c",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 12, "bold"),
             width=32,
+            height=2,
             command=self._disarm_all,
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#c0392b",
+            activeforeground="black"
         ).pack(pady=5)
 
         tk.Button(
             quick_content,
-            text="🔄 Reset All States",
+            text="🔄 RESET ALL STATES",
             bg="#3498db",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 12, "bold"),
             width=32,
+            height=2,
             command=self._reset_all,
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#2980b9",
+            activeforeground="black"
         ).pack(pady=5)
 
     def _update_id_ranges(self):
