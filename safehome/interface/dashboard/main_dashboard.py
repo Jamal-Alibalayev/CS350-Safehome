@@ -116,26 +116,32 @@ class MainDashboard(tk.Toplevel):
 
         tk.Button(
             button_frame,
-            text="📊 Logs",
+            text="📊 LOGS",
             command=self._open_log_viewer,
             bg="#f39c12",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 12, "bold"),
             width=10,
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#e67e22",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
         tk.Button(
             button_frame,
-            text="Logout",
+            text="🚪 LOGOUT",
             command=self._logout,
             bg="#e74c3c",
-            fg="white",
-            font=("Arial", 10, "bold"),
+            fg="black",
+            font=("Helvetica", 12, "bold"),
             width=10,
-            relief="flat",
-            cursor="hand2"
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#c0392b",
+            activeforeground="black"
         ).pack(side="left", padx=5)
 
     def _create_camera_section(self, parent):
@@ -153,6 +159,12 @@ class MainDashboard(tk.Toplevel):
         grid_container = tk.Frame(camera_frame, bg="white")
         grid_container.pack(fill="both", expand=True, padx=10, pady=10)
 
+        # 3개 카메라를 위한 컬럼 가중치 설정
+        grid_container.grid_columnconfigure(0, weight=1)
+        grid_container.grid_columnconfigure(1, weight=1)
+        grid_container.grid_columnconfigure(2, weight=1)
+        grid_container.grid_rowconfigure(0, weight=1)
+
         self.camera_labels = {}
         cameras = list(self.system.camera_controller.cameras.values())
 
@@ -166,13 +178,13 @@ class MainDashboard(tk.Toplevel):
             ).pack(expand=True)
             return
 
-        # 카메라 그리드 (2x2 레이아웃)
-        for i, camera in enumerate(cameras[:4]):
-            row = i // 2
-            col = i % 2
+        # 카메라 그리드 (3개 고정 - 1행 3열 레이아웃)
+        # Dining Room, Kitchen, Living Room 순서로 표시
+        for i, camera in enumerate(cameras[:3]):
+            col = i
 
             cam_container = tk.Frame(grid_container, bg="#ecf0f1", relief="solid", borderwidth=2)
-            cam_container.grid(row=row, column=col, padx=8, pady=8, sticky="nsew")
+            cam_container.grid(row=0, column=col, padx=8, pady=8, sticky="nsew")
 
             # 카메라 제목
             title_frame = tk.Frame(cam_container, bg="#34495e")
@@ -203,57 +215,80 @@ class MainDashboard(tk.Toplevel):
             control_frame = tk.Frame(cam_container, bg="#ecf0f1")
             control_frame.pack(fill="x", padx=5, pady=5)
 
-            tk.Button(
+            # Pan Left 버튼
+            left_btn = tk.Button(
                 control_frame,
-                text="◄",
+                text="← LEFT",
                 command=lambda c=camera: self._pan_camera(c, "left"),
-                width=3,
-                bg="#3498db",
-                fg="white",
-                relief="flat",
-                cursor="hand2"
-            ).pack(side="left", padx=2)
+                width=10,
+                height=2,
+                bg="#5dade2",
+                fg="black",
+                font=("Helvetica", 11, "bold"),
+                relief="groove",
+                bd=3,
+                cursor="hand2",
+                activebackground="#3498db",
+                activeforeground="black"
+            )
+            left_btn.pack(side="left", padx=3)
 
-            tk.Button(
+            # Pan Right 버튼
+            right_btn = tk.Button(
                 control_frame,
-                text="►",
+                text="RIGHT →",
                 command=lambda c=camera: self._pan_camera(c, "right"),
-                width=3,
-                bg="#3498db",
-                fg="white",
-                relief="flat",
-                cursor="hand2"
-            ).pack(side="left", padx=2)
+                width=10,
+                height=2,
+                bg="#5dade2",
+                fg="black",
+                font=("Helvetica", 11, "bold"),
+                relief="groove",
+                bd=3,
+                cursor="hand2",
+                activebackground="#3498db",
+                activeforeground="black"
+            )
+            right_btn.pack(side="left", padx=3)
 
-            tk.Button(
+            # Zoom In 버튼
+            zoomin_btn = tk.Button(
                 control_frame,
-                text="+",
+                text="ZOOM +",
                 command=lambda c=camera: self._zoom_camera(c, "in"),
-                width=3,
-                bg="#2ecc71",
-                fg="white",
-                relief="flat",
-                cursor="hand2"
-            ).pack(side="left", padx=2)
+                width=10,
+                height=2,
+                bg="#58d68d",
+                fg="black",
+                font=("Helvetica", 11, "bold"),
+                relief="groove",
+                bd=3,
+                cursor="hand2",
+                activebackground="#2ecc71",
+                activeforeground="black"
+            )
+            zoomin_btn.pack(side="left", padx=3)
 
-            tk.Button(
+            # Zoom Out 버튼
+            zoomout_btn = tk.Button(
                 control_frame,
-                text="-",
+                text="ZOOM -",
                 command=lambda c=camera: self._zoom_camera(c, "out"),
-                width=3,
-                bg="#e67e22",
-                fg="white",
-                relief="flat",
-                cursor="hand2"
-            ).pack(side="left", padx=2)
-
-        # 그리드 가중치 설정
-        for i in range(2):
-            grid_container.grid_rowconfigure(i, weight=1)
-            grid_container.grid_columnconfigure(i, weight=1)
+                width=10,
+                height=2,
+                bg="#f39c12",
+                fg="black",
+                font=("Helvetica", 11, "bold"),
+                relief="groove",
+                bd=3,
+                cursor="hand2",
+                activebackground="#e67e22",
+                activeforeground="black"
+            )
+            zoomout_btn.pack(side="left", padx=3)
 
     def _create_control_buttons(self, parent):
-        """Arm/Disarm 제어 버튼"""
+        """Arm/Disarm 제어 버튼 및 센서 시뮬레이터"""
         control_frame = tk.LabelFrame(
             parent,
             text="🎛️ System Control",
@@ -279,15 +314,38 @@ class MainDashboard(tk.Toplevel):
                 button_container,
                 text=text,
                 bg=color,
-                fg="white",
-                font=("Arial", 12, "bold"),
+                fg="black",  # 검은색으로 변경 (최대 가독성)
+                font=("Helvetica", 12, "bold"),
                 width=14,
                 height=2,
-                relief="flat",
+                relief="groove",
+                bd=3,
                 cursor="hand2",
+                activebackground=color,
+                activeforeground="black",
                 command=lambda m=mode: self._set_mode(m)
             )
             btn.pack(side="left", padx=5)
+
+        # 센서 시뮬레이터 버튼 추가
+        simulator_container = tk.Frame(control_frame, bg="white")
+        simulator_container.pack(padx=15, pady=(0, 15))
+
+        tk.Button(
+            simulator_container,
+            text="🧪 OPEN SENSOR SIMULATOR",
+            bg="#f39c12",
+            fg="black",
+            font=("Helvetica", 13, "bold"),
+            width=30,
+            height=2,
+            relief="groove",
+            bd=4,
+            cursor="hand2",
+            activebackground="#e67e22",
+            activeforeground="black",
+            command=self._open_sensor_simulator
+        ).pack()
 
     def _create_sensor_section(self, parent):
         """센서 상태 섹션"""
@@ -359,13 +417,17 @@ class MainDashboard(tk.Toplevel):
 
         tk.Button(
             btn_frame,
-            text="Manage Zones",
+            text="🗺️ MANAGE ZONES",
             command=self._open_zone_manager,
-            bg="#16a085",
-            fg="white",
-            font=("Arial", 10, "bold"),
-            relief="flat",
-            cursor="hand2"
+            bg="#48c9b0",
+            fg="black",
+            font=("Helvetica", 11, "bold"),
+            relief="groove",
+            bd=3,
+            height=2,
+            cursor="hand2",
+            activebackground="#16a085",
+            activeforeground="black"
         ).pack(fill="x")
 
     def _create_quick_actions(self, parent):
@@ -388,16 +450,25 @@ class MainDashboard(tk.Toplevel):
         ]
 
         for text, command, color in actions:
+            # 더 밝은 배경색으로 변경
+            if "Panic" in text:
+                bg_color = "#e74c3c"  # 빨간색
+            else:
+                bg_color = "#95a5a6"  # 회색
+
             tk.Button(
                 content,
-                text=text,
+                text=text.upper(),  # 대문자로 표시
                 command=command,
-                bg=color,
-                fg="white",
-                font=("Arial", 11, "bold"),
+                bg=bg_color,
+                fg="black",  # 검은색 텍스트
+                font=("Helvetica", 11, "bold"),
                 height=2,
-                relief="flat",
-                cursor="hand2"
+                relief="groove",
+                bd=3,
+                cursor="hand2",
+                activebackground=color,
+                activeforeground="black"
             ).pack(fill="x", pady=5)
 
     def _update_loop(self):
@@ -521,6 +592,14 @@ class MainDashboard(tk.Toplevel):
         """알람 끄기"""
         self.system.alarm.stop()
         messagebox.showinfo("Alarm", "Alarm silenced")
+
+    def _open_sensor_simulator(self):
+        """센서 시뮬레이터 열기"""
+        try:
+            from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
+            DeviceSensorTester.showSensorTester()
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to open Sensor Simulator: {e}")
 
     def _logout(self):
         """로그아웃"""

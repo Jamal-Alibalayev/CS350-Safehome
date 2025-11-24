@@ -1,234 +1,708 @@
+"""
+SafeHome Sensor Simulator GUI
+Modern interface for testing sensors based on fixed floor plan
+"""
+
 import tkinter as tk
 from tkinter import ttk, messagebox
-
+from PIL import Image, ImageTk
 from .device_sensor_tester import DeviceSensorTester
 
 
 class SafeHomeSensorTest(tk.Toplevel):
-    """Tkinter translation of the Java SafeHomeSensorTest GUI.
-
-    This GUI allows the user to input a sensor ID and call open/close or
-    detect/clear on registered sensors by ID. It uses the DeviceSensorTester
-    head_* linked lists to find sensors.
+    """
+    현대적인 센서 시뮬레이터 GUI
+    - Floor plan 기반 센서 배치
+    - 10개 고정 센서 (6 windows, 2 doors, 2 motion)
+    - 실시간 상태 업데이트
     """
 
     def __init__(self, master=None):
         super().__init__(master)
-        self.title("Sensor Test")
-        self.geometry("500x450")
-        self.resizable(False, False)
+        self.title("SafeHome - Sensor Simulator")
+        self.geometry("1200x700")
+        self.resizable(True, True)
 
-        self.rangeSensorID_WinDoorSensor = tk.StringVar(value="N/A")
-        self.inputSensorID_WinDoorSensor = tk.StringVar()
+        # 변수 초기화
+        self.sensor_widgets = {}
 
-        self.rangeSensorID_MotionDetector = tk.StringVar(value="N/A")
-        self.inputSensorID_MotionDetector = tk.StringVar()
+        # UI 구성
+        self._create_ui()
 
-        # WinDoor panel
-        wd_frame = ttk.Frame(self)
-        wd_frame.place(x=15, y=15, width=225, height=130)
-        ttk.Label(wd_frame, text="      WinDoor Sensor").grid(row=0, column=0, columnspan=2)
-        ttk.Label(wd_frame, text="   ID range").grid(row=1, column=0)
-        ttk.Label(wd_frame, text="   input ID").grid(row=2, column=0)
-        ttk.Entry(wd_frame, textvariable=self.rangeSensorID_WinDoorSensor, state="readonly", width=10).grid(row=1, column=1)
-        ttk.Entry(wd_frame, textvariable=self.inputSensorID_WinDoorSensor, width=10).grid(row=2, column=1)
-        
-        # Sensor control buttons (Arm/Disarm)
-        ttk.Label(wd_frame, text="Sensor Control:").grid(row=3, column=0, columnspan=2, pady=(5,0))
-        ttk.Button(wd_frame, text="Arm", command=lambda: self._handle_windoor_sensor("arm")).grid(row=4, column=0, padx=2)
-        ttk.Button(wd_frame, text="Disarm", command=lambda: self._handle_windoor_sensor("disarm")).grid(row=4, column=1, padx=2)
-        
-        # Door control buttons (Open/Close)
-        ttk.Label(wd_frame, text="Door Control:").grid(row=5, column=0, columnspan=2, pady=(5,0))
-        ttk.Button(wd_frame, text="Open", command=lambda: self._handle_windoor("open")).grid(row=6, column=0, padx=2)
-        ttk.Button(wd_frame, text="Close", command=lambda: self._handle_windoor("close")).grid(row=6, column=1, padx=2)
+        # 센서 ID 범위 업데이트
+        self._update_id_ranges()
 
-        # Motion panel
-        md_frame = ttk.Frame(self)
-        md_frame.place(x=260, y=15, width=225, height=130)
-        ttk.Label(md_frame, text="      Motion Detector").grid(row=0, column=0, columnspan=2)
-        ttk.Label(md_frame, text="   ID range").grid(row=1, column=0)
-        ttk.Label(md_frame, text="   input ID").grid(row=2, column=0)
-        ttk.Entry(md_frame, textvariable=self.rangeSensorID_MotionDetector, state="readonly", width=10).grid(row=1, column=1)
-        ttk.Entry(md_frame, textvariable=self.inputSensorID_MotionDetector, width=10).grid(row=2, column=1)
-        
-        # Sensor control buttons (Arm/Disarm)
-        ttk.Label(md_frame, text="Sensor Control:").grid(row=3, column=0, columnspan=2, pady=(5,0))
-        ttk.Button(md_frame, text="Arm", command=lambda: self._handle_motion_sensor("arm")).grid(row=4, column=0, padx=2)
-        ttk.Button(md_frame, text="Disarm", command=lambda: self._handle_motion_sensor("disarm")).grid(row=4, column=1, padx=2)
-        
-        # Motion control buttons (Detect/Clear)
-        ttk.Label(md_frame, text="Motion Control:").grid(row=5, column=0, columnspan=2, pady=(5,0))
-        ttk.Button(md_frame, text="Detect", command=lambda: self._handle_motion("detect")).grid(row=6, column=0, padx=2)
-        ttk.Button(md_frame, text="Clear", command=lambda: self._handle_motion("clear")).grid(row=6, column=1, padx=2)
-
-        # Status display frame
-        status_frame = ttk.LabelFrame(self, text="Sensor Status", padding=10)
-        status_frame.place(x=15, y=160, width=470, height=270)
-        
-        # WinDoor status
-        ttk.Label(status_frame, text="Window/Door Sensors:", font=("Arial", 9, "bold")).grid(row=0, column=0, columnspan=3, sticky="w", pady=(0, 5))
-        self.wd_status_text = tk.Text(status_frame, height=5, width=53, font=("Courier", 9), state="disabled")
-        self.wd_status_text.grid(row=1, column=0, columnspan=3, pady=(0, 10))
-        
-        # Motion status
-        ttk.Label(status_frame, text="Motion Detectors:", font=("Arial", 9, "bold")).grid(row=2, column=0, columnspan=3, sticky="w", pady=(0, 5))
-        self.motion_status_text = tk.Text(status_frame, height=5, width=53, font=("Courier", 9), state="disabled")
-        self.motion_status_text.grid(row=3, column=0, columnspan=3)
-        
-        # Start status update loop
+        # 상태 업데이트 시작
         self._update_status()
 
-    def _update_status(self):
-        """Update sensor status display every 500ms."""
-        # Update WinDoor status
-        self.wd_status_text.config(state="normal")
-        self.wd_status_text.delete(1.0, tk.END)
-        
+    def _create_ui(self):
+        """UI 구성"""
+        # 상단 헤더
+        header = tk.Frame(self, bg="#2c3e50", height=70)
+        header.pack(fill="x")
+        header.pack_propagate(False)
+
+        tk.Label(
+            header,
+            text="🧪 Sensor Simulator",
+            font=("Arial", 20, "bold"),
+            bg="#2c3e50",
+            fg="white"
+        ).pack(side="left", padx=20, pady=15)
+
+        tk.Label(
+            header,
+            text="Test sensors based on fixed floor plan",
+            font=("Arial", 11),
+            bg="#2c3e50",
+            fg="#bdc3c7"
+        ).pack(side="left")
+
+        # 메인 컨테이너
+        main_container = tk.Frame(self, bg="#ecf0f1")
+        main_container.pack(fill="both", expand=True, padx=15, pady=15)
+
+        # 좌측: Floor Plan 및 센서 목록
+        left_panel = tk.Frame(main_container, bg="#ecf0f1")
+        left_panel.pack(side="left", fill="both", expand=True, padx=(0, 10))
+
+        self._create_floorplan_section(left_panel)
+        self._create_sensor_list(left_panel)
+
+        # 우측: 센서 제어 패널
+        right_panel = tk.Frame(main_container, bg="#ecf0f1", width=400)
+        right_panel.pack(side="right", fill="both", padx=(10, 0))
+        right_panel.pack_propagate(False)
+
+        self._create_control_panels(right_panel)
+
+    def _create_floorplan_section(self, parent):
+        """Floor Plan 이미지 표시"""
+        floorplan_frame = tk.LabelFrame(
+            parent,
+            text="📐 Floor Plan",
+            font=("Arial", 12, "bold"),
+            bg="white",
+            fg="#2c3e50"
+        )
+        floorplan_frame.pack(fill="x", pady=(0, 10))
+
+        try:
+            # Floor plan 이미지 로드
+            img_path = "/Users/kaibaek/IdeaProjects/CS350-Safehome/assets/images/floorplan.png"
+            img = Image.open(img_path)
+            img = img.resize((600, 300), Image.Resampling.LANCZOS)
+            photo = ImageTk.PhotoImage(img)
+
+            img_label = tk.Label(floorplan_frame, image=photo, bg="white")
+            img_label.image = photo  # Keep reference
+            img_label.pack(padx=10, pady=10)
+        except Exception as e:
+            tk.Label(
+                floorplan_frame,
+                text=f"Floor plan not available\n{str(e)}",
+                font=("Arial", 10),
+                bg="white",
+                fg="#95a5a6"
+            ).pack(pady=20)
+
+        # Legend
+        legend_frame = tk.Frame(floorplan_frame, bg="white")
+        legend_frame.pack(fill="x", padx=10, pady=(0, 10))
+
+        legend_items = [
+            ("🔴", "Red dots = Windows (S₁-S₆)"),
+            ("🔵", "Blue dots = Doors (D₁-D₂)"),
+            ("📹", "Cameras (C₁-C₃)"),
+            ("👁️", "Motion Detectors (M₁-M₂)")
+        ]
+
+        for emoji, text in legend_items:
+            item_frame = tk.Frame(legend_frame, bg="white")
+            item_frame.pack(side="left", padx=10)
+            tk.Label(item_frame, text=emoji, font=("Arial", 12), bg="white").pack(side="left")
+            tk.Label(item_frame, text=text, font=("Arial", 9), bg="white", fg="#7f8c8d").pack(side="left", padx=5)
+
+    def _create_sensor_list(self, parent):
+        """센서 목록 테이블"""
+        list_frame = tk.LabelFrame(
+            parent,
+            text="📊 Sensor Status List",
+            font=("Arial", 12, "bold"),
+            bg="white",
+            fg="#2c3e50"
+        )
+        list_frame.pack(fill="both", expand=True)
+
+        # Treeview
+        tree_container = tk.Frame(list_frame, bg="white")
+        tree_container.pack(fill="both", expand=True, padx=10, pady=10)
+
+        columns = ("ID", "Type", "Location", "Sensor", "State")
+        self.sensor_tree = ttk.Treeview(
+            tree_container,
+            columns=columns,
+            show="headings",
+            height=10
+        )
+
+        # 컬럼 설정
+        self.sensor_tree.heading("ID", text="ID")
+        self.sensor_tree.heading("Type", text="Type")
+        self.sensor_tree.heading("Location", text="Location")
+        self.sensor_tree.heading("Sensor", text="Sensor")
+        self.sensor_tree.heading("State", text="Door/Motion")
+
+        self.sensor_tree.column("ID", width=50, anchor="center")
+        self.sensor_tree.column("Type", width=100, anchor="center")
+        self.sensor_tree.column("Location", width=120, anchor="w")
+        self.sensor_tree.column("Sensor", width=100, anchor="center")
+        self.sensor_tree.column("State", width=120, anchor="center")
+
+        self.sensor_tree.pack(side="left", fill="both", expand=True)
+
+        # Scrollbar
+        scrollbar = ttk.Scrollbar(tree_container, orient="vertical", command=self.sensor_tree.yview)
+        scrollbar.pack(side="right", fill="y")
+        self.sensor_tree.configure(yscrollcommand=scrollbar.set)
+
+        # 스타일
+        style = ttk.Style()
+        style.configure("Treeview", rowheight=28, font=("Arial", 10))
+        style.configure("Treeview.Heading", font=("Arial", 10, "bold"))
+
+    def _create_control_panels(self, parent):
+        """센서 제어 패널"""
+        # Window/Door 제어
+        wd_frame = tk.LabelFrame(
+            parent,
+            text="🚪 Window/Door Sensors",
+            font=("Arial", 12, "bold"),
+            bg="white",
+            fg="#2c3e50"
+        )
+        wd_frame.pack(fill="x", pady=(0, 15))
+
+        wd_content = tk.Frame(wd_frame, bg="white")
+        wd_content.pack(padx=15, pady=15)
+
+        # ID 입력
+        tk.Label(wd_content, text="Sensor ID:", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        self.wd_id_var = tk.StringVar()
+        tk.Entry(wd_content, textvariable=self.wd_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
+
+        # ID 범위 표시
+        self.wd_range_label = tk.Label(wd_content, text="Available IDs: N/A", font=("Arial", 9), bg="white", fg="#7f8c8d")
+        self.wd_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
+
+        # 센서 제어
+        tk.Label(wd_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white").grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
+
+        btn_frame1 = tk.Frame(wd_content, bg="white")
+        btn_frame1.grid(row=3, column=0, columnspan=2, pady=5)
+
+        tk.Button(
+            btn_frame1,
+            text="🟢 Arm Sensor",
+            bg="#27ae60",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=15,
+            command=lambda: self._handle_windoor_sensor("arm"),
+            relief="flat",
+            cursor="hand2"
+        ).pack(side="left", padx=5)
+
+        tk.Button(
+            btn_frame1,
+            text="🔴 Disarm Sensor",
+            bg="#e74c3c",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=15,
+            command=lambda: self._handle_windoor_sensor("disarm"),
+            relief="flat",
+            cursor="hand2"
+        ).pack(side="left", padx=5)
+
+        # Door/Window 제어
+        tk.Label(wd_content, text="Door/Window State:", font=("Arial", 10, "bold"), bg="white").grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
+
+        btn_frame2 = tk.Frame(wd_content, bg="white")
+        btn_frame2.grid(row=5, column=0, columnspan=2, pady=5)
+
+        tk.Button(
+            btn_frame2,
+            text="🚪 Open",
+            bg="#3498db",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=15,
+            command=lambda: self._handle_windoor("open"),
+            relief="flat",
+            cursor="hand2"
+        ).pack(side="left", padx=5)
+
+        tk.Button(
+            btn_frame2,
+            text="🚪 Close",
+            bg="#95a5a6",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=15,
+            command=lambda: self._handle_windoor("close"),
+            relief="flat",
+            cursor="hand2"
+        ).pack(side="left", padx=5)
+
+        # Motion Detector 제어
+        md_frame = tk.LabelFrame(
+            parent,
+            text="👁️ Motion Detectors",
+            font=("Arial", 12, "bold"),
+            bg="white",
+            fg="#2c3e50"
+        )
+        md_frame.pack(fill="x", pady=(0, 15))
+
+        md_content = tk.Frame(md_frame, bg="white")
+        md_content.pack(padx=15, pady=15)
+
+        # ID 입력
+        tk.Label(md_content, text="Detector ID:", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        self.md_id_var = tk.StringVar()
+        tk.Entry(md_content, textvariable=self.md_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
+
+        # ID 범위 표시
+        self.md_range_label = tk.Label(md_content, text="Available IDs: N/A", font=("Arial", 9), bg="white", fg="#7f8c8d")
+        self.md_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
+
+        # 센서 제어
+        tk.Label(md_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white").grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
+
+        btn_frame3 = tk.Frame(md_content, bg="white")
+        btn_frame3.grid(row=3, column=0, columnspan=2, pady=5)
+
+        tk.Button(
+            btn_frame3,
+            text="🟢 Arm Sensor",
+            bg="#27ae60",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=15,
+            command=lambda: self._handle_motion_sensor("arm"),
+            relief="flat",
+            cursor="hand2"
+        ).pack(side="left", padx=5)
+
+        tk.Button(
+            btn_frame3,
+            text="🔴 Disarm Sensor",
+            bg="#e74c3c",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=15,
+            command=lambda: self._handle_motion_sensor("disarm"),
+            relief="flat",
+            cursor="hand2"
+        ).pack(side="left", padx=5)
+
+        # Motion 제어
+        tk.Label(md_content, text="Motion State:", font=("Arial", 10, "bold"), bg="white").grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
+
+        btn_frame4 = tk.Frame(md_content, bg="white")
+        btn_frame4.grid(row=5, column=0, columnspan=2, pady=5)
+
+        tk.Button(
+            btn_frame4,
+            text="👁️ Detect Motion",
+            bg="#9b59b6",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=15,
+            command=lambda: self._handle_motion("detect"),
+            relief="flat",
+            cursor="hand2"
+        ).pack(side="left", padx=5)
+
+        tk.Button(
+            btn_frame4,
+            text="⚪ Clear Motion",
+            bg="#95a5a6",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=15,
+            command=lambda: self._handle_motion("clear"),
+            relief="flat",
+            cursor="hand2"
+        ).pack(side="left", padx=5)
+
+        # Quick Actions
+        quick_frame = tk.LabelFrame(
+            parent,
+            text="⚡ Quick Actions",
+            font=("Arial", 12, "bold"),
+            bg="white",
+            fg="#2c3e50"
+        )
+        quick_frame.pack(fill="x")
+
+        quick_content = tk.Frame(quick_frame, bg="white")
+        quick_content.pack(padx=15, pady=15)
+
+        tk.Button(
+            quick_content,
+            text="🟢 Arm All Sensors",
+            bg="#27ae60",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=32,
+            command=self._arm_all,
+            relief="flat",
+            cursor="hand2"
+        ).pack(pady=5)
+
+        tk.Button(
+            quick_content,
+            text="🔴 Disarm All Sensors",
+            bg="#e74c3c",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=32,
+            command=self._disarm_all,
+            relief="flat",
+            cursor="hand2"
+        ).pack(pady=5)
+
+        tk.Button(
+            quick_content,
+            text="🔄 Reset All States",
+            bg="#3498db",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=32,
+            command=self._reset_all,
+            relief="flat",
+            cursor="hand2"
+        ).pack(pady=5)
+
+    def _update_id_ranges(self):
+        """센서 ID 범위 업데이트"""
+        # Window/Door ID 범위
+        wd_ids = []
         scan = DeviceSensorTester.head_WinDoorSensor
-        if scan is None:
-            self.wd_status_text.insert(tk.END, "No sensors registered\n")
+        while scan is not None:
+            sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
+            if sensor_id is not None:
+                wd_ids.append(sensor_id)
+            scan = getattr(scan, "next", None)
+
+        if wd_ids:
+            wd_ids.sort()
+            self.wd_range_label.config(text=f"Available IDs: {min(wd_ids)}-{max(wd_ids)} ({len(wd_ids)} sensors)")
         else:
-            while scan is not None:
-                sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", "?"))
-                # Prefer explicit test method when available, fall back to known attrs
-                if callable(getattr(scan, "test_armed_state", None)):
-                    try:
-                        armed = bool(scan.test_armed_state())
-                    except Exception:
-                        armed = False
-                else:
-                    armed = getattr(scan, "amred", getattr(scan, "armed", getattr(scan, "enabled", False)))
-                opened = getattr(scan, "opened", False)
-                
-                # Separate status display: Sensor ON/OFF | Door OPEN/CLOSED
-                sensor_status = "🟢 ON " if armed else "🔴 OFF"
-                door_status = "🚪 OPEN  " if opened else "🚪 CLOSED"
-                self.wd_status_text.insert(tk.END, f"ID {sensor_id}: Sensor[{sensor_status}] Door[{door_status}]\n")
-                scan = getattr(scan, "next", None)
-        
-        self.wd_status_text.config(state="disabled")
-        
-        # Update Motion status
-        self.motion_status_text.config(state="normal")
-        self.motion_status_text.delete(1.0, tk.END)
-        
+            self.wd_range_label.config(text="Available IDs: No sensors registered")
+
+        # Motion Detector ID 범위
+        md_ids = []
         scan = DeviceSensorTester.head_MotionDetector
-        if scan is None:
-            self.motion_status_text.insert(tk.END, "No detectors registered\n")
+        while scan is not None:
+            sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
+            if sensor_id is not None:
+                md_ids.append(sensor_id)
+            scan = getattr(scan, "next", None)
+
+        if md_ids:
+            md_ids.sort()
+            self.md_range_label.config(text=f"Available IDs: {min(md_ids)}-{max(md_ids)} ({len(md_ids)} detectors)")
         else:
-            while scan is not None:
-                sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", "?"))
-                # Prefer explicit test method when available, fall back to known attrs
-                if callable(getattr(scan, "test_armed_state", None)):
-                    try:
-                        armed = bool(scan.test_armed_state())
-                    except Exception:
-                        armed = False
-                else:
-                    armed = getattr(scan, "enabled", getattr(scan, "armed", getattr(scan, "amred", False)))
-                detected = getattr(scan, "detected", False)
-                
-                # Separate status display: Sensor ON/OFF | Motion DETECTED/CLEAR
-                sensor_status = "🟢 ON " if armed else "🔴 OFF"
-                motion_status = "👁️  DETECTED" if detected else "⚪ CLEAR   "
-                self.motion_status_text.insert(tk.END, f"ID {sensor_id}: Sensor[{sensor_status}] Motion[{motion_status}]\n")
-                scan = getattr(scan, "next", None)
-        
-        self.motion_status_text.config(state="disabled")
-        
+            self.md_range_label.config(text="Available IDs: No detectors registered")
+
+    def _update_status(self):
+        """센서 상태 업데이트 (500ms마다)"""
+        # Clear tree
+        for item in self.sensor_tree.get_children():
+            self.sensor_tree.delete(item)
+
+        # Update Window/Door sensors
+        scan = DeviceSensorTester.head_WinDoorSensor
+        while scan is not None:
+            sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", "?"))
+            name = getattr(scan, "name", f"WinDoor {sensor_id}")
+
+            # Get armed state
+            if callable(getattr(scan, "test_armed_state", None)):
+                try:
+                    armed = bool(scan.test_armed_state())
+                except:
+                    armed = False
+            else:
+                armed = getattr(scan, "armed", getattr(scan, "enabled", False))
+
+            # Get opened state
+            opened = getattr(scan, "opened", False)
+
+            sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
+            door_status = "🚪 Open" if opened else "🚪 Closed"
+
+            self.sensor_tree.insert(
+                "",
+                "end",
+                values=(sensor_id, "Window/Door", name, sensor_status, door_status)
+            )
+
+            scan = getattr(scan, "next", None)
+
+        # Update Motion Detectors
+        scan = DeviceSensorTester.head_MotionDetector
+        while scan is not None:
+            sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", "?"))
+            name = getattr(scan, "name", f"Motion {sensor_id}")
+
+            # Get armed state
+            if callable(getattr(scan, "test_armed_state", None)):
+                try:
+                    armed = bool(scan.test_armed_state())
+                except:
+                    armed = False
+            else:
+                armed = getattr(scan, "enabled", getattr(scan, "armed", False))
+
+            # Get detected state
+            detected = getattr(scan, "detected", False)
+
+            sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
+            motion_status = "👁️ Detected" if detected else "⚪ Clear"
+
+            self.sensor_tree.insert(
+                "",
+                "end",
+                values=(sensor_id, "Motion", name, sensor_status, motion_status)
+            )
+
+            scan = getattr(scan, "next", None)
+
         # Schedule next update
         self.after(500, self._update_status)
 
-    def _validate_digits(self, s: str) -> bool:
-        return s.isdigit() if s else False
-
     def _handle_windoor_sensor(self, action: str):
-        """Handle Window/Door sensor arm/disarm."""
-        inputNumber = self.inputSensorID_WinDoorSensor.get()
-        if inputNumber == "":
-            messagebox.showinfo(self.title(), "input the WinDoorSensor's ID")
+        """Window/Door 센서 arm/disarm"""
+        sensor_id_str = self.wd_id_var.get().strip()
+        if not sensor_id_str:
+            messagebox.showwarning("Input Required", "Please enter a sensor ID")
             return
-        if not self._validate_digits(inputNumber):
-            messagebox.showinfo(self.title(), "only digit allowed")
+
+        try:
+            sensor_id = int(sensor_id_str)
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Sensor ID must be a number")
             return
-        selectedID = int(inputNumber)
+
+        # Find sensor
         scan = DeviceSensorTester.head_WinDoorSensor
-        while scan is not None and getattr(scan, "sensor_id", getattr(scan, "sensorID", None)) != selectedID:
+        found = False
+        while scan is not None:
+            sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
+            if sid == sensor_id:
+                found = True
+                if action == "arm":
+                    if hasattr(scan, "arm"):
+                        scan.arm()
+                    elif hasattr(scan, "enable"):
+                        scan.enable()
+                elif action == "disarm":
+                    if hasattr(scan, "disarm"):
+                        scan.disarm()
+                    elif hasattr(scan, "disable"):
+                        scan.disable()
+                break
             scan = getattr(scan, "next", None)
-        if scan is None:
-            messagebox.showinfo(self.title(), f"ID {selectedID} not exist")
-        else:
-            if action == "arm":
-                scan.arm()
-            else:
-                scan.disarm()
-            # Immediately update status display
-            self._update_status()
+
+        if not found:
+            messagebox.showerror("Not Found", f"Window/Door sensor ID {sensor_id} not found")
 
     def _handle_windoor(self, action: str):
-        inputNumber = self.inputSensorID_WinDoorSensor.get()
-        if inputNumber == "":
-            messagebox.showinfo(self.title(), "input the WinDoorSensor's ID")
+        """Window/Door 열기/닫기"""
+        sensor_id_str = self.wd_id_var.get().strip()
+        if not sensor_id_str:
+            messagebox.showwarning("Input Required", "Please enter a sensor ID")
             return
-        if not self._validate_digits(inputNumber):
-            messagebox.showinfo(self.title(), "only digit allowed")
+
+        try:
+            sensor_id = int(sensor_id_str)
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Sensor ID must be a number")
             return
-        selectedID = int(inputNumber)
+
+        # Find sensor
         scan = DeviceSensorTester.head_WinDoorSensor
-        while scan is not None and getattr(scan, "sensor_id", getattr(scan, "sensorID", None)) != selectedID:
+        found = False
+        while scan is not None:
+            sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
+            if sid == sensor_id:
+                found = True
+                if action == "open":
+                    if hasattr(scan, "intrude"):
+                        scan.intrude()
+                    elif hasattr(scan, "open"):
+                        scan.open()
+                elif action == "close":
+                    if hasattr(scan, "release"):
+                        scan.release()
+                    elif hasattr(scan, "close"):
+                        scan.close()
+                break
             scan = getattr(scan, "next", None)
-        if scan is None:
-            messagebox.showinfo(self.title(), f"ID {selectedID} not exist")
-        else:
-            if action == "open":
-                scan.intrude()
-            else:
-                scan.release()
-            # Immediately update status display
-            self._update_status()
+
+        if not found:
+            messagebox.showerror("Not Found", f"Window/Door sensor ID {sensor_id} not found")
 
     def _handle_motion_sensor(self, action: str):
-        """Handle Motion Detector arm/disarm."""
-        inputNumber = self.inputSensorID_MotionDetector.get()
-        if inputNumber == "":
-            messagebox.showinfo(self.title(), "input the MotionDetector's ID")
+        """Motion detector arm/disarm"""
+        sensor_id_str = self.md_id_var.get().strip()
+        if not sensor_id_str:
+            messagebox.showwarning("Input Required", "Please enter a detector ID")
             return
-        if not self._validate_digits(inputNumber):
-            messagebox.showinfo(self.title(), "only digit allowed")
+
+        try:
+            sensor_id = int(sensor_id_str)
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Detector ID must be a number")
             return
-        selectedID = int(inputNumber)
+
+        # Find detector
         scan = DeviceSensorTester.head_MotionDetector
-        while scan is not None and getattr(scan, "sensor_id", getattr(scan, "sensorID", None)) != selectedID:
+        found = False
+        while scan is not None:
+            sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
+            if sid == sensor_id:
+                found = True
+                if action == "arm":
+                    if hasattr(scan, "arm"):
+                        scan.arm()
+                    elif hasattr(scan, "enable"):
+                        scan.enable()
+                elif action == "disarm":
+                    if hasattr(scan, "disarm"):
+                        scan.disarm()
+                    elif hasattr(scan, "disable"):
+                        scan.disable()
+                break
             scan = getattr(scan, "next", None)
-        if scan is None:
-            messagebox.showinfo(self.title(), f"ID {selectedID} not exist")
-        else:
-            if action == "arm":
-                scan.arm()
-            else:
-                scan.disarm()
-            # Immediately update status display
-            self._update_status()
+
+        if not found:
+            messagebox.showerror("Not Found", f"Motion detector ID {sensor_id} not found")
 
     def _handle_motion(self, action: str):
-        inputNumber = self.inputSensorID_MotionDetector.get()
-        if inputNumber == "":
-            messagebox.showinfo(self.title(), "input the MotionDetector's ID")
+        """Motion 감지/해제"""
+        sensor_id_str = self.md_id_var.get().strip()
+        if not sensor_id_str:
+            messagebox.showwarning("Input Required", "Please enter a detector ID")
             return
-        if not self._validate_digits(inputNumber):
-            messagebox.showinfo(self.title(), "only digit allowed")
+
+        try:
+            sensor_id = int(sensor_id_str)
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Detector ID must be a number")
             return
-        selectedID = int(inputNumber)
+
+        # Find detector
         scan = DeviceSensorTester.head_MotionDetector
-        while scan is not None and getattr(scan, "sensor_id", getattr(scan, "sensorID", None)) != selectedID:
+        found = False
+        while scan is not None:
+            sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
+            if sid == sensor_id:
+                found = True
+                if action == "detect":
+                    if hasattr(scan, "intrude"):
+                        scan.intrude()
+                    elif hasattr(scan, "detect"):
+                        scan.detect()
+                elif action == "clear":
+                    if hasattr(scan, "release"):
+                        scan.release()
+                    elif hasattr(scan, "clear"):
+                        scan.clear()
+                break
             scan = getattr(scan, "next", None)
-        if scan is None:
-            messagebox.showinfo(self.title(), f"ID {selectedID} not exist")
-        else:
-            if action == "detect":
-                scan.intrude()
-            else:
+
+        if not found:
+            messagebox.showerror("Not Found", f"Motion detector ID {sensor_id} not found")
+
+    def _arm_all(self):
+        """모든 센서 arm"""
+        count = 0
+
+        # Arm all Window/Door sensors
+        scan = DeviceSensorTester.head_WinDoorSensor
+        while scan is not None:
+            if hasattr(scan, "arm"):
+                scan.arm()
+            elif hasattr(scan, "enable"):
+                scan.enable()
+            count += 1
+            scan = getattr(scan, "next", None)
+
+        # Arm all Motion detectors
+        scan = DeviceSensorTester.head_MotionDetector
+        while scan is not None:
+            if hasattr(scan, "arm"):
+                scan.arm()
+            elif hasattr(scan, "enable"):
+                scan.enable()
+            count += 1
+            scan = getattr(scan, "next", None)
+
+        messagebox.showinfo("Success", f"Armed {count} sensors")
+
+    def _disarm_all(self):
+        """모든 센서 disarm"""
+        count = 0
+
+        # Disarm all Window/Door sensors
+        scan = DeviceSensorTester.head_WinDoorSensor
+        while scan is not None:
+            if hasattr(scan, "disarm"):
+                scan.disarm()
+            elif hasattr(scan, "disable"):
+                scan.disable()
+            count += 1
+            scan = getattr(scan, "next", None)
+
+        # Disarm all Motion detectors
+        scan = DeviceSensorTester.head_MotionDetector
+        while scan is not None:
+            if hasattr(scan, "disarm"):
+                scan.disarm()
+            elif hasattr(scan, "disable"):
+                scan.disable()
+            count += 1
+            scan = getattr(scan, "next", None)
+
+        messagebox.showinfo("Success", f"Disarmed {count} sensors")
+
+    def _reset_all(self):
+        """모든 센서 상태 초기화"""
+        count = 0
+
+        # Reset all Window/Door sensors
+        scan = DeviceSensorTester.head_WinDoorSensor
+        while scan is not None:
+            if hasattr(scan, "release"):
                 scan.release()
-            # Immediately update status display
-            self._update_status()
+            elif hasattr(scan, "close"):
+                scan.close()
+            count += 1
+            scan = getattr(scan, "next", None)
+
+        # Reset all Motion detectors
+        scan = DeviceSensorTester.head_MotionDetector
+        while scan is not None:
+            if hasattr(scan, "release"):
+                scan.release()
+            elif hasattr(scan, "clear"):
+                scan.clear()
+            count += 1
+            scan = getattr(scan, "next", None)
+
+        messagebox.showinfo("Success", f"Reset {count} sensors to default state")
