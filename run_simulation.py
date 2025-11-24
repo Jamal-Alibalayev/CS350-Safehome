@@ -6,8 +6,7 @@ Initializes and runs the complete SafeHome security system with all components
 
 import tkinter as tk
 from safehome.core.system import System
-from safehome.interface.control_panel.safehome_control_panel import SafeHomeControlPanel
-from safehome.interface.control_panel.camera_monitor import CameraMonitor
+from safehome.interface.dashboard import LoginWindow
 from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
 
 
@@ -67,13 +66,7 @@ def setup_hardware(system: System):
 def main():
     """Main entry point for SafeHome simulation"""
     try:
-        # 1. Create Tkinter root window (hidden)
-        print("Creating Tkinter root window...")
-        root = tk.Tk()
-        root.withdraw()
-        print("✓ Tkinter root created\n")
-
-        # 2. Initialize System (this initializes all subsystems)
+        # 1. Initialize System (this initializes all subsystems)
         print("=" * 60)
         print("SafeHome Security System")
         print("=" * 60)
@@ -81,15 +74,15 @@ def main():
         system = System()
         print("✓ System initialized\n")
 
-        # 3. Setup virtual hardware
+        # 2. Setup virtual hardware
         setup_hardware(system)
 
-        # 4. Turn on the system
+        # 3. Turn on the system
         print("[System] Starting system...")
         system.turn_on()
         print("[System] System is now running (sensor polling active)\n")
 
-        # 5. Launch Sensor Test GUI (simulates physical environment)
+        # 4. Launch Sensor Test GUI (simulates physical environment)
         print("[GUI] Launching Sensor Simulator...")
         try:
             DeviceSensorTester.showSensorTester()
@@ -97,15 +90,10 @@ def main():
         except Exception as e:
             print(f"⚠ Warning: Could not launch Sensor Simulator: {e}")
 
-        # 6. Launch Control Panel GUI (simulates wall-mounted keypad)
-        print("[GUI] Launching Control Panel...")
-        control_panel = SafeHomeControlPanel(master=root, system=system)
-        print("✓ Control Panel launched\n")
-
-        # 7. Camera Monitor will be launched on demand
-        # Note: To open camera monitor, you can manually create it after the system starts
-        # Example: camera_monitor = CameraMonitor(master=root, system=system, camera_id=1)
-        print("[INFO] Camera Monitor available (can be opened manually if needed)")
+        # 5. Launch Login Window (Main Entry Point)
+        print("[GUI] Launching SafeHome Dashboard...")
+        login_window = LoginWindow(system)
+        print("✓ Dashboard launched\n")
 
         # Window close handler
         def on_close():
@@ -117,10 +105,10 @@ def main():
             system.shutdown()
 
             print("[System] Cleanup complete. Goodbye!")
-            root.destroy()
+            login_window.destroy()
             exit()
 
-        control_panel.protocol("WM_DELETE_WINDOW", on_close)
+        login_window.protocol("WM_DELETE_WINDOW", on_close)
 
         # Print usage instructions
         print("\n" + "=" * 60)
@@ -129,14 +117,16 @@ def main():
         print("\n[Usage Instructions]")
         print("  1. Use 'Sensor Test' window to simulate door/window opening")
         print("     and motion detection.")
-        print("\n  2. Use 'Control Panel' to:")
-        print("     - Login (Default password: 1234)")
-        print("     - Arm/Disarm system (1=Away, 2=Home, 0=Disarm)")
-        print("     - Change password (3=Set Password)")
-        print("     - Switch zones (9=Zone Change)")
-        print("\n  3. Camera Monitor:")
-        print("     - Available in the code for manual opening")
-        print("     - Can view live feed and control PTZ")
+        print("\n  2. Login to SafeHome Dashboard:")
+        print("     - Default Admin password: 1234")
+        print("     - Default Guest password: 0000")
+        print("\n  3. Main Dashboard features:")
+        print("     - View all camera feeds in real-time")
+        print("     - Monitor sensor status (motion/door/window)")
+        print("     - Arm/Disarm system (Away/Home/Disarm modes)")
+        print("     - Manage safety zones")
+        print("     - View event logs")
+        print("     - Control camera PTZ")
         print("\n[System Information]")
         print(f"  - Sensors: {len(system.sensor_controller.sensors)}")
         print(f"  - Cameras: {len(system.camera_controller.cameras)}")
@@ -147,7 +137,7 @@ def main():
 
         # Start Tkinter main loop
         print("[System] Starting GUI event loop...")
-        root.mainloop()
+        login_window.mainloop()
 
     except Exception as e:
         print(f"\n❌ Error: {e}")

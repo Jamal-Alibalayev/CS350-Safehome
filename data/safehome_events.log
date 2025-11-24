@@ -409,3 +409,810 @@
 [2025-11-24 00:05:06] [INFO] CameraController: All cameras stopped
 [2025-11-24 00:05:06] [INFO] ConfigManager: Configuration saved
 [2025-11-24 00:05:06] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-24 13:12:28] [INFO] ConfigManager: System configuration loaded
+[2025-11-24 13:12:28] [INFO] SensorController: Loaded 39 sensors from storage
+[2025-11-24 13:14:23] [INFO] ConfigManager: System configuration loaded
+[2025-11-24 13:14:23] [INFO] SensorController: Loaded 39 sensors from storage
+[2025-11-24 13:14:33] [INFO] CameraController: Loaded 7 cameras from storage
+[2025-11-24 13:14:33] [INFO] SensorController: Sensor 40 (WINDOOR) added at Living Room Window
+[2025-11-24 13:14:33] [INFO] SensorController: Sensor 41 (WINDOOR) added at Front Door
+[2025-11-24 13:14:33] [INFO] SensorController: Sensor 42 (MOTION) added at Living Room
+[2025-11-24 13:14:33] [INFO] SensorController: Sensor 43 (MOTION) added at Bedroom
+[2025-11-24 13:14:33] [INFO] SensorController: Sensor 44 (WINDOOR) added at Bedroom Window
+[2025-11-24 13:14:33] [INFO] SensorController: Sensor 45 (WINDOOR) added at Back Door
+[2025-11-24 13:14:33] [INFO] CameraController: Camera 8 (Living Room Camera) added at Living Room
+[2025-11-24 13:14:34] [INFO] CameraController: Camera 9 (Front Door Camera) added at Front Door
+[2025-11-24 13:14:34] [INFO] System: System turned ON
+[2025-11-24 13:15:03] [INFO] ConfigManager: System configuration loaded
+[2025-11-24 13:15:03] [INFO] SensorController: Loaded 45 sensors from storage
+[2025-11-24 13:15:13] [INFO] CameraController: Loaded 9 cameras from storage
+[2025-11-24 13:15:13] [INFO] SensorController: Sensor 46 (WINDOOR) added at Living Room Window
+[2025-11-24 13:15:13] [INFO] SensorController: Sensor 47 (WINDOOR) added at Front Door
+[2025-11-24 13:15:13] [INFO] SensorController: Sensor 48 (MOTION) added at Living Room
+[2025-11-24 13:15:13] [INFO] SensorController: Sensor 49 (MOTION) added at Bedroom
+[2025-11-24 13:15:13] [INFO] SensorController: Sensor 50 (WINDOOR) added at Bedroom Window
+[2025-11-24 13:15:13] [INFO] SensorController: Sensor 51 (WINDOOR) added at Back Door
+[2025-11-24 13:15:14] [INFO] CameraController: Camera 10 (Living Room Camera) added at Living Room
+[2025-11-24 13:15:14] [INFO] CameraController: Camera 11 (Front Door Camera) added at Front Door
+[2025-11-24 13:15:14] [INFO] System: System turned ON
+[2025-11-24 13:15:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:44] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:44] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:45] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:45] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:45] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:45] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:46] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:46] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:46] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:46] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:47] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:47] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:47] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:47] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:48] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:48] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:48] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:48] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:49] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:49] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:49] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:49] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:50] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:50] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:51] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:51] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:51] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:51] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:51] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:52] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:52] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:15:52] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:15:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:15:52] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:15:54] [INFO] ConfigManager: Configuration saved
+[2025-11-24 13:15:54] [INFO] System: System turned OFF
+[2025-11-24 13:15:54] [INFO] CameraController: All cameras stopped
+[2025-11-24 13:15:54] [INFO] ConfigManager: Configuration saved
+[2025-11-24 13:15:54] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-24 13:15:59] [INFO] ConfigManager: System configuration loaded
+[2025-11-24 13:15:59] [INFO] SensorController: Loaded 51 sensors from storage
+[2025-11-24 13:16:09] [INFO] CameraController: Loaded 11 cameras from storage
+[2025-11-24 13:16:09] [INFO] SensorController: Sensor 52 (WINDOOR) added at Living Room Window
+[2025-11-24 13:16:09] [INFO] SensorController: Sensor 53 (WINDOOR) added at Front Door
+[2025-11-24 13:16:09] [INFO] SensorController: Sensor 54 (MOTION) added at Living Room
+[2025-11-24 13:16:09] [INFO] SensorController: Sensor 55 (MOTION) added at Bedroom
+[2025-11-24 13:16:09] [INFO] SensorController: Sensor 56 (WINDOOR) added at Bedroom Window
+[2025-11-24 13:16:09] [INFO] SensorController: Sensor 57 (WINDOOR) added at Back Door
+[2025-11-24 13:16:09] [INFO] CameraController: Camera 12 (Living Room Camera) added at Living Room
+[2025-11-24 13:16:10] [INFO] CameraController: Camera 13 (Front Door Camera) added at Front Door
+[2025-11-24 13:16:10] [INFO] System: System turned ON
+[2025-11-24 13:16:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:16] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:16] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:16] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:16] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:17] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:17] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:18] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:18] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:18] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:18] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:19] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:19] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:19] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:19] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:19] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:19] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:19] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:19] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:20] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:20] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:20] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:20] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:21] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:21] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:21] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:21] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:22] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:22] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:22] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:22] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:23] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:23] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:23] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:24] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:24] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:24] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:25] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:25] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:25] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:25] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:26] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:26] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:26] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:26] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:27] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:27] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:27] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:27] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:28] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:28] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:28] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:28] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:29] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:29] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:29] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:29] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:30] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:30] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:30] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:30] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:31] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:31] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:32] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:32] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:32] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:32] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:33] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:33] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:33] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:33] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:34] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:34] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:34] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:34] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:35] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:35] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:35] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:35] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:36] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:36] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:36] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:36] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:37] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:37] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:37] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:37] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:38] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:38] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:39] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:39] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:39] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:39] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:40] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:40] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:40] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:40] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:41] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:41] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:41] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:41] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:42] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:42] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:42] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:42] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:43] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:43] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:43] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:43] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:44] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:44] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:44] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:44] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:45] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:45] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:46] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:46] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:46] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:46] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:47] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:47] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:16:47] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:16:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:16:47] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:16:50] [INFO] ConfigManager: Configuration saved
+[2025-11-24 13:16:50] [INFO] System: System turned OFF
+[2025-11-24 13:16:50] [INFO] CameraController: All cameras stopped
+[2025-11-24 13:16:50] [INFO] ConfigManager: Configuration saved
+[2025-11-24 13:16:50] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-24 13:20:09] [INFO] ConfigManager: System configuration loaded
+[2025-11-24 13:20:09] [INFO] SensorController: Loaded 57 sensors from storage
+[2025-11-24 13:20:19] [INFO] CameraController: Loaded 13 cameras from storage
+[2025-11-24 13:20:19] [INFO] SensorController: Sensor 58 (WINDOOR) added at Living Room Window
+[2025-11-24 13:20:19] [INFO] SensorController: Sensor 59 (WINDOOR) added at Front Door
+[2025-11-24 13:20:19] [INFO] SensorController: Sensor 60 (MOTION) added at Living Room
+[2025-11-24 13:20:19] [INFO] SensorController: Sensor 61 (MOTION) added at Bedroom
+[2025-11-24 13:20:19] [INFO] SensorController: Sensor 62 (WINDOOR) added at Bedroom Window
+[2025-11-24 13:20:19] [INFO] SensorController: Sensor 63 (WINDOOR) added at Back Door
+[2025-11-24 13:20:20] [INFO] CameraController: Camera 14 (Living Room Camera) added at Living Room
+[2025-11-24 13:20:20] [INFO] CameraController: Camera 15 (Front Door Camera) added at Front Door
+[2025-11-24 13:20:20] [INFO] System: System turned ON
+[2025-11-24 13:20:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:35] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:35] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:35] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:35] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:36] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:36] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:36] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:36] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:37] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:37] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:38] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:38] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:38] [INFO] CameraController: Camera 1 panned left
+[2025-11-24 13:20:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:38] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:38] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:38] [INFO] CameraController: Camera 1 panned right
+[2025-11-24 13:20:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:39] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:39] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:39] [INFO] CameraController: Camera 1 panned right
+[2025-11-24 13:20:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:39] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:39] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:39] [INFO] CameraController: Camera 1 panned right
+[2025-11-24 13:20:39] [INFO] CameraController: Camera 1 panned right
+[2025-11-24 13:20:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:40] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:40] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:40] [INFO] CameraController: Camera 1 panned right
+[2025-11-24 13:20:40] [INFO] CameraController: Camera 1 panned right
+[2025-11-24 13:20:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:40] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:40] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:41] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:41] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:41] [INFO] CameraController: Camera 1 zoomed in
+[2025-11-24 13:20:41] [INFO] CameraController: Camera 1 zoomed in
+[2025-11-24 13:20:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:41] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:41] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:42] [INFO] CameraController: Camera 1 zoomed in
+[2025-11-24 13:20:42] [INFO] CameraController: Camera 1 zoomed in
+[2025-11-24 13:20:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:42] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:42] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:42] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:42] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:42] [INFO] CameraController: Camera 1 zoomed out
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 1 zoomed out
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 1 zoomed out
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:43] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 1 zoomed out
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 1 zoomed out
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:43] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:43] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:44] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:44] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:44] [INFO] CameraController: Camera 1 panned left
+[2025-11-24 13:20:44] [INFO] CameraController: Camera 1 panned left
+[2025-11-24 13:20:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:44] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:44] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:45] [INFO] CameraController: Camera 1 panned left
+[2025-11-24 13:20:45] [INFO] CameraController: Camera 1 panned left
+[2025-11-24 13:20:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:45] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:45] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:46] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:46] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:46] [INFO] CameraController: Camera 1 panned left
+[2025-11-24 13:20:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:46] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:46] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:47] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:47] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:47] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:47] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:47] [INFO] CameraController: Camera 1 zoomed in
+[2025-11-24 13:20:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:48] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:48] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:48] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:48] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:48] [INFO] CameraController: Camera 3 panned left
+[2025-11-24 13:20:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:49] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:49] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:49] [INFO] CameraController: Camera 3 panned left
+[2025-11-24 13:20:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:49] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:49] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:49] [INFO] CameraController: Camera 3 panned left
+[2025-11-24 13:20:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:50] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:50] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:50] [INFO] CameraController: Camera 3 panned right
+[2025-11-24 13:20:50] [INFO] CameraController: Camera 3 panned right
+[2025-11-24 13:20:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:50] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:50] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:50] [INFO] CameraController: Camera 3 panned right
+[2025-11-24 13:20:51] [INFO] CameraController: Camera 3 panned right
+[2025-11-24 13:20:51] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:51] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:51] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:51] [INFO] CameraController: Camera 3 zoomed in
+[2025-11-24 13:20:51] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:51] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:51] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:52] [INFO] CameraController: Camera 3 zoomed in
+[2025-11-24 13:20:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:52] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:52] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:52] [INFO] CameraController: Camera 3 zoomed out
+[2025-11-24 13:20:52] [INFO] CameraController: Camera 3 zoomed out
+[2025-11-24 13:20:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:52] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:53] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:53] [INFO] CameraController: Camera 3 zoomed out
+[2025-11-24 13:20:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:53] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:53] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:54] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:54] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:54] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:54] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:54] [WARNING] CameraController: Camera 2 pan denied: Invalid password
+[2025-11-24 13:20:55] [WARNING] CameraController: Camera 2 pan denied: Invalid password
+[2025-11-24 13:20:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:55] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:55] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:55] [WARNING] CameraController: Camera 2 pan denied: Invalid password
+[2025-11-24 13:20:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:55] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:55] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:55] [WARNING] CameraController: Camera 2 pan denied: Invalid password
+[2025-11-24 13:20:56] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:56] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:56] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:56] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:56] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:56] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:56] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:56] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:57] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:57] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:57] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:57] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:57] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:57] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:57] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:57] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:58] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:58] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:58] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:58] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:59] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:59] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:59] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:20:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:20:59] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:20:59] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:20:59] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:00] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:00] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:00] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:00] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:01] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:01] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:01] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:01] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:02] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:02] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:02] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:02] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:02] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:02] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:03] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:03] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:03] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:03] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:03] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:03] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:04] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:04] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:04] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:04] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:05] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:05] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:05] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:05] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:06] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:06] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:06] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:06] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:06] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:06] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:07] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:07] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:08] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:08] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:08] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:08] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:08] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:08] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:09] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:09] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:09] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:09] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:09] [INFO] ConfigManager: System mode changed to HOME
+[2025-11-24 13:21:09] [INFO] System: System ARMED in HOME mode
+[2025-11-24 13:21:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:10] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:10] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:11] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:11] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:12] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:12] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:12] [INFO] ConfigManager: System mode changed to AWAY
+[2025-11-24 13:21:12] [INFO] System: System ARMED in AWAY mode
+[2025-11-24 13:21:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:13] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:13] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:13] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:14] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:14] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:14] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:14] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:14] [INFO] ConfigManager: System mode changed to OVERNIGHT
+[2025-11-24 13:21:14] [INFO] System: System ARMED in OVERNIGHT mode
+[2025-11-24 13:21:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:15] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:15] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:16] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:16] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:16] [INFO] ConfigManager: System mode changed to EXTENDED
+[2025-11-24 13:21:16] [INFO] System: System ARMED in EXTENDED mode
+[2025-11-24 13:21:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:17] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:17] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:17] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:17] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:18] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:18] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:18] [INFO] SensorController: All 63 sensors disarmed
+[2025-11-24 13:21:18] [INFO] ConfigManager: System mode changed to DISARMED
+[2025-11-24 13:21:18] [INFO] System: System DISARMED
+[2025-11-24 13:21:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:20] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:20] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:20] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:20] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:21] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:21] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:21] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:21] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:22] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:22] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:22] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:22] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:23] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:23] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:23] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:23] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:24] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:24] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:24] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:24] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:25] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:25] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:25] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:26] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:26] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:26] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:27] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:27] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:27] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:27] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:28] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:28] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:28] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:28] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:29] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:29] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:29] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:29] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:30] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:30] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:30] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:30] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:31] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:31] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-24 13:21:31] [WARNING] CameraController: Camera 2 access denied: Invalid password
+[2025-11-24 13:21:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-24 13:21:31] [INFO] CameraController: Camera 4 view accessed
+[2025-11-24 13:21:35] [INFO] ConfigManager: Configuration saved
+[2025-11-24 13:21:35] [INFO] ConfigManager: Configuration saved
+[2025-11-24 13:21:35] [INFO] System: System turned OFF
+[2025-11-24 13:21:35] [INFO] CameraController: All cameras stopped
+[2025-11-24 13:21:35] [INFO] ConfigManager: Configuration saved
+[2025-11-24 13:21:35] [INFO] ConfigManager: Configuration Manager shutdown
