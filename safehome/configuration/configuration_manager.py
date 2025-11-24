@@ -37,7 +37,9 @@ class ConfigurationManager:
             self.settings.update_settings(**loaded_data)
 
         # 4. Initialize Log Manager
-        self.logger = LogManager()
+        self.logger = LogManager(storage_manager=self.storage)
+        # Backward-compatibility alias for UI/tests referring to log_manager
+        self.log_manager = self.logger
         self.logger.add_log("System configuration loaded", source="ConfigManager")
 
         # 5. Initialize Login Manager
@@ -121,6 +123,11 @@ class ConfigurationManager:
             return self.zones[self.current_zone_index]
         return None
 
+    # Backward-compatibility alias for UI code
+    def get_zone(self, zone_id: int) -> Optional[SafetyZone]:
+        """Alias for get_safety_zone (used by dashboard UI)"""
+        return self.get_safety_zone(zone_id)
+
     def next_zone(self) -> SafetyZone:
         """Switch to next zone and return it"""
         if self.zones:
@@ -173,6 +180,11 @@ class ConfigurationManager:
         self.zones = [z for z in self.zones if z.zone_id != zone_id]
         self.logger.add_log(f"Safety zone {zone_id} deleted", source="ConfigManager")
         return True
+
+    # Backward-compatibility alias for UI code
+    def remove_safety_zone(self, zone_id: int) -> bool:
+        """Alias for delete_safety_zone (used by dashboard UI)"""
+        return self.delete_safety_zone(zone_id)
 
     def get_all_zones(self) -> List[SafetyZone]:
         """Get list of all safety zones"""

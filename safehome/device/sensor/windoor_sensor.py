@@ -22,6 +22,10 @@ class WindowDoorSensor(Sensor):
 
         # Create hardware device instance
         self.hardware = DeviceWinDoorSensor()
+        # Provide metadata so external tools (simulator) can show friendly info
+        self.hardware.location = location
+        self.hardware.name = location
+        self.hardware.is_motion = False
 
     def read(self) -> bool:
         """

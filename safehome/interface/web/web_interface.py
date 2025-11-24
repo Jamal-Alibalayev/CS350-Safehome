@@ -327,3 +327,12 @@ class WebInterface:
             "title": "SafeHome - Surveillance",
             "cameras": self.get_camera_list()
         }
+
+
+    def get_intrusion_logs(self, limit: int = 50) -> dict:
+        """
+        Fetch intrusion (ALARM) logs for web use case
+        """
+        logs = self.system.config.storage.get_logs(limit=limit, event_type="ALARM")
+        return {"success": True, "logs": logs, "count": len(logs)}
+

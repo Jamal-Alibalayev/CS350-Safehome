@@ -196,20 +196,29 @@ class System:
             )
             return False
 
-        # Set mode
-        self.config.set_mode(mode)
-
-        # Activate sensors for this mode
-        sensor_ids = self._get_sensors_for_mode(mode)
-        for sensor_id in sensor_ids:
-            sensor = self.sensor_controller.get_sensor(sensor_id)
-            if sensor:
-                sensor.arm()
-
+        # Exit delay countdown before arming
+        delay = self.config.settings.exit_delay
         self.config.logger.add_log(
-            f"System ARMED in {mode.name} mode",
+            f"Exit delay started: {delay} seconds",
             source="System"
         )
+
+        def arm_after_delay():
+            time.sleep(delay)
+            # Set mode
+            self.config.set_mode(mode)
+            # Activate sensors for this mode
+            sensor_ids = self._get_sensors_for_mode(mode)
+            for sensor_id in sensor_ids:
+                sensor = self.sensor_controller.get_sensor(sensor_id)
+                if sensor:
+                    sensor.arm()
+            self.config.logger.add_log(
+                f"System ARMED in {mode.name} mode",
+                source="System"
+            )
+
+        threading.Thread(target=arm_after_delay, daemon=True).start()
         return True
 
     def disarm_system(self):
@@ -235,7 +244,7 @@ class System:
         if zone:
             zone.arm()
             self.config.logger.add_log(
-                f"Zone {zone.zone_name} ARMED",
+                f"Zone {zone.name} ARMED",
                 source="System"
             )
 
@@ -252,7 +261,7 @@ class System:
         if zone:
             zone.disarm()
             self.config.logger.add_log(
-                f"Zone {zone.zone_name} DISARMED",
+                f"Zone {zone.name} DISARMED",
                 source="System"
             )
 
@@ -302,7 +311,13 @@ class System:
             List of sensor IDs for this mode
         """
         mode_name = SafeHomeMode.get_db_mode_name(mode)
-        return self.config.storage.get_sensors_for_mode(mode_name)
+        sensor_ids = self.config.storage.get_sensors_for_mode(mode_name)
+
+        # If no mapping configured, fall back to "all sensors" for arming modes
+        if not sensor_ids and mode not in [SafeHomeMode.DISARMED, SafeHomeMode.PANIC]:
+            sensor_ids = list(self.sensor_controller.sensors.keys())
+
+        return sensor_ids
 
     def get_system_status(self) -> dict:
         """

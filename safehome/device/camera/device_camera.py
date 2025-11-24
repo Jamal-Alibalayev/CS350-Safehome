@@ -8,7 +8,7 @@ from .interface_camera import InterfaceCamera
 
 class DeviceCamera(threading.Thread, InterfaceCamera):
     
-    RETURN_SIZE = 500
+    RETURN_SIZE = 320
     SOURCE_SIZE = 200
     
     def __init__(self):
@@ -54,23 +54,10 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
         """Get the current camera view as a PIL Image (synchronized)."""
         with self._lock:
 
-            view = "Time = "
-            if self.time < 10:
-                view += "0"
-            view += f"{self.time}, zoom x{self.zoom}, "
-            
-            if self.pan > 0:
-                view += f"right {self.pan}"
-            elif self.pan == 0:
-                view += "center"
-            else:
-                view += f"left {-self.pan}"
-            
-            # Create the view image (500x500)
+            # Create the view image (RETURN_SIZE x RETURN_SIZE)
             imgView = Image.new('RGB', (self.RETURN_SIZE, self.RETURN_SIZE), 'black')
             
             if self.imgSource is not None:
- 
                 zoomed = self.SOURCE_SIZE * (10 - self.zoom) // 10
                 panned = self.pan * self.SOURCE_SIZE // 5
                 
@@ -82,32 +69,25 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
                 # Crop and resize to fill the view
                 try:
                     cropped = self.imgSource.crop((left, top, right, bottom))
-                    resized = cropped.resize((self.RETURN_SIZE, self.RETURN_SIZE), Image.LANCZOS)
+                    resized = cropped.resize((self.RETURN_SIZE, self.RETURN_SIZE), Image.BILINEAR)
                     imgView.paste(resized, (0, 0))
                 except Exception:
-                    # If crop fails, keep black background
                     pass
             
+            # Overlay only time (lighter text)
             draw = ImageDraw.Draw(imgView)
-            
-            # Get text size
+            view = f"T={self.time:02d}"
             bbox = draw.textbbox((0, 0), view, font=self.font)
             wText = bbox[2] - bbox[0]
             hText = bbox[3] - bbox[1]
-            
-            # Draw rounded rectangle background (gray)
-            rX = 0
-            rY = 0
+            rX = 4
+            rY = 4
             draw.rounded_rectangle(
                 [(rX, rY), (rX + wText + 10, rY + hText + 5)],
-                radius=hText // 2,
+                radius=max(2, hText // 2),
                 fill='gray'
             )
-            
-            # Draw text (cyan)
-            xText = rX + 5
-            yText = rY + 2
-            draw.text((xText, yText), view, fill='cyan', font=self.font)
+            draw.text((rX + 5, rY + 2), view, fill='cyan', font=self.font)
             
             return imgView
     

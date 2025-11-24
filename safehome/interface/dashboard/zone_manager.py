@@ -287,12 +287,12 @@ class ZoneManagerWindow(tk.Toplevel):
         for sensor in self.system.sensor_controller.sensors.values():
             if sensor.zone_id == zone_id:
                 sensor_type = "Motion" if sensor.sensor_type == "MOTION" else "Door/Window"
-                status = "Active" if sensor.get_status() else "Inactive"
+                status = "Active" if sensor.is_active else "Inactive"
 
                 self.sensor_tree.insert(
                     "",
                     "end",
-                    values=(sensor_type, sensor.name, status)
+                    values=(sensor_type, sensor.location, status)
                 )
 
     def _add_zone(self):
@@ -565,9 +565,10 @@ class AssignSensorDialog(tk.Toplevel):
         for sensor_id, sensor in self.system.sensor_controller.sensors.items():
             self.sensor_ids.append(sensor_id)
             sensor_type = "Motion" if sensor.sensor_type == "MOTION" else "Door/Window"
-            zone_info = f"(Zone: {self.system.config.get_zone(sensor.zone_id).name})" if sensor.zone_id else "(Unassigned)"
+            zone_obj = self.system.config.get_zone(sensor.zone_id) if sensor.zone_id else None
+            zone_info = f"(Zone: {zone_obj.name})" if zone_obj else "(Unassigned)"
 
-            self.sensor_listbox.insert("end", f"{sensor.name} - {sensor_type} {zone_info}")
+            self.sensor_listbox.insert("end", f"{sensor.location} - {sensor_type} {zone_info}")
 
             # Pre-select sensors already in this zone
             if sensor.zone_id == self.zone.zone_id:
@@ -605,12 +606,20 @@ class AssignSensorDialog(tk.Toplevel):
         for sensor in self.system.sensor_controller.sensors.values():
             if sensor.zone_id == self.zone.zone_id:
                 sensor.zone_id = None
+                if self.system.sensor_controller.storage:
+                    self.system.sensor_controller.storage.save_sensor(
+                        sensor.sensor_id, sensor.sensor_type, sensor.location, None
+                    )
 
         # Assign selected sensors to this zone
         for index in selected_indices:
             sensor_id = self.sensor_ids[index]
             sensor = self.system.sensor_controller.sensors[sensor_id]
             sensor.zone_id = self.zone.zone_id
+            if self.system.sensor_controller.storage:
+                self.system.sensor_controller.storage.save_sensor(
+                    sensor.sensor_id, sensor.sensor_type, sensor.location, sensor.zone_id
+                )
 
         # Save configuration
         self.system.config.save_configuration()

@@ -72,9 +72,16 @@ class StorageManager:
 
         self.db.update_system_settings(
             master_password=settings.master_password,
+            guest_password=settings.guest_password,
+            web_password_1=settings.web_password_1,
+            web_password_2=settings.web_password_2,
             entry_delay=settings.entry_delay,
             exit_delay=settings.exit_delay,
-            alarm_duration=settings.alarm_duration
+            alarm_duration=settings.alarm_duration,
+            system_lock_time=settings.system_lock_time,
+            monitoring_phone=settings.monitoring_phone,
+            homeowner_phone=settings.homeowner_phone,
+            max_login_attempts=settings.max_login_attempts
         )
 
     def load_settings_from_db(self) -> Optional[dict]:
@@ -223,13 +230,16 @@ class StorageManager:
 
     def save_log(self, log):
         """Save log entry to database"""
-        if not self.db:
+        if not self.db or log is None:
             return
 
         self.db.add_event_log(
-            event_type=log.level,
-            event_message=log.message,
-            source=log.source
+            event_type=getattr(log, "level", "INFO"),
+            event_message=getattr(log, "message", ""),
+            sensor_id=getattr(log, "sensor_id", None),
+            camera_id=getattr(log, "camera_id", None),
+            zone_id=getattr(log, "zone_id", None),
+            source=getattr(log, "source", "System")
         )
 
     def get_logs(self, limit: int = 100, event_type: Optional[str] = None,
@@ -245,6 +255,13 @@ class StorageManager:
             limit=limit
         )
         return [dict(row) for row in rows]
+
+    def clear_logs(self):
+        """Delete all event logs"""
+        if not self.db:
+            return
+        self.db.execute_query("DELETE FROM event_logs")
+        self.db.commit()
 
     def get_sensors_for_mode(self, mode_name: str) -> List[int]:
         """Get list of sensor IDs for a given SafeHomeMode"""

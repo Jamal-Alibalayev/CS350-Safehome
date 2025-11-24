@@ -1,617 +1,457 @@
 """
-SafeHome Main Dashboard
-Unified monitoring and control interface
+SafeHome Dashboard
+Camera grid with embedded quick actions, settings popup, mode mapping, sensors, zones, logs.
 """
 
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, simpledialog
 from PIL import Image, ImageTk
 from safehome.configuration.safehome_mode import SafeHomeMode
 
+CAM_VIEW_SIZE = (320, 200)
+REFRESH_MS = 800
+
 
 class MainDashboard(tk.Toplevel):
-    """
-    통합 메인 대시보드
-    - 시스템 상태 실시간 모니터링
-    - 센서/카메라 상태 한눈에 보기
-    - 빠른 Arm/Disarm 액션
-    - Zone 관리
-    """
-
     def __init__(self, system, login_window):
         super().__init__()
         self.system = system
         self.login_window = login_window
+        self.title("SafeHome Dashboard")
+        self.geometry("1600x1000")
+        try:
+            self.state("zoomed")
+        except Exception:
+            pass
+        self.configure(bg="#0b1220")
 
-        # 윈도우 설정
-        self.title("SafeHome - Dashboard")
-        self.geometry("1400x900")
-        self.state('zoomed')  # 최대화
+        self._camera_images = {}
+        self._camera_passwords = {}
 
-        # UI 구성
-        self._create_ui()
-
-        # 자동 업데이트 시작
+        self._build_ui()
         self._update_loop()
-
-        # 종료 처리
         self.protocol("WM_DELETE_WINDOW", self._on_close)
 
-    def _create_ui(self):
-        """UI 구성"""
-        # 상단 헤더
-        self._create_header()
+    # UI ------------------------------------------------------------------
+    def _build_ui(self):
+        self._build_header()
 
-        # 메인 컨텐츠 영역
-        main_container = tk.Frame(self, bg="#ecf0f1")
-        main_container.pack(fill="both", expand=True)
+        body = tk.Frame(self, bg="#0b1220")
+        body.pack(fill="both", expand=True, padx=14, pady=10)
 
-        # 좌측: 카메라 뷰 + 제어
-        left_panel = tk.Frame(main_container, bg="#ecf0f1")
-        left_panel.pack(side="left", fill="both", expand=True, padx=10, pady=10)
+        self._build_cameras(body)
 
-        self._create_camera_section(left_panel)
-        self._create_control_buttons(left_panel)
+        right = tk.Frame(body, bg="#0b1220")
+        right.pack(side="right", fill="y", padx=(10, 0))
+        self._build_mode_mapping(right)
+        self._build_sensors(right)
+        self._build_zones(right)
+        self._build_logs(right)
 
-        # 우측: 센서 상태 + Zone 관리
-        right_panel = tk.Frame(main_container, bg="#ecf0f1", width=500)
-        right_panel.pack(side="right", fill="both", padx=10, pady=10)
-        right_panel.pack_propagate(False)
-
-        self._create_sensor_section(right_panel)
-        self._create_zone_section(right_panel)
-        self._create_quick_actions(right_panel)
-
-    def _create_header(self):
-        """상단 헤더 바"""
-        header = tk.Frame(self, bg="#34495e", height=70)
+    def _build_header(self):
+        header = tk.Frame(self, bg="#0f172a", height=70)
         header.pack(fill="x")
         header.pack_propagate(False)
 
-        # 좌측: 타이틀
-        title_frame = tk.Frame(header, bg="#34495e")
-        title_frame.pack(side="left", padx=20, pady=10)
+        tk.Label(header, text="SafeHome", font=("Segoe UI", 20, "bold"),
+                 bg="#0f172a", fg="#e2e8f0").pack(anchor="w", padx=16, pady=(10, 0))
+        tk.Label(header, text="Security & Surveillance", font=("Segoe UI", 11),
+                 bg="#0f172a", fg="#94a3b8").pack(anchor="w", padx=16)
 
-        tk.Label(
-            title_frame,
-            text="🏠 SafeHome Dashboard",
-            font=("Arial", 22, "bold"),
-            bg="#34495e",
-            fg="white"
-        ).pack(anchor="w")
+        status_frame = tk.Frame(header, bg="#0f172a")
+        status_frame.pack(side="right", padx=16)
+        self.mode_label = tk.Label(status_frame, text=f"Mode: {self.system.config.current_mode.name}",
+                                   font=("Segoe UI", 11, "bold"), bg="#0f172a", fg="#38bdf8")
+        self.run_label = tk.Label(status_frame, text="● RUNNING" if self.system.is_running else "○ STOPPED",
+                                  font=("Segoe UI", 10, "bold"), bg="#0f172a",
+                                  fg="#10b981" if self.system.is_running else "#f97316")
+        self.mode_label.pack(anchor="e")
+        self.run_label.pack(anchor="e")
 
-        tk.Label(
-            title_frame,
-            text="Security Monitoring System",
-            font=("Arial", 11),
-            bg="#34495e",
-            fg="#bdc3c7"
-        ).pack(anchor="w")
+    def _build_cameras(self, parent):
+        card = tk.Frame(parent, bg="#0f172a")
+        card.pack(side="left", fill="both", expand=True)
 
-        # 중앙: 시스템 상태
-        status_frame = tk.Frame(header, bg="#34495e")
-        status_frame.pack(side="left", expand=True)
+        tk.Label(card, text="Cameras", font=("Segoe UI", 14, "bold"),
+                 bg="#0f172a", fg="#e5e7eb").pack(anchor="w", padx=8, pady=(0, 6))
 
-        self.mode_label = tk.Label(
-            status_frame,
-            text=f"Mode: {self.system.config.current_mode.name}",
-            font=("Arial", 14, "bold"),
-            bg="#34495e",
-            fg="#3498db"
-        )
-        self.mode_label.pack()
+        grid = tk.Frame(card, bg="#0f172a")
+        grid.pack(fill="both", expand=True)
+        grid.grid_rowconfigure(0, weight=1, uniform="camrow")
+        grid.grid_rowconfigure(1, weight=1, uniform="camrow")
+        grid.grid_columnconfigure(0, weight=1, uniform="camcol")
+        grid.grid_columnconfigure(1, weight=1, uniform="camcol")
 
-        self.status_indicator = tk.Label(
-            status_frame,
-            text="● SYSTEM RUNNING",
-            font=("Arial", 12),
-            bg="#34495e",
-            fg="#2ecc71"
-        )
-        self.status_indicator.pack()
-
-        # 우측: 액션 버튼
-        button_frame = tk.Frame(header, bg="#34495e")
-        button_frame.pack(side="right", padx=20)
-
-        tk.Button(
-            button_frame,
-            text="📊 LOGS",
-            command=self._open_log_viewer,
-            bg="#f39c12",
-            fg="black",
-            font=("Helvetica", 12, "bold"),
-            width=10,
-            relief="groove",
-            bd=3,
-            cursor="hand2",
-            activebackground="#e67e22",
-            activeforeground="black"
-        ).pack(side="left", padx=5)
-
-        tk.Button(
-            button_frame,
-            text="🚪 LOGOUT",
-            command=self._logout,
-            bg="#e74c3c",
-            fg="black",
-            font=("Helvetica", 12, "bold"),
-            width=10,
-            relief="groove",
-            bd=3,
-            cursor="hand2",
-            activebackground="#c0392b",
-            activeforeground="black"
-        ).pack(side="left", padx=5)
-
-    def _create_camera_section(self, parent):
-        """카메라 뷰 섹션"""
-        camera_frame = tk.LabelFrame(
-            parent,
-            text="📹 Live Camera Feeds",
-            font=("Arial", 13, "bold"),
-            bg="white",
-            fg="#2c3e50"
-        )
-        camera_frame.pack(fill="both", expand=True, pady=(0, 10))
-
-        # 카메라 그리드 컨테이너
-        grid_container = tk.Frame(camera_frame, bg="white")
-        grid_container.pack(fill="both", expand=True, padx=10, pady=10)
-
-        # 3개 카메라를 위한 컬럼 가중치 설정
-        grid_container.grid_columnconfigure(0, weight=1)
-        grid_container.grid_columnconfigure(1, weight=1)
-        grid_container.grid_columnconfigure(2, weight=1)
-        grid_container.grid_rowconfigure(0, weight=1)
-
-        self.camera_labels = {}
         cameras = list(self.system.camera_controller.cameras.values())
+        for idx, cam in enumerate(cameras[:3]):
+            row, col = divmod(idx, 2)
+            cell = tk.Frame(grid, bg="#111827", bd=1, relief="solid")
+            cell.grid(row=row, column=col, padx=8, pady=8, sticky="nsew")
 
-        if not cameras:
-            tk.Label(
-                grid_container,
-                text="No cameras available",
-                font=("Arial", 14),
-                bg="white",
-                fg="#95a5a6"
-            ).pack(expand=True)
-            return
+            tk.Label(cell, text=f"{cam.name} • {cam.location}", font=("Segoe UI", 10, "bold"),
+                     bg="#111827", fg="#e5e7eb").pack(anchor="w", padx=8, pady=4)
 
-        # 카메라 그리드 (3개 고정 - 1행 3열 레이아웃)
-        # Dining Room, Kitchen, Living Room 순서로 표시
-        for i, camera in enumerate(cameras[:3]):
-            col = i
+            img_label = tk.Label(cell, bg="#0b0f1a", width=CAM_VIEW_SIZE[0], height=CAM_VIEW_SIZE[1])
+            img_label.pack(fill="both", padx=8, pady=4, expand=True)
+            self._camera_images[cam.camera_id] = img_label
 
-            cam_container = tk.Frame(grid_container, bg="#ecf0f1", relief="solid", borderwidth=2)
-            cam_container.grid(row=0, column=col, padx=8, pady=8, sticky="nsew")
+            controls = tk.Frame(cell, bg="#111827")
+            controls.pack(fill="x", padx=8, pady=6)
+            self._add_ptz_controls(controls, cam)
 
-            # 카메라 제목
-            title_frame = tk.Frame(cam_container, bg="#34495e")
-            title_frame.pack(fill="x")
+        # Bottom-right slot for quick actions card
+        qa_cell = tk.Frame(grid, bg="#0f172a")
+        qa_cell.grid(row=1, column=1, padx=8, pady=8, sticky="nsew")
+        qa_card = tk.Frame(qa_cell, bg="#111827", bd=1, relief="solid")
+        qa_card.pack(fill="both", expand=True)
+        tk.Label(qa_card, text="Quick Actions", font=("Segoe UI", 11, "bold"),
+                 bg="#111827", fg="#e5e7eb").pack(anchor="w", padx=8, pady=(6, 4))
+        self._build_quick_controls(qa_card, embed=True)
 
-            tk.Label(
-                title_frame,
-                text=f"📷 {camera.name}",
-                font=("Arial", 11, "bold"),
-                bg="#34495e",
-                fg="white"
-            ).pack(side="left", padx=10, pady=5)
+    def _add_ptz_controls(self, parent, cam):
+        """Linear control bar with text labels."""
+        def make_btn(txt, cmd, bg, fg="#e5e7eb"):
+            return tk.Button(parent, text=txt, command=cmd,
+                             font=("Segoe UI", 9, "bold"), width=8, height=1,
+                             bg=bg, fg=fg, relief="flat", bd=1, cursor="hand2",
+                             activebackground=bg, activeforeground=fg)
 
-            tk.Label(
-                title_frame,
-                text=camera.location,
-                font=("Arial", 9),
-                bg="#34495e",
-                fg="#bdc3c7"
-            ).pack(side="left")
-
-            # 카메라 이미지
-            img_label = tk.Label(cam_container, bg="black", width=50, height=20)
-            img_label.pack(padx=5, pady=5, fill="both", expand=True)
-            self.camera_labels[camera.camera_id] = img_label
-
-            # PTZ 제어 버튼
-            control_frame = tk.Frame(cam_container, bg="#ecf0f1")
-            control_frame.pack(fill="x", padx=5, pady=5)
-
-            # Pan Left 버튼
-            left_btn = tk.Button(
-                control_frame,
-                text="← LEFT",
-                command=lambda c=camera: self._pan_camera(c, "left"),
-                width=10,
-                height=2,
-                bg="#5dade2",
-                fg="black",
-                font=("Helvetica", 11, "bold"),
-                relief="groove",
-                bd=3,
-                cursor="hand2",
-                activebackground="#3498db",
-                activeforeground="black"
-            )
-            left_btn.pack(side="left", padx=3)
-
-            # Pan Right 버튼
-            right_btn = tk.Button(
-                control_frame,
-                text="RIGHT →",
-                command=lambda c=camera: self._pan_camera(c, "right"),
-                width=10,
-                height=2,
-                bg="#5dade2",
-                fg="black",
-                font=("Helvetica", 11, "bold"),
-                relief="groove",
-                bd=3,
-                cursor="hand2",
-                activebackground="#3498db",
-                activeforeground="black"
-            )
-            right_btn.pack(side="left", padx=3)
-
-            # Zoom In 버튼
-            zoomin_btn = tk.Button(
-                control_frame,
-                text="ZOOM +",
-                command=lambda c=camera: self._zoom_camera(c, "in"),
-                width=10,
-                height=2,
-                bg="#58d68d",
-                fg="black",
-                font=("Helvetica", 11, "bold"),
-                relief="groove",
-                bd=3,
-                cursor="hand2",
-                activebackground="#2ecc71",
-                activeforeground="black"
-            )
-            zoomin_btn.pack(side="left", padx=3)
-
-            # Zoom Out 버튼
-            zoomout_btn = tk.Button(
-                control_frame,
-                text="ZOOM -",
-                command=lambda c=camera: self._zoom_camera(c, "out"),
-                width=10,
-                height=2,
-                bg="#f39c12",
-                fg="black",
-                font=("Helvetica", 11, "bold"),
-                relief="groove",
-                bd=3,
-                cursor="hand2",
-                activebackground="#e67e22",
-                activeforeground="black"
-            )
-            zoomout_btn.pack(side="left", padx=3)
-
-    def _create_control_buttons(self, parent):
-        """Arm/Disarm 제어 버튼 및 센서 시뮬레이터"""
-        control_frame = tk.LabelFrame(
-            parent,
-            text="🎛️ System Control",
-            font=("Arial", 13, "bold"),
-            bg="white",
-            fg="#2c3e50"
-        )
-        control_frame.pack(fill="x", pady=(0, 10))
-
-        button_container = tk.Frame(control_frame, bg="white")
-        button_container.pack(padx=15, pady=15)
-
-        modes = [
-            ("🏠 Home", SafeHomeMode.HOME, "#3498db"),
-            ("🚗 Away", SafeHomeMode.AWAY, "#9b59b6"),
-            ("🌙 Overnight", SafeHomeMode.OVERNIGHT, "#34495e"),
-            ("✈️ Extended", SafeHomeMode.EXTENDED, "#16a085"),
-            ("🔓 Disarm", SafeHomeMode.DISARMED, "#e74c3c")
+        buttons = [
+            ("UP", lambda c=cam: self._tilt_camera(c, "up"), "#1e293b"),
+            ("DOWN", lambda c=cam: self._tilt_camera(c, "down"), "#1e293b"),
+            ("LEFT", lambda c=cam: self._pan_camera(c, "left"), "#1e293b"),
+            ("RIGHT", lambda c=cam: self._pan_camera(c, "right"), "#1e293b"),
+            ("ZOOM +", lambda c=cam: self._zoom_camera(c, "in"), "#16a34a"),
+            ("ZOOM -", lambda c=cam: self._zoom_camera(c, "out"), "#f59e0b"),
         ]
 
-        for text, mode, color in modes:
-            btn = tk.Button(
-                button_container,
-                text=text,
-                bg=color,
-                fg="black",  # 검은색으로 변경 (최대 가독성)
-                font=("Helvetica", 12, "bold"),
-                width=14,
-                height=2,
-                relief="groove",
-                bd=3,
-                cursor="hand2",
-                activebackground=color,
-                activeforeground="black",
-                command=lambda m=mode: self._set_mode(m)
-            )
-            btn.pack(side="left", padx=5)
+        for idx, (txt, cmd, bg) in enumerate(buttons):
+            make_btn(txt, cmd, bg, fg="#111827" if "ZOOM -" in txt else "#e5e7eb")\
+                .grid(row=0, column=idx, padx=3, pady=5, sticky="nsew")
 
-        # 센서 시뮬레이터 버튼 추가
-        simulator_container = tk.Frame(control_frame, bg="white")
-        simulator_container.pack(padx=15, pady=(0, 15))
+        parent.grid_rowconfigure(0, weight=1)
+        for c in range(len(buttons)):
+            parent.grid_columnconfigure(c, weight=1)
 
-        tk.Button(
-            simulator_container,
-            text="🧪 OPEN SENSOR SIMULATOR",
-            bg="#f39c12",
-            fg="black",
-            font=("Helvetica", 13, "bold"),
-            width=30,
-            height=2,
-            relief="groove",
-            bd=4,
-            cursor="hand2",
-            activebackground="#e67e22",
-            activeforeground="black",
-            command=self._open_sensor_simulator
-        ).pack()
+        # Camera enable/disable and password controls below
+        ctrl_row = tk.Frame(parent, bg="#111827")
+        ctrl_row.grid(row=1, column=0, columnspan=len(buttons), sticky="ew", pady=(4, 0))
+        small_btn = dict(font=("Segoe UI", 8, "bold"), width=6, height=1, relief="ridge", bd=1, cursor="hand2")
+        tk.Button(ctrl_row, text="Enable", command=lambda c=cam: self._toggle_camera(c, True),
+                  bg="#0ea5e9", fg="white", **small_btn).pack(side="left", padx=2)
+        tk.Button(ctrl_row, text="Disable", command=lambda c=cam: self._toggle_camera(c, False),
+                  bg="#9ca3af", fg="black", **small_btn).pack(side="left", padx=2)
+        tk.Button(ctrl_row, text="Set Pwd", command=lambda c=cam: self._set_camera_password(c),
+                  bg="#22c55e", fg="white", **small_btn).pack(side="left", padx=2)
+        tk.Button(ctrl_row, text="Clear Pwd", command=lambda c=cam: self._clear_camera_password(c),
+                  bg="#f87171", fg="white", **small_btn).pack(side="left", padx=2)
+        tk.Button(ctrl_row, text="Unlock", command=lambda c=cam: self._unlock_camera(c),
+                  bg="#fcd34d", fg="black", **small_btn).pack(side="left", padx=2)
 
-    def _create_sensor_section(self, parent):
-        """센서 상태 섹션"""
-        sensor_frame = tk.LabelFrame(
-            parent,
-            text="🔍 Sensor Status",
-            font=("Arial", 13, "bold"),
-            bg="white",
-            fg="#2c3e50"
-        )
-        sensor_frame.pack(fill="both", expand=True, pady=(0, 10))
+    def _build_quick_controls(self, parent, embed=False):
+        container = parent if embed else self._panel(parent, "Quick Actions")
+        btn_cfg = dict(font=("Segoe UI", 10 if embed else 11, "bold"),
+                       width=16, height=2, relief="flat", cursor="hand2")
+        tk.Button(container, text="Arm Home", bg="#2563eb", fg="white",
+                  command=lambda: self._set_mode(SafeHomeMode.HOME), **btn_cfg).pack(fill="x", pady=3)
+        tk.Button(container, text="Arm Away", bg="#7c3aed", fg="white",
+                  command=lambda: self._set_mode(SafeHomeMode.AWAY), **btn_cfg).pack(fill="x", pady=3)
+        tk.Button(container, text="Disarm", bg="#dc2626", fg="white",
+                  command=lambda: self._set_mode(SafeHomeMode.DISARMED), **btn_cfg).pack(fill="x", pady=3)
+        tk.Button(container, text="Sensor Simulator", bg="#f59e0b", fg="black",
+                  command=self._open_sensor_simulator, **btn_cfg).pack(fill="x", pady=3)
+        tk.Button(container, text="Settings", bg="#0ea5e9", fg="white",
+                  command=self._open_settings, **btn_cfg).pack(fill="x", pady=3)
+        tk.Button(container, text="Logout", bg="#4b5563", fg="white",
+                  command=self._logout, **btn_cfg).pack(fill="x", pady=3)
 
-        # Treeview
-        tree_frame = tk.Frame(sensor_frame, bg="white")
-        tree_frame.pack(fill="both", expand=True, padx=10, pady=10)
-
-        columns = ("Type", "Location", "Zone", "Status")
-        self.sensor_tree = ttk.Treeview(
-            tree_frame,
-            columns=columns,
-            show="headings",
-            height=12
-        )
-
-        # 컬럼 설정
-        column_widths = {"Type": 80, "Location": 150, "Zone": 80, "Status": 100}
-        for col in columns:
+    def _build_sensors(self, parent):
+        card = self._panel(parent, "Sensors")
+        columns = ("Type", "Location", "Zone", "State")
+        self.sensor_tree = ttk.Treeview(card, columns=columns, show="headings", height=6)
+        for col, w in zip(columns, (70, 150, 80, 90)):
             self.sensor_tree.heading(col, text=col)
-            self.sensor_tree.column(col, width=column_widths[col], anchor="center")
+            self.sensor_tree.column(col, width=w, anchor="center")
+        vsb = ttk.Scrollbar(card, orient="vertical", command=self.sensor_tree.yview)
+        self.sensor_tree.configure(yscrollcommand=vsb.set)
+        self.sensor_tree.pack(side="left", fill="x", expand=True)
+        vsb.pack(side="right", fill="y")
 
-        self.sensor_tree.pack(side="left", fill="both", expand=True)
+    def _build_mode_mapping(self, parent):
+        card = self._panel(parent, "Mode Sensor Mapping")
+        frame = tk.Frame(card, bg="#111827")
+        frame.pack(fill="x", padx=8, pady=4)
 
-        # 스크롤바
-        scrollbar = ttk.Scrollbar(tree_frame, orient="vertical", command=self.sensor_tree.yview)
-        scrollbar.pack(side="right", fill="y")
-        self.sensor_tree.configure(yscrollcommand=scrollbar.set)
+        modes = ["HOME", "AWAY", "OVERNIGHT", "EXTENDED"]
+        self.mode_var = tk.StringVar(value="HOME")
+        tk.OptionMenu(frame, self.mode_var, *modes).grid(row=0, column=0, sticky="w", pady=4)
 
-        # 스타일 설정
-        style = ttk.Style()
-        style.configure("Treeview", rowheight=25, font=("Arial", 10))
-        style.configure("Treeview.Heading", font=("Arial", 10, "bold"))
+        self.sensor_listbox = tk.Listbox(frame, selectmode="multiple", height=6, width=28,
+                                         font=("Segoe UI", 10))
+        self.sensor_listbox.grid(row=1, column=0, columnspan=2, sticky="nsew", pady=4)
+        tk.Button(frame, text="Save Mapping", bg="#2563eb", fg="white",
+                  font=("Segoe UI", 10, "bold"), relief="flat", cursor="hand2",
+                  command=self._save_mode_mapping).grid(row=2, column=0, columnspan=2, sticky="ew", pady=4)
 
-    def _create_zone_section(self, parent):
-        """Zone 관리 섹션"""
-        zone_frame = tk.LabelFrame(
-            parent,
-            text="📍 Safety Zones",
-            font=("Arial", 13, "bold"),
-            bg="white",
-            fg="#2c3e50"
-        )
-        zone_frame.pack(fill="x", pady=(0, 10))
+        frame.grid_rowconfigure(1, weight=1)
+        frame.grid_columnconfigure(0, weight=1)
+        self._refresh_mode_mapping()
 
-        content = tk.Frame(zone_frame, bg="white")
-        content.pack(padx=10, pady=10, fill="x")
+    def _build_zones(self, parent):
+        card = self._panel(parent, "Zones")
+        self.zone_list = tk.Listbox(card, height=5, font=("Segoe UI", 10))
+        self.zone_list.pack(fill="both", expand=True)
+        tk.Button(card, text="Manage Zones", bg="#10b981", fg="white",
+                  font=("Segoe UI", 10, "bold"), relief="flat", cursor="hand2",
+                  command=self._open_zone_manager).pack(fill="x", pady=6)
 
-        self.zone_listbox = tk.Listbox(
-            content,
-            height=4,
-            font=("Arial", 10),
-            relief="solid",
-            borderwidth=1
-        )
-        self.zone_listbox.pack(fill="x", pady=(0, 10))
+    def _build_logs(self, parent):
+        card = self._panel(parent, "Logs")
+        tk.Button(card, text="Open Log Viewer", bg="#f97316", fg="black",
+                  font=("Segoe UI", 10, "bold"), relief="flat", cursor="hand2",
+                  command=self._open_log_viewer).pack(fill="x", pady=6)
+        tk.Button(card, text="Silence Alarm", bg="#ef4444", fg="white",
+                  font=("Segoe UI", 10, "bold"), relief="flat", cursor="hand2",
+                  command=self._silence_alarm).pack(fill="x", pady=6)
 
-        # Zone 버튼
-        btn_frame = tk.Frame(content, bg="white")
-        btn_frame.pack(fill="x")
+    def _panel(self, parent, title):
+        frame = tk.Frame(parent, bg="#111827", bd=1, relief="solid")
+        frame.pack(fill="x", pady=6)
+        tk.Label(frame, text=title, font=("Segoe UI", 12, "bold"),
+                 bg="#111827", fg="#e5e7eb").pack(anchor="w", padx=10, pady=6)
+        return frame
 
-        tk.Button(
-            btn_frame,
-            text="🗺️ MANAGE ZONES",
-            command=self._open_zone_manager,
-            bg="#48c9b0",
-            fg="black",
-            font=("Helvetica", 11, "bold"),
-            relief="groove",
-            bd=3,
-            height=2,
-            cursor="hand2",
-            activebackground="#16a085",
-            activeforeground="black"
-        ).pack(fill="x")
-
-    def _create_quick_actions(self, parent):
-        """빠른 액션 버튼"""
-        action_frame = tk.LabelFrame(
-            parent,
-            text="⚡ Quick Actions",
-            font=("Arial", 13, "bold"),
-            bg="white",
-            fg="#2c3e50"
-        )
-        action_frame.pack(fill="x")
-
-        content = tk.Frame(action_frame, bg="white")
-        content.pack(padx=10, pady=10, fill="x")
-
-        actions = [
-            ("🚨 Panic Alarm", self._trigger_panic, "#c0392b"),
-            ("🔕 Silence Alarm", self._silence_alarm, "#7f8c8d"),
-        ]
-
-        for text, command, color in actions:
-            # 더 밝은 배경색으로 변경
-            if "Panic" in text:
-                bg_color = "#e74c3c"  # 빨간색
-            else:
-                bg_color = "#95a5a6"  # 회색
-
-            tk.Button(
-                content,
-                text=text.upper(),  # 대문자로 표시
-                command=command,
-                bg=bg_color,
-                fg="black",  # 검은색 텍스트
-                font=("Helvetica", 11, "bold"),
-                height=2,
-                relief="groove",
-                bd=3,
-                cursor="hand2",
-                activebackground=color,
-                activeforeground="black"
-            ).pack(fill="x", pady=5)
-
+    # EVENTS / ACTIONS ---------------------------------------------------
     def _update_loop(self):
-        """주기적 UI 업데이트"""
         try:
-            # 카메라 이미지 업데이트
             self._update_cameras()
-
-            # 센서 상태 업데이트
             self._update_sensors()
-
-            # Zone 목록 업데이트
             self._update_zones()
-
-            # 헤더 업데이트
+            self._refresh_mode_mapping()
             self._update_header()
-
         except Exception as e:
             print(f"Update error: {e}")
-
-        # 500ms 후 재실행
-        self.after(500, self._update_loop)
+        self.after(REFRESH_MS, self._update_loop)
 
     def _update_cameras(self):
-        """카메라 이미지 갱신"""
-        for cam_id, label in self.camera_labels.items():
+        for cam_id, label in self._camera_images.items():
             try:
-                img = self.system.camera_controller.get_camera_view(cam_id)
+                cam_obj = self.system.camera_controller.get_camera(cam_id)
+                pwd = self._camera_passwords.get(cam_id)
+                if cam_obj and cam_obj.has_password() and not pwd:
+                    label.config(text="🔒 Locked", fg="#f97316", image="")
+                    continue
+                img = self.system.camera_controller.get_camera_view(cam_id, pwd)
                 if img:
-                    # 리사이즈
-                    img_resized = img.resize((400, 300), Image.Resampling.LANCZOS)
-                    photo = ImageTk.PhotoImage(img_resized)
+                    resized = img.resize(CAM_VIEW_SIZE, Image.BILINEAR)
+                    photo = ImageTk.PhotoImage(resized)
                     label.config(image=photo)
                     label.image = photo
             except Exception as e:
-                label.config(text=f"Camera Error\n{str(e)[:30]}", fg="red")
+                label.config(text=f"Error: {e}", fg="red")
 
     def _update_sensors(self):
-        """센서 리스트 갱신"""
         self.sensor_tree.delete(*self.sensor_tree.get_children())
-
-        for sensor in self.system.sensor_controller.get_all_sensors():
-            status = "🟢 Armed" if sensor.is_active else "⚪ Disarmed"
-            zone_name = f"Zone {sensor.zone_id}" if sensor.zone_id else "-"
-
-            self.sensor_tree.insert("", "end", values=(
-                sensor.sensor_type,
-                sensor.location,
-                zone_name,
-                status
-            ))
+        for s in self.system.sensor_controller.get_all_sensors():
+            state = "🟢 Armed" if s.is_active else "⚪ Disarmed"
+            zone = f"Zone {s.zone_id}" if s.zone_id else "-"
+            self.sensor_tree.insert("", "end", values=(s.sensor_type, s.location, zone, state))
 
     def _update_zones(self):
-        """Zone 목록 갱신"""
-        self.zone_listbox.delete(0, tk.END)
+        self.zone_list.delete(0, tk.END)
+        for z in self.system.config.get_all_zones():
+            status = "🟢" if z.is_armed else "⚪"
+            self.zone_list.insert(tk.END, f"{status} {z.name}")
 
-        for zone in self.system.config.get_all_zones():
-            sensors = self.system.sensor_controller.get_sensors_by_zone(zone.zone_id)
-            status = "🟢" if zone.is_armed else "⚪"
-            self.zone_listbox.insert(
-                tk.END,
-                f"{status} {zone.zone_name} ({len(sensors)} sensors)"
-            )
+    def _refresh_mode_mapping(self):
+        if not hasattr(self, "sensor_listbox"):
+            return
+        selected_mode = self.mode_var.get()
+        self.sensor_listbox.delete(0, tk.END)
+        sensors = self.system.sensor_controller.get_all_sensors()
+        mapped = set(self.system.config.storage.get_sensors_for_mode(selected_mode))
+        for s in sensors:
+            label = f"{s.sensor_id}: {s.location} ({s.sensor_type})"
+            self.sensor_listbox.insert(tk.END, label)
+            if s.sensor_id in mapped:
+                self.sensor_listbox.selection_set(tk.END)
 
-    def _update_header(self):
-        """헤더 상태 갱신"""
-        self.mode_label.config(text=f"Mode: {self.system.config.current_mode.name}")
+    def _save_mode_mapping(self):
+        try:
+            mode_name = self.mode_var.get()
+            selections = self.sensor_listbox.curselection()
+            sensors = self.system.sensor_controller.get_all_sensors()
+            sensor_ids = []
+            for idx in selections:
+                if 0 <= idx < len(sensors):
+                    sensor_ids.append(sensors[idx].sensor_id)
+            self.system.config.configure_mode_sensors(mode_name, sensor_ids)
+            messagebox.showinfo("Mode Mapping", f"Saved {len(sensor_ids)} sensors for {mode_name}")
+        except Exception as e:
+            messagebox.showerror("Mode Mapping", f"Failed to save mapping: {e}")
 
-        if self.system.is_running:
-            self.status_indicator.config(
-                text="● SYSTEM RUNNING",
-                fg="#2ecc71"
-            )
-        else:
-            self.status_indicator.config(
-                text="○ SYSTEM STOPPED",
-                fg="#e74c3c"
-            )
+    def _save_settings(self, popup, entries):
+        s = self.system.config.settings
+        try:
+            s.master_password = entries["master"].get()
+            s.guest_password = entries["guest"].get() or None
+            s.entry_delay = int(entries["entry"].get())
+            s.exit_delay = int(entries["exit"].get())
+            s.system_lock_time = int(entries["lock"].get())
+            s.monitoring_phone = entries["monitor"].get()
+            s.homeowner_phone = entries["home"].get()
+            self.system.config.save_configuration()
+            messagebox.showinfo("Settings", "Settings saved.")
+            popup.destroy()
+        except Exception as e:
+            messagebox.showerror("Settings", f"Failed to save settings: {e}")
+
+    def _open_settings(self):
+        popup = tk.Toplevel(self)
+        popup.title("Settings")
+        popup.geometry("420x460")
+        popup.resizable(False, False)
+        popup.transient(self)
+        popup.grab_set()
+        popup.configure(bg="#0f172a")
+
+        # Center the popup relative to parent
+        try:
+            popup.update_idletasks()
+            w, h = 420, 460
+            parent_x = self.winfo_rootx()
+            parent_y = self.winfo_rooty()
+            parent_w = self.winfo_width()
+            parent_h = self.winfo_height()
+            x = parent_x + (parent_w // 2 - w // 2)
+            y = parent_y + (parent_h // 2 - h // 2)
+            popup.geometry(f"{w}x{h}+{x}+{y}")
+        except Exception:
+            pass
+
+        tk.Label(popup, text="Settings", font=("Segoe UI", 14, "bold"),
+                 bg="#0f172a", fg="#e5e7eb").pack(anchor="w", padx=12, pady=10)
+
+        form = tk.Frame(popup, bg="#0f172a")
+        form.pack(fill="both", expand=True, padx=12, pady=4)
+
+        entries = {}
+        def add_row(label, key, show=None, default=""):
+            row = tk.Frame(form, bg="#0f172a")
+            row.pack(fill="x", pady=4)
+            tk.Label(row, text=label, font=("Segoe UI", 10), bg="#0f172a", fg="#cbd5e1").pack(side="left")
+            ent = tk.Entry(row, font=("Segoe UI", 10), show=show, width=18)
+            ent.pack(side="right")
+            ent.insert(0, default)
+            entries[key] = ent
+
+        add_row("Master Password", "master", show="*", default=self.system.config.settings.master_password)
+        add_row("Guest Password", "guest", show="*", default=self.system.config.settings.guest_password or "")
+        add_row("Entry Delay (s)", "entry", default=str(self.system.config.settings.entry_delay))
+        add_row("Exit Delay (s)", "exit", default=str(self.system.config.settings.exit_delay))
+        add_row("Lock Time (s)", "lock", default=str(self.system.config.settings.system_lock_time))
+        add_row("Monitor Phone", "monitor", default=self.system.config.settings.monitoring_phone)
+        add_row("Home Phone", "home", default=self.system.config.settings.homeowner_phone)
+
+        btn_row = tk.Frame(popup, bg="#0f172a")
+        btn_row.pack(fill="x", pady=12)
+        tk.Button(btn_row, text="Save", bg="#22c55e", fg="white",
+                  font=("Segoe UI", 10, "bold"), relief="flat", cursor="hand2",
+                  command=lambda: self._save_settings(popup, entries)).pack(side="left", padx=6)
+        tk.Button(btn_row, text="Close", bg="#4b5563", fg="white",
+                  font=("Segoe UI", 10, "bold"), relief="flat", cursor="hand2",
+                  command=popup.destroy).pack(side="right", padx=6)
 
     def _set_mode(self, mode):
-        """모드 설정"""
         if mode == SafeHomeMode.DISARMED:
             self.system.disarm_system()
-            messagebox.showinfo("Success", "System Disarmed")
+            messagebox.showinfo("Success", "System disarmed")
         else:
-            success = self.system.arm_system(mode)
-            if success:
-                messagebox.showinfo("Success", f"System Armed in {mode.name} mode")
+            ok = self.system.arm_system(mode)
+            if ok:
+                messagebox.showinfo("Success", f"Armed in {mode.name}")
             else:
-                messagebox.showwarning(
-                    "Cannot Arm",
-                    "Cannot arm system!\nSome windows/doors are open."
-                )
+                messagebox.showwarning("Cannot arm", "Check windows/doors (open)")
 
-    def _pan_camera(self, camera, direction):
-        """카메라 패닝"""
-        self.system.camera_controller.pan_camera(camera.camera_id, direction)
+    def _pan_camera(self, cam, direction):
+        if not self._ensure_camera_access(cam):
+            return
+        self.system.camera_controller.pan_camera(cam.camera_id, direction,
+                                                 self._camera_passwords.get(cam.camera_id))
 
-    def _zoom_camera(self, camera, direction):
-        """카메라 줌"""
-        self.system.camera_controller.zoom_camera(camera.camera_id, direction)
+    def _tilt_camera(self, cam, direction):
+        if not self._ensure_camera_access(cam):
+            return
+        self.system.camera_controller.tilt_camera(cam.camera_id, direction,
+                                                  self._camera_passwords.get(cam.camera_id))
+
+    def _zoom_camera(self, cam, direction):
+        if not self._ensure_camera_access(cam):
+            return
+        self.system.camera_controller.zoom_camera(cam.camera_id, direction,
+                                                  self._camera_passwords.get(cam.camera_id))
+
+    def _toggle_camera(self, cam, enable: bool):
+        if enable:
+            self.system.camera_controller.enable_camera(cam.camera_id)
+        else:
+            self.system.camera_controller.disable_camera(cam.camera_id)
+
+    def _set_camera_password(self, cam):
+        pwd = simpledialog.askstring("Set Camera Password", "Enter new password:", show="*")
+        if pwd is None:
+            return
+        self.system.camera_controller.set_camera_password(cam.camera_id, pwd)
+        self._camera_passwords[cam.camera_id] = pwd
+
+    def _clear_camera_password(self, cam):
+        self.system.camera_controller.set_camera_password(cam.camera_id, None)
+        self._camera_passwords.pop(cam.camera_id, None)
+
+    def _unlock_camera(self, cam):
+        if not cam.has_password():
+            messagebox.showinfo("Camera", "Camera has no password.")
+            return
+        pwd = simpledialog.askstring("Camera Password", f"Enter password for {cam.name}:", show="*")
+        if pwd:
+            self._camera_passwords[cam.camera_id] = pwd
+
+    def _ensure_camera_access(self, cam):
+        if cam.has_password() and cam.camera_id not in self._camera_passwords:
+            pwd = simpledialog.askstring("Camera Password", f"Enter password for {cam.name}:", show="*")
+            if not pwd:
+                return False
+            self._camera_passwords[cam.camera_id] = pwd
+        return True
 
     def _open_zone_manager(self):
-        """Zone 관리자 열기"""
         from .zone_manager import ZoneManagerWindow
         ZoneManagerWindow(self.system, self)
 
     def _open_log_viewer(self):
-        """로그 뷰어 열기"""
         from .log_viewer import LogViewerWindow
         LogViewerWindow(self.system, self)
 
-    def _trigger_panic(self):
-        """패닉 알람"""
-        if messagebox.askyesno("Panic Alarm", "Trigger panic alarm?"):
-            self.system.config.set_mode(SafeHomeMode.PANIC)
-            self.system.alarm.ring()
-            messagebox.showwarning("Panic Alarm", "🚨 PANIC ALARM ACTIVATED!")
-
-    def _silence_alarm(self):
-        """알람 끄기"""
-        self.system.alarm.stop()
-        messagebox.showinfo("Alarm", "Alarm silenced")
-
     def _open_sensor_simulator(self):
-        """센서 시뮬레이터 열기"""
         try:
             from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
             DeviceSensorTester.showSensorTester()
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to open Sensor Simulator: {e}")
+            messagebox.showerror("Error", f"Failed to open simulator: {e}")
+
+    def _silence_alarm(self):
+        self.system.alarm.stop()
+        messagebox.showinfo("Alarm", "Alarm silenced")
 
     def _logout(self):
-        """로그아웃"""
-        if messagebox.askyesno("Logout", "Logout and return to login screen?"):
+        if messagebox.askyesno("Logout", "Return to login screen?"):
             self.destroy()
             self.login_window.deiconify()
             self.login_window.password_entry.delete(0, tk.END)
             self.login_window.password_entry.focus()
 
     def _on_close(self):
-        """윈도우 종료"""
-        if messagebox.askokcancel("Quit", "Shutdown SafeHome System?"):
+        if messagebox.askokcancel("Quit", "Shutdown SafeHome?"):
             self.system.shutdown()
             self.login_window.destroy()
             self.destroy()

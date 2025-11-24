@@ -108,6 +108,15 @@ class LogViewerWindow(tk.Toplevel):
         self.search_entry.pack(side="left", padx=5)
         self.search_entry.bind("<KeyRelease>", lambda e: self._refresh_logs())
 
+        # Zone filter
+        tk.Label(control_frame, text="Zone:", font=("Arial", 11), bg="#ecf0f1").pack(side="left", padx=(20, 5))
+        self.zone_var = tk.StringVar(value="All")
+        zone_options = ["All"] + [z.name for z in self.system.config.get_all_zones()]
+        self.zone_combo = ttk.Combobox(control_frame, values=zone_options, state="readonly", width=12, font=("Arial", 10),
+                                       textvariable=self.zone_var)
+        self.zone_combo.pack(side="left", padx=5)
+        self.zone_combo.bind("<<ComboboxSelected>>", lambda e: self._refresh_logs())
+
         # 새로고침 버튼
         refresh_btn = tk.Button(
             control_frame,
@@ -146,6 +155,19 @@ class LogViewerWindow(tk.Toplevel):
         )
         clear_btn.pack(side="right", padx=5)
 
+        # Mark seen button
+        seen_btn = tk.Button(
+            control_frame,
+            text="Mark Seen",
+            font=("Arial", 10),
+            bg="#10b981",
+            fg="white",
+            relief="flat",
+            cursor="hand2",
+            command=self._mark_seen
+        )
+        seen_btn.pack(side="right", padx=5)
+
         # 로그 테이블
         table_frame = tk.Frame(self, bg="white", relief="solid", borderwidth=1)
         table_frame.pack(fill="both", expand=True, padx=20, pady=20)
@@ -160,7 +182,7 @@ class LogViewerWindow(tk.Toplevel):
         # Treeview
         self.log_tree = ttk.Treeview(
             table_frame,
-            columns=("Timestamp", "Type", "Source", "Message"),
+            columns=("Timestamp", "Type", "Source", "Zone", "Message"),
             show="headings",
             yscrollcommand=y_scrollbar.set,
             xscrollcommand=x_scrollbar.set
@@ -172,11 +194,13 @@ class LogViewerWindow(tk.Toplevel):
         self.log_tree.heading("Type", text="Type")
         self.log_tree.heading("Source", text="Source")
         self.log_tree.heading("Message", text="Message")
+        self.log_tree.heading("Zone", text="Zone")
 
-        self.log_tree.column("Timestamp", width=180)
-        self.log_tree.column("Type", width=100)
-        self.log_tree.column("Source", width=150)
-        self.log_tree.column("Message", width=500)
+        self.log_tree.column("Timestamp", width=160)
+        self.log_tree.column("Type", width=80)
+        self.log_tree.column("Source", width=120)
+        self.log_tree.column("Zone", width=100)
+        self.log_tree.column("Message", width=480)
 
         self.log_tree.pack(fill="both", expand=True)
 
@@ -216,6 +240,8 @@ class LogViewerWindow(tk.Toplevel):
 
         # Apply filters
         filtered_logs = []
+        zone_filter = self.zone_var.get() if hasattr(self, "zone_var") else "All"
+
         for log in logs:
             # Type filter
             if filter_type != "All" and log.event_type != filter_type:
@@ -227,6 +253,16 @@ class LogViewerWindow(tk.Toplevel):
                 if search_text not in searchable_text:
                     continue
 
+            # Zone filter
+            if zone_filter != "All":
+                log_zone = getattr(log, "zone_id", None)
+                zone_name = ""
+                if log_zone:
+                    zone_obj = self.system.config.get_safety_zone(log_zone)
+                    zone_name = zone_obj.name if zone_obj else ""
+                if zone_name != zone_filter:
+                    continue
+
             filtered_logs.append(log)
 
         # Sort by timestamp (newest first)
@@ -234,18 +270,26 @@ class LogViewerWindow(tk.Toplevel):
 
         # Insert into tree
         for log in filtered_logs:
-            # Format timestamp
+            # Format timestamp (supports datetime or ISO string)
             try:
-                dt = datetime.fromisoformat(log.timestamp)
-                formatted_time = dt.strftime("%Y-%m-%d %H:%M:%S")
-            except:
-                formatted_time = log.timestamp
+                if isinstance(log.timestamp, datetime):
+                    formatted_time = log.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+                else:
+                    dt = datetime.fromisoformat(str(log.timestamp))
+                    formatted_time = dt.strftime("%Y-%m-%d %H:%M:%S")
+            except Exception:
+                formatted_time = str(log.timestamp)
 
             # Insert with tag for coloring
+            zone_name = ""
+            if getattr(log, "zone_id", None):
+                zobj = self.system.config.get_safety_zone(log.zone_id)
+                zone_name = zobj.name if zobj else f"Zone {log.zone_id}"
+
             self.log_tree.insert(
                 "",
                 "end",
-                values=(formatted_time, log.event_type, log.source, log.message),
+                values=(formatted_time, log.event_type, log.source, zone_name, log.message),
                 tags=(log.event_type,)
             )
 
@@ -281,3 +325,16 @@ class LogViewerWindow(tk.Toplevel):
             self.system.config.log_manager.clear_logs()
             self._refresh_logs()
             messagebox.showinfo("Success", "All logs cleared successfully")
+
+    def _mark_seen(self):
+        """Mark filtered logs as seen (acknowledged)."""
+        try:
+            # For now, just write an INFO log indicating acknowledgement
+            count = len(self.log_tree.get_children())
+            if count == 0:
+                messagebox.showinfo("Acknowledge", "No logs to acknowledge.")
+                return
+            self.system.config.logger.add_log(f"Acknowledged {count} logs in viewer", source="LogViewer")
+            messagebox.showinfo("Acknowledge", f"Acknowledged {count} logs.")
+        except Exception as e:
+            messagebox.showerror("Acknowledge", f"Failed to mark seen: {e}")

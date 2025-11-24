@@ -31,14 +31,22 @@ class DeviceSensorTester(ABC):
     @staticmethod
     def showSensorTester():
         """Show the sensor tester GUI."""
-        if DeviceSensorTester.safeHomeSensorTest is not None:
-            return
         try:
             import os
             if os.environ.get("SAFEHOME_HEADLESS") == "1":
                 return
             import tkinter as tk
-            from .safehome_sensor_test_gui import SafeHomeSensorTest
+            # Reuse existing window if it's still alive
+            if DeviceSensorTester.safeHomeSensorTest is not None:
+                try:
+                    if DeviceSensorTester.safeHomeSensorTest.winfo_exists():
+                        DeviceSensorTester.safeHomeSensorTest.lift()
+                        return
+                except Exception:
+                    DeviceSensorTester.safeHomeSensorTest = None
+                    DeviceSensorTester.safehome_sensor_test = None
+
+            from safehome.interface.dashboard.sensor_simulator import SafeHomeSensorTest
             root = tk._default_root
             if root is None:
                 root = tk.Tk()
