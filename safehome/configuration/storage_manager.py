@@ -81,6 +81,11 @@ class StorageManager:
             system_lock_time=settings.system_lock_time,
             monitoring_phone=settings.monitoring_phone,
             homeowner_phone=settings.homeowner_phone,
+            alert_email=settings.alert_email,
+            smtp_host=settings.smtp_host,
+            smtp_port=settings.smtp_port,
+            smtp_user=settings.smtp_user,
+            smtp_password=settings.smtp_password,
             max_login_attempts=settings.max_login_attempts
         )
 
@@ -93,18 +98,24 @@ class StorageManager:
         if not row:
             return None
 
+        row_dict = dict(row)
         return {
-            "master_password": row['master_password'],
-            "guest_password": row['guest_password'],
-            "web_password_1": row['web_password_1'],
-            "web_password_2": row['web_password_2'],
-            "entry_delay": row['entry_delay'],
-            "exit_delay": row['exit_delay'],
-            "alarm_duration": row['alarm_duration'],
-            "system_lock_time": row['system_lock_time'],
-            "monitoring_phone": row['monitoring_phone'],
-            "homeowner_phone": row['homeowner_phone'],
-            "max_login_attempts": row['max_login_attempts']
+            "master_password": row_dict.get('master_password'),
+            "guest_password": row_dict.get('guest_password'),
+            "web_password_1": row_dict.get('web_password_1'),
+            "web_password_2": row_dict.get('web_password_2'),
+            "entry_delay": row_dict.get('entry_delay'),
+            "exit_delay": row_dict.get('exit_delay'),
+            "alarm_duration": row_dict.get('alarm_duration'),
+            "system_lock_time": row_dict.get('system_lock_time'),
+            "monitoring_phone": row_dict.get('monitoring_phone'),
+            "homeowner_phone": row_dict.get('homeowner_phone'),
+            "alert_email": row_dict.get('alert_email'),
+            "smtp_host": row_dict.get('smtp_host'),
+            "smtp_port": row_dict.get('smtp_port'),
+            "smtp_user": row_dict.get('smtp_user'),
+            "smtp_password": row_dict.get('smtp_password'),
+            "max_login_attempts": row_dict.get('max_login_attempts', 3)
         }
 
     def save_safety_zone(self, zone: SafetyZone):
@@ -256,11 +267,41 @@ class StorageManager:
         )
         return [dict(row) for row in rows]
 
+    def get_unseen_logs(self, limit: int = 100, event_type: Optional[str] = "ALARM") -> List[dict]:
+        """Get logs not marked as seen"""
+        if not self.db:
+            return []
+
+        query = """
+            SELECT e.*
+            FROM event_logs e
+            LEFT JOIN event_log_seen s ON e.log_id = s.log_id
+            WHERE s.log_id IS NULL
+        """
+        params = []
+        if event_type:
+            query += " AND e.event_type = ?"
+            params.append(event_type)
+        query += " ORDER BY e.event_timestamp DESC LIMIT ?"
+        params.append(limit)
+
+        rows = self.db.execute_query(query, tuple(params), fetch_all=True)
+        return [dict(row) for row in rows]
+
+    def mark_logs_seen(self, log_ids: List[int]):
+        """Mark specified log IDs as seen"""
+        if not self.db or not log_ids:
+            return
+        values = [(lid,) for lid in log_ids]
+        self.db.execute_many("INSERT OR IGNORE INTO event_log_seen (log_id) VALUES (?)", values)
+        self.db.commit()
+
     def clear_logs(self):
         """Delete all event logs"""
         if not self.db:
             return
         self.db.execute_query("DELETE FROM event_logs")
+        self.db.execute_query("DELETE FROM event_log_seen")
         self.db.commit()
 
     def get_sensors_for_mode(self, mode_name: str) -> List[int]:

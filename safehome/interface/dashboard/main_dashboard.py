@@ -1,6 +1,5 @@
 """
-SafeHome Dashboard
-Camera grid with embedded quick actions, settings popup, mode mapping, sensors, zones, logs.
+SafeHome Dashboard (with visible Settings popup)
 """
 
 import tkinter as tk
@@ -99,7 +98,7 @@ class MainDashboard(tk.Toplevel):
             controls.pack(fill="x", padx=8, pady=6)
             self._add_ptz_controls(controls, cam)
 
-        # Bottom-right slot for quick actions card
+        # Bottom-right slot for quick actions
         qa_cell = tk.Frame(grid, bg="#0f172a")
         qa_cell.grid(row=1, column=1, padx=8, pady=8, sticky="nsew")
         qa_card = tk.Frame(qa_cell, bg="#111827", bd=1, relief="solid")
@@ -109,7 +108,6 @@ class MainDashboard(tk.Toplevel):
         self._build_quick_controls(qa_card, embed=True)
 
     def _add_ptz_controls(self, parent, cam):
-        """Linear control bar with text labels."""
         def make_btn(txt, cmd, bg, fg="#e5e7eb"):
             return tk.Button(parent, text=txt, command=cmd,
                              font=("Segoe UI", 9, "bold"), width=8, height=1,
@@ -133,7 +131,7 @@ class MainDashboard(tk.Toplevel):
         for c in range(len(buttons)):
             parent.grid_columnconfigure(c, weight=1)
 
-        # Camera enable/disable and password controls below
+        # Camera enable/disable/password controls
         ctrl_row = tk.Frame(parent, bg="#111827")
         ctrl_row.grid(row=1, column=0, columnspan=len(buttons), sticky="ew", pady=(4, 0))
         small_btn = dict(font=("Segoe UI", 8, "bold"), width=6, height=1, relief="ridge", bd=1, cursor="hand2")
@@ -290,8 +288,10 @@ class MainDashboard(tk.Toplevel):
         except Exception as e:
             messagebox.showerror("Mode Mapping", f"Failed to save mapping: {e}")
 
+    # SETTINGS POPUP ------------------------------------------------------
     def _save_settings(self, popup, entries):
         s = self.system.config.settings
+        old_master = s.master_password
         try:
             s.master_password = entries["master"].get()
             s.guest_password = entries["guest"].get() or None
@@ -300,7 +300,20 @@ class MainDashboard(tk.Toplevel):
             s.system_lock_time = int(entries["lock"].get())
             s.monitoring_phone = entries["monitor"].get()
             s.homeowner_phone = entries["home"].get()
+            s.alert_email = entries["alert"].get()
             self.system.config.save_configuration()
+            if s.master_password != old_master:
+                # Trigger email alert for admin password change
+                sent = False
+                try:
+                    sent = self.system._send_password_change_alert()
+                except Exception as e:
+                    self.system.config.logger.add_log(f"Password change email failed: {e}",
+                                                      level="ERROR", source="Dashboard")
+                if not sent:
+                    messagebox.showwarning("Settings",
+                                           "Password updated, but email alert was not sent.\n"
+                                           "Please check Alert Email/SMTP settings.")
             messagebox.showinfo("Settings", "Settings saved.")
             popup.destroy()
         except Exception as e:
@@ -309,59 +322,60 @@ class MainDashboard(tk.Toplevel):
     def _open_settings(self):
         popup = tk.Toplevel(self)
         popup.title("Settings")
-        popup.geometry("420x460")
+        popup.configure(bg="#0f172a")
         popup.resizable(False, False)
         popup.transient(self)
         popup.grab_set()
-        popup.configure(bg="#0f172a")
-
-        # Center the popup relative to parent
+        width, height = 500, 520
         try:
-            popup.update_idletasks()
-            w, h = 420, 460
-            parent_x = self.winfo_rootx()
-            parent_y = self.winfo_rooty()
-            parent_w = self.winfo_width()
-            parent_h = self.winfo_height()
-            x = parent_x + (parent_w // 2 - w // 2)
-            y = parent_y + (parent_h // 2 - h // 2)
-            popup.geometry(f"{w}x{h}+{x}+{y}")
+            # center relative to dashboard
+            self.update_idletasks()
+            x = self.winfo_rootx() + (self.winfo_width() // 2) - (width // 2)
+            y = self.winfo_rooty() + (self.winfo_height() // 2) - (height // 2)
+            popup.geometry(f"{width}x{height}+{x}+{y}")
         except Exception:
-            pass
+            popup.geometry(f"{width}x{height}")
+        popup.lift()
 
-        tk.Label(popup, text="Settings", font=("Segoe UI", 14, "bold"),
-                 bg="#0f172a", fg="#e5e7eb").pack(anchor="w", padx=12, pady=10)
+        container = tk.Frame(popup, bg="#0f172a", padx=16, pady=12)
+        container.pack(fill="both", expand=True)
 
-        form = tk.Frame(popup, bg="#0f172a")
-        form.pack(fill="both", expand=True, padx=12, pady=4)
+        tk.Label(container, text="Settings", font=("Segoe UI", 15, "bold"),
+                 bg="#0f172a", fg="#e5e7eb").grid(row=0, column=0, columnspan=2,
+                                                 sticky="w", pady=(0, 12))
 
         entries = {}
-        def add_row(label, key, show=None, default=""):
-            row = tk.Frame(form, bg="#0f172a")
-            row.pack(fill="x", pady=4)
-            tk.Label(row, text=label, font=("Segoe UI", 10), bg="#0f172a", fg="#cbd5e1").pack(side="left")
-            ent = tk.Entry(row, font=("Segoe UI", 10), show=show, width=18)
-            ent.pack(side="right")
-            ent.insert(0, default)
+
+        def add_row(row, label, key, show=None, default=""):
+            tk.Label(container, text=label, font=("Segoe UI", 10),
+                     bg="#0f172a", fg="#cbd5e1").grid(row=row, column=0, sticky="w", pady=6, padx=(0, 10))
+            ent = tk.Entry(container, font=("Segoe UI", 10), show=show, width=30)
+            ent.grid(row=row, column=1, sticky="ew", pady=6)
+            ent.insert(0, "" if default is None else str(default))
             entries[key] = ent
 
-        add_row("Master Password", "master", show="*", default=self.system.config.settings.master_password)
-        add_row("Guest Password", "guest", show="*", default=self.system.config.settings.guest_password or "")
-        add_row("Entry Delay (s)", "entry", default=str(self.system.config.settings.entry_delay))
-        add_row("Exit Delay (s)", "exit", default=str(self.system.config.settings.exit_delay))
-        add_row("Lock Time (s)", "lock", default=str(self.system.config.settings.system_lock_time))
-        add_row("Monitor Phone", "monitor", default=self.system.config.settings.monitoring_phone)
-        add_row("Home Phone", "home", default=self.system.config.settings.homeowner_phone)
+        add_row(1, "Master Password", "master", show="*", default=self.system.config.settings.master_password)
+        add_row(2, "Guest Password", "guest", show="*", default=self.system.config.settings.guest_password or "")
+        add_row(3, "Entry Delay (s)", "entry", default=str(self.system.config.settings.entry_delay))
+        add_row(4, "Exit Delay (s)", "exit", default=str(self.system.config.settings.exit_delay))
+        add_row(5, "Lock Time (s)", "lock", default=str(self.system.config.settings.system_lock_time))
+        add_row(6, "Monitor Phone", "monitor", default=self.system.config.settings.monitoring_phone)
+        add_row(7, "Home Phone", "home", default=self.system.config.settings.homeowner_phone)
+        add_row(8, "Alert Email", "alert", default=self.system.config.settings.alert_email)
 
-        btn_row = tk.Frame(popup, bg="#0f172a")
-        btn_row.pack(fill="x", pady=12)
+        # button row inside the same grid to guarantee visibility
+        btn_row = tk.Frame(container, bg="#0f172a")
+        btn_row.grid(row=9, column=0, columnspan=2, sticky="ew", pady=(14, 6))
         tk.Button(btn_row, text="Save", bg="#22c55e", fg="white",
-                  font=("Segoe UI", 10, "bold"), relief="flat", cursor="hand2",
-                  command=lambda: self._save_settings(popup, entries)).pack(side="left", padx=6)
+                  font=("Segoe UI", 11, "bold"), relief="flat", cursor="hand2",
+                  command=lambda: self._save_settings(popup, entries)).pack(side="left", padx=6, ipadx=14, ipady=6)
         tk.Button(btn_row, text="Close", bg="#4b5563", fg="white",
-                  font=("Segoe UI", 10, "bold"), relief="flat", cursor="hand2",
-                  command=popup.destroy).pack(side="right", padx=6)
+                  font=("Segoe UI", 11, "bold"), relief="flat", cursor="hand2",
+                  command=popup.destroy).pack(side="right", padx=6, ipadx=14, ipady=6)
 
+        container.grid_columnconfigure(1, weight=1)
+
+    # CAMERA ACCESS ------------------------------------------------------
     def _set_mode(self, mode):
         if mode == SafeHomeMode.DISARMED:
             self.system.disarm_system()
@@ -424,6 +438,7 @@ class MainDashboard(tk.Toplevel):
             self._camera_passwords[cam.camera_id] = pwd
         return True
 
+    # OTHER WINDOWS ------------------------------------------------------
     def _open_zone_manager(self):
         from .zone_manager import ZoneManagerWindow
         ZoneManagerWindow(self.system, self)

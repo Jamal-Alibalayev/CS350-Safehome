@@ -5,6 +5,8 @@ from .log_manager import LogManager
 from .login_manager import LoginManager
 from .safehome_mode import SafeHomeMode
 from .safety_zone import SafetyZone
+import smtplib
+from email.message import EmailMessage
 
 
 class ConfigurationManager:
@@ -34,7 +36,12 @@ class ConfigurationManager:
         self.settings = SystemSettings()
         loaded_data = self.storage.load_settings()
         if loaded_data:
-            self.settings.update_settings(**loaded_data)
+            # Apply only non-None values so defaults remain for newly added fields (e.g., SMTP)
+            for key, value in loaded_data.items():
+                if value is None:
+                    continue
+                if hasattr(self.settings, key):
+                    setattr(self.settings, key, value)
 
         # 4. Initialize Log Manager
         self.logger = LogManager(storage_manager=self.storage)
@@ -54,6 +61,38 @@ class ConfigurationManager:
 
         # 8. Current state
         self.current_mode = SafeHomeMode.DISARMED
+
+    def send_email_alert(self, subject: str, body: str) -> bool:
+        """
+        Send an email alert using SMTP settings
+
+        Returns:
+            True if sent, False otherwise
+        """
+        settings = self.settings
+        if not settings.alert_email:
+            self.logger.add_log("Email alert skipped: no alert_email configured",
+                                level="WARNING", source="ConfigManager")
+            return False
+        try:
+            port = int(settings.smtp_port) if settings.smtp_port else 587
+            msg = EmailMessage()
+            msg["Subject"] = subject
+            msg["From"] = settings.smtp_user
+            msg["To"] = settings.alert_email
+            msg.set_content(body)
+
+            with smtplib.SMTP(settings.smtp_host, port, timeout=10) as server:
+                server.starttls()
+                server.login(settings.smtp_user, settings.smtp_password)
+                server.send_message(msg)
+            self.logger.add_log(f"Alert email sent to {settings.alert_email}",
+                                source="ConfigManager")
+            return True
+        except Exception as e:
+            self.logger.add_log(f"Email alert failed: {e}", level="ERROR", source="ConfigManager")
+            print(f"[Email] Failed to send alert: {e}")
+            return False
 
     def _load_or_create_zones(self) -> List[SafetyZone]:
         """Load safety zones from database or create defaults"""
@@ -89,6 +128,33 @@ class ConfigurationManager:
         self.logger.add_log("Configuration saved", source="ConfigManager")
 
     # ===== Mode Management =====
+    def ensure_default_mode_mappings(self, sensor_ids: List[int]):
+        """
+        Validate mode mappings; if missing, assign basic defaults:
+        HOME -> perimeter (WinDoor), AWAY -> all sensors, OVERNIGHT -> WinDoor, EXTENDED -> all.
+        """
+        if not sensor_ids:
+            return
+        win_door = [s_id for s_id in sensor_ids if self._is_windoor(s_id)]
+        all_ids = list(sensor_ids)
+
+        def ensure(mode_name, ids):
+            if not self.storage.get_sensors_for_mode(mode_name):
+                self.storage.save_mode_sensor_mapping(mode_name, ids)
+                self.logger.add_log(f"Default mapping set for {mode_name} ({len(ids)} sensors)", source="ConfigManager")
+
+        ensure("HOME", win_door)
+        ensure("OVERNIGHT", win_door)
+        ensure("AWAY", all_ids)
+        ensure("EXTENDED", all_ids)
+
+    def _is_windoor(self, sensor_id: int) -> bool:
+        # look up in storage if available
+        rows = self.storage.load_all_sensors()
+        for r in rows:
+            if r.get("sensor_id") == sensor_id:
+                return r.get("sensor_type") == "WINDOOR"
+        return False
 
     def set_mode(self, mode: SafeHomeMode):
         """Change system mode"""

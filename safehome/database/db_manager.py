@@ -67,6 +67,16 @@ class DatabaseManager:
         cursor.executescript(schema_sql)
         self.connection.commit()
 
+        # Ensure event_log_seen table exists (for unseen tracking)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS event_log_seen (
+                log_id INTEGER PRIMARY KEY
+            )
+        """)
+        self.connection.commit()
+        # Ensure new settings columns exist
+        self.ensure_settings_columns()
+
     def execute_query(
         self,
         query: str,
@@ -160,6 +170,21 @@ class DatabaseManager:
         """
         self.execute_query(query, values)
         self.commit()
+
+    def ensure_settings_columns(self):
+        """Add missing columns for email alerts if needed"""
+        cols = {
+            "alert_email": "TEXT",
+            "smtp_host": "TEXT",
+            "smtp_port": "INTEGER",
+            "smtp_user": "TEXT",
+            "smtp_password": "TEXT"
+        }
+        for col, ctype in cols.items():
+            try:
+                self.execute_query(f"ALTER TABLE system_settings ADD COLUMN {col} {ctype}")
+            except Exception:
+                pass
 
     def get_safety_zones(self) -> List[sqlite3.Row]:
         """Get all safety zones"""

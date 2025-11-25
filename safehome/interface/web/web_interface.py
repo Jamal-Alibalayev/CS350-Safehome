@@ -257,6 +257,20 @@ class WebInterface:
             "count": len(logs)
         }
 
+    def get_intrusion_logs(self, limit: int = 50) -> dict:
+        """
+        Fetch intrusion (ALARM) logs (unseen first)
+        """
+        if not self.is_authenticated:
+            return {"success": False, "error": "Not authenticated"}
+
+        unseen = self.system.config.storage.get_unseen_logs(limit=limit, event_type="ALARM")
+        return {
+            "success": True,
+            "logs": unseen,
+            "count": len(unseen)
+        }
+
     def change_password(self, old_password: str, new_password1: str, new_password2: str) -> dict:
         """
         Change web interface password
@@ -335,4 +349,3 @@ class WebInterface:
         """
         logs = self.system.config.storage.get_logs(limit=limit, event_type="ALARM")
         return {"success": True, "logs": logs, "count": len(logs)}
-

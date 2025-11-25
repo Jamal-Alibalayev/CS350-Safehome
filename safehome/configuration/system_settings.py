@@ -25,6 +25,13 @@ class SystemSettings:
     # Phone numbers
     monitoring_phone: str = "911"           # Monitoring service phone
     homeowner_phone: str = "000-0000-0000"  # Homeowner phone
+    alert_email: str = "safehomejongyoon@gmail.com"  # Default recipient email
+
+    # Email SMTP defaults (Gmail app password provided)
+    smtp_host: str = "smtp.gmail.com"
+    smtp_port: int = 587
+    smtp_user: str = "safehomejongyoon@gmail.com"
+    smtp_password: str = "lfzj nkxr dqsa czal"
 
     # Security settings
     max_login_attempts: int = 3             # Max login attempts before lock
@@ -48,5 +55,10 @@ class SystemSettings:
             'system_lock_time': self.system_lock_time,
             'monitoring_phone': self.monitoring_phone,
             'homeowner_phone': self.homeowner_phone,
+            'alert_email': self.alert_email,
+            'smtp_host': self.smtp_host,
+            'smtp_port': self.smtp_port,
+            'smtp_user': self.smtp_user,
+            'smtp_password': self.smtp_password,
             'max_login_attempts': self.max_login_attempts
         }

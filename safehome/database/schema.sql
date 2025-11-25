@@ -14,6 +14,11 @@ CREATE TABLE IF NOT EXISTS system_settings (
     system_lock_time INTEGER DEFAULT 300, -- seconds
     monitoring_phone TEXT,
     homeowner_phone TEXT,
+    alert_email TEXT,
+    smtp_host TEXT,
+    smtp_port INTEGER,
+    smtp_user TEXT,
+    smtp_password TEXT,
     max_login_attempts INTEGER DEFAULT 3,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -100,6 +105,11 @@ CREATE INDEX IF NOT EXISTS idx_sensors_type ON sensors(sensor_type);
 CREATE INDEX IF NOT EXISTS idx_event_logs_timestamp ON event_logs(event_timestamp DESC);
 CREATE INDEX IF NOT EXISTS idx_event_logs_type ON event_logs(event_type);
 CREATE INDEX IF NOT EXISTS idx_login_sessions_interface ON login_sessions(interface_type);
+
+-- 9. Event log seen tracking
+CREATE TABLE IF NOT EXISTS event_log_seen (
+    log_id INTEGER PRIMARY KEY
+);
 
 -- Insert default SafeHome modes
 INSERT OR IGNORE INTO safehome_modes (mode_name, description) VALUES
