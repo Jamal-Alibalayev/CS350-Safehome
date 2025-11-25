@@ -17,6 +17,7 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
         self.cameraId = 0
         self.time = 0
         self.pan = 0
+        self.tilt = 0
         self.zoom = 2
         self.imgSource = None
         self.centerWidth = 0
@@ -32,7 +33,7 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
         """Set the camera ID and load associated image (synchronized)."""
         with self._lock:
             self.cameraId = id_
-            fileName = f"camera{id_}.jpg"
+            fileName = f"assets/images/camera{id_}.jpg"
             
             try:
                 self.imgSource = Image.open(fileName)
@@ -66,6 +67,11 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
             else:
                 view += f"left {-self.pan}"
             
+            if self.tilt > 0:
+                view += f", up {self.tilt}"
+            elif self.tilt < 0:
+                view += f", down {-self.tilt}"
+
             # Create the view image (500x500)
             imgView = Image.new('RGB', (self.RETURN_SIZE, self.RETURN_SIZE), 'black')
             
@@ -73,11 +79,12 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
  
                 zoomed = self.SOURCE_SIZE * (10 - self.zoom) // 10
                 panned = self.pan * self.SOURCE_SIZE // 5
+                tilted = self.tilt * self.SOURCE_SIZE // 5
                 
                 left = self.centerWidth + panned - zoomed
-                top = self.centerHeight - zoomed
+                top = self.centerHeight - tilted - zoomed
                 right = self.centerWidth + panned + zoomed
-                bottom = self.centerHeight + zoomed
+                bottom = self.centerHeight - tilted + zoomed
                 
                 # Crop and resize to fill the view
                 try:
@@ -126,6 +133,24 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
             self.pan -= 1
             if self.pan < -5:
                 self.pan += 1
+                return False
+            return True
+
+    def tilt_up(self):
+        """Tilt camera up (synchronized)."""
+        with self._lock:
+            self.tilt += 1
+            if self.tilt > 5:
+                self.tilt = 5
+                return False
+            return True
+
+    def tilt_down(self):
+        """Tilt camera down (synchronized)."""
+        with self._lock:
+            self.tilt -= 1
+            if self.tilt < -5:
+                self.tilt = -5
                 return False
             return True
     
