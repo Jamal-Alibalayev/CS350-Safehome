@@ -4,7 +4,7 @@ Unified monitoring and control interface
 """
 
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, simpledialog
 from PIL import Image, ImageTk
 from safehome.configuration.safehome_mode import SafeHomeMode
 
@@ -18,10 +18,11 @@ class MainDashboard(tk.Toplevel):
     - Zone 관리
     """
 
-    def __init__(self, system, login_window):
+    def __init__(self, system, login_window, user_id: str):
         super().__init__()
         self.system = system
         self.login_window = login_window
+        self.user_id = user_id
 
         # 윈도우 설정
         self.title("SafeHome - Dashboard")
@@ -143,6 +144,22 @@ class MainDashboard(tk.Toplevel):
             activebackground="#c0392b",
             activeforeground="black"
         ).pack(side="left", padx=5)
+
+        if self.user_id == "admin":
+            tk.Button(
+                button_frame,
+                text="⚙️ SETTINGS",
+                command=self._open_settings,
+                bg="#3498db",
+                fg="black",
+                font=("Helvetica", 12, "bold"),
+                width=10,
+                relief="groove",
+                bd=3,
+                cursor="hand2",
+                activebackground="#2980b9",
+                activeforeground="black"
+            ).pack(side="left", padx=5)
 
     def _create_camera_section(self, parent):
         """카메라 뷰 섹션"""
@@ -535,6 +552,93 @@ class MainDashboard(tk.Toplevel):
         """알람 끄기"""
         self.system.alarm.stop()
         messagebox.showinfo("Alarm", "Alarm silenced")
+
+    def _open_settings(self):
+        popup = tk.Toplevel(self)
+        popup.title("Settings")
+        popup.configure(bg="#ecf0f1")
+        popup.resizable(False, False)
+        popup.transient(self)
+        popup.grab_set()
+        width, height = 500, 400
+        try:
+            # center relative to dashboard
+            self.update_idletasks()
+            x = self.winfo_rootx() + (self.winfo_width() // 2) - (width // 2)
+            y = self.winfo_rooty() + (self.winfo_height() // 2) - (height // 2)
+            popup.geometry(f"{width}x{height}+{x}+{y}")
+        except Exception:
+            popup.geometry(f"{width}x{height}")
+        popup.lift()
+
+        container = tk.Frame(popup, bg="#ecf0f1", padx=16, pady=12)
+        container.pack(fill="both", expand=True)
+
+        tk.Label(container, text="System Settings", font=("Arial", 15, "bold"),
+                 bg="#ecf0f1", fg="#2c3e50").grid(row=0, column=0, columnspan=2,
+                                                 sticky="w", pady=(0, 12))
+
+        entries = {}
+
+        def add_row(row, label, key, show=None, default=""):
+            tk.Label(container, text=label, font=("Arial", 10),
+                     bg="#ecf0f1", fg="#34495e").grid(row=row, column=0, sticky="w", pady=6, padx=(0, 10))
+            ent = tk.Entry(container, font=("Arial", 10), show=show, width=30)
+            ent.grid(row=row, column=1, sticky="ew", pady=6)
+            ent.insert(0, "" if default is None else str(default))
+            entries[key] = ent
+
+        add_row(1, "Master Password", "master", show="*", default=self.system.config.settings.master_password)
+        add_row(2, "Guest Password", "guest", show="*", default=self.system.config.settings.guest_password or "")
+        add_row(3, "Entry Delay (s)", "entry", default=str(self.system.config.settings.entry_delay))
+        add_row(4, "Exit Delay (s)", "exit", default=str(self.system.config.settings.exit_delay))
+        add_row(5, "Lock Time (s)", "lock", default=str(self.system.config.settings.system_lock_time))
+        add_row(6, "Monitor Phone", "monitor", default=self.system.config.settings.monitoring_phone)
+        add_row(7, "Home Phone", "home", default=self.system.config.settings.homeowner_phone)
+        add_row(8, "Alert Email", "alert", default=self.system.config.settings.alert_email)
+
+        btn_row = tk.Frame(container, bg="#ecf0f1")
+        btn_row.grid(row=10, column=0, columnspan=2, sticky="ew", pady=(14, 6))
+        tk.Button(btn_row, text="Save", bg="#27ae60", fg="white",
+                  font=("Arial", 11, "bold"), relief="flat", cursor="hand2",
+                  command=lambda: self._save_settings(popup, entries)).pack(side="left", padx=6, ipadx=14, ipady=6)
+        tk.Button(btn_row, text="Close", bg="#95a5a6", fg="white",
+                  font=("Arial", 11, "bold"), relief="flat", cursor="hand2",
+                  command=popup.destroy).pack(side="right", padx=6, ipadx=14, ipady=6)
+
+        container.grid_columnconfigure(1, weight=1)
+
+    def _save_settings(self, popup, entries):
+        s = self.system.config.settings
+        old_master = s.master_password
+        try:
+            s.master_password = entries["master"].get()
+            s.guest_password = entries["guest"].get() or None
+            s.entry_delay = int(entries["entry"].get())
+            s.exit_delay = int(entries["exit"].get())
+            s.system_lock_time = int(entries["lock"].get())
+            s.monitoring_phone = entries["monitor"].get()
+            s.homeowner_phone = entries["home"].get()
+            s.alert_email = entries["alert"].get()
+            self.system.config.save_configuration()
+
+            if s.master_password != old_master:
+                # Trigger email alert for admin password change
+                sent = False
+                try:
+                    sent = self.system._send_password_change_alert()
+                except Exception as e:
+                    self.system.config.logger.add_log(f"Password change email failed: {e}",
+                                                      level="ERROR", source="Dashboard")
+                if not sent:
+                    messagebox.showwarning("Settings",
+                                           "Password updated, but email alert was not sent.\n"
+                                           "Please check Alert Email/SMTP settings.")
+            
+            messagebox.showinfo("Settings", "Settings saved successfully.")
+            popup.destroy()
+        except Exception as e:
+            messagebox.showerror("Settings Error", f"Failed to save settings: {e}")
 
     def _open_sensor_simulator(self):
         """센서 시뮬레이터 열기"""

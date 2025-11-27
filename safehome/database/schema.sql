@@ -14,6 +14,11 @@ CREATE TABLE IF NOT EXISTS system_settings (
     system_lock_time INTEGER DEFAULT 300, -- seconds
     monitoring_phone TEXT,
     homeowner_phone TEXT,
+    alert_email TEXT,
+    smtp_host TEXT,
+    smtp_port INTEGER,
+    smtp_user TEXT,
+    smtp_password TEXT,
     max_login_attempts INTEGER DEFAULT 3,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -94,6 +99,11 @@ CREATE TABLE IF NOT EXISTS login_sessions (
     logout_timestamp TIMESTAMP
 );
 
+-- 9. Event log seen tracking
+CREATE TABLE IF NOT EXISTS event_log_seen (
+    log_id INTEGER PRIMARY KEY
+);
+
 -- Create indexes for performance optimization
 CREATE INDEX IF NOT EXISTS idx_sensors_zone ON sensors(zone_id);
 CREATE INDEX IF NOT EXISTS idx_sensors_type ON sensors(sensor_type);
@@ -115,12 +125,22 @@ INSERT OR IGNORE INTO system_settings (
     web_password_1,
     web_password_2,
     monitoring_phone,
-    homeowner_phone
+    homeowner_phone,
+    alert_email,
+    smtp_host,
+    smtp_port,
+    smtp_user,
+    smtp_password
 ) VALUES (
     1,
     '1234',           -- Default master password
     'webpass1',       -- Default web password 1
     'webpass2',       -- Default web password 2
     '911',            -- Default monitoring service phone
-    '000-0000-0000'   -- Default homeowner phone
+    '000-0000-0000',   -- Default homeowner phone
+    'safehomejongyoon@gmail.com', -- Default recipient email
+    'smtp.gmail.com', -- Default SMTP host
+    587,              -- Default SMTP port
+    'safehomejongyoon@gmail.com', -- Default SMTP user
+    'lfzj nkxr dqsa czal'  -- Default SMTP (app) password
 );

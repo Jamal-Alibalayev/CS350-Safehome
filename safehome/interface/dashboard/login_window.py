@@ -176,7 +176,7 @@ class LoginWindow(tk.Tk):
         if success:
             # 로그인 성공
             self.withdraw()  # 로그인 창 숨김
-            self._open_dashboard()
+            self._open_dashboard(user_id)
         else:
             # 로그인 실패
             locked = self.system.config.login_manager.is_locked.get("CONTROL_PANEL", False)
@@ -189,7 +189,7 @@ class LoginWindow(tk.Tk):
             self.password_entry.delete(0, tk.END)
             self.password_entry.focus()
 
-    def _open_dashboard(self):
+    def _open_dashboard(self, user_id: str):
         """Dashboard 열기"""
         from .main_dashboard import MainDashboard
-        dashboard = MainDashboard(self.system, self)
+        dashboard = MainDashboard(self.system, self, user_id)

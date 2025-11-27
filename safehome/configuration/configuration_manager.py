@@ -5,6 +5,8 @@ from .log_manager import LogManager
 from .login_manager import LoginManager
 from .safehome_mode import SafeHomeMode
 from .safety_zone import SafetyZone
+import smtplib
+from email.message import EmailMessage
 
 
 class ConfigurationManager:
@@ -52,6 +54,38 @@ class ConfigurationManager:
 
         # 8. Current state
         self.current_mode = SafeHomeMode.DISARMED
+
+    def send_email_alert(self, subject: str, body: str) -> bool:
+        """
+        Send an email alert using SMTP settings
+
+        Returns:
+            True if sent, False otherwise
+        """
+        settings = self.settings
+        if not settings.alert_email:
+            self.logger.add_log("Email alert skipped: no alert_email configured",
+                                level="WARNING", source="ConfigManager")
+            return False
+        try:
+            port = int(settings.smtp_port) if settings.smtp_port else 587
+            msg = EmailMessage()
+            msg["Subject"] = subject
+            msg["From"] = settings.smtp_user
+            msg["To"] = settings.alert_email
+            msg.set_content(body)
+
+            with smtplib.SMTP(settings.smtp_host, port, timeout=10) as server:
+                server.starttls()
+                server.login(settings.smtp_user, settings.smtp_password)
+                server.send_message(msg)
+            self.logger.add_log(f"Alert email sent to {settings.alert_email}",
+                                source="ConfigManager")
+            return True
+        except Exception as e:
+            self.logger.add_log(f"Email alert failed: {e}", level="ERROR", source="ConfigManager")
+            print(f"[Email] Failed to send alert: {e}")
+            return False
 
     def _load_or_create_zones(self) -> List[SafetyZone]:
         """Load safety zones from database or create defaults"""

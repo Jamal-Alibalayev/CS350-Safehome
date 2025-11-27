@@ -6,9 +6,11 @@ Initializes and runs the complete SafeHome security system with all components
 """
 
 import tkinter as tk
+import threading
 from safehome.core.system import System
 from safehome.interface.dashboard import LoginWindow
 from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
+from safehome.interface.web import api_server
 
 
 def setup_hardware(system: System):
@@ -135,6 +137,16 @@ def main():
         print("[System] Starting system...")
         system.turn_on()
         print("[System] System is now running (sensor polling active)\n")
+
+        # 3.5. Start API server in background thread
+        print("[System] Starting API server...")
+        api_thread = threading.Thread(
+            target=api_server.run_api,
+            args=(system,),
+            daemon=True
+        )
+        api_thread.start()
+        print("✓ API server running in background\n")
 
         # 4. Launch Login Window (Main Entry Point)
         # Note: Sensor Test GUI will be available from within the dashboard

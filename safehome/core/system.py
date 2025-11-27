@@ -286,8 +286,27 @@ class System:
         Returns:
             True if password changed successfully, False otherwise
         """
-        return self.config.login_manager.change_password(
+        changed = self.config.login_manager.change_password(
             old_password, new_password, interface_type
+        )
+        if changed:
+            # Persist and notify
+            self.config.save_configuration()
+            self.config.logger.add_log(
+                f"{interface_type} password changed",
+                level="INFO",
+                source="System"
+            )
+            if interface_type == "CONTROL_PANEL":
+                self._send_password_change_alert()
+        return changed
+
+    def _send_password_change_alert(self) -> bool:
+        """Send an email alert when the admin (control panel) password changes."""
+        return self.config.send_email_alert(
+            "SafeHome password changed",
+            "Your SafeHome control panel password was changed.\n"
+            "If you did not make this change, please reset it immediately."
         )
 
     # ===== Helper Methods =====
