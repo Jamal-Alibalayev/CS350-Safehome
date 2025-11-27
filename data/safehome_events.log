@@ -23230,3 +23230,1854 @@
 [2025-11-27 21:48:55] [INFO] CameraController: All cameras stopped
 [2025-11-27 21:48:55] [INFO] ConfigManager: Configuration saved
 [2025-11-27 21:48:55] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-27 21:55:54] [INFO] ConfigManager: System configuration loaded
+[2025-11-27 21:55:54] [INFO] SensorController: Loaded 10 sensors from storage
+[2025-11-27 21:55:54] [INFO] CameraController: Loaded 3 cameras from storage
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 1 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 2 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 3 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 4 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 5 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 6 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 7 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 8 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 9 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 10 removed
+[2025-11-27 21:55:54] [INFO] CameraController: Camera 1 removed
+[2025-11-27 21:55:54] [INFO] CameraController: Camera 2 removed
+[2025-11-27 21:55:54] [INFO] CameraController: Camera 3 removed
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 1 (WINDOOR) added at DR Window 1
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 2 (WINDOOR) added at DR Window 2
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 3 (WINDOOR) added at Kitchen Window
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 4 (WINDOOR) added at LR Window 1
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 5 (WINDOOR) added at LR Window 2
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 6 (WINDOOR) added at LR Window 3
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 7 (WINDOOR) added at Hallway Door
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 8 (WINDOOR) added at Kitchen Door
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 9 (MOTION) added at Motion DR-LR
+[2025-11-27 21:55:54] [INFO] SensorController: Sensor 10 (MOTION) added at Motion Kitchen
+[2025-11-27 21:55:54] [INFO] CameraController: Camera 1 (Dining Room Camera) added at Dining Room
+[2025-11-27 21:55:54] [INFO] CameraController: Camera 2 (Kitchen Camera) added at Kitchen
+[2025-11-27 21:55:55] [INFO] CameraController: Camera 3 (Living Room Camera) added at Living Room
+[2025-11-27 21:55:55] [INFO] System: System turned ON
+[2025-11-27 21:55:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:55:58] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:55:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:55:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:55:58] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:55:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:55:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:55:59] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:55:59] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:55:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:00] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:00] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:00] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:00] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:00] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:01] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:01] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:01] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 21:56:02] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:02] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:03] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:03] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 21:56:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:04] [INFO] CameraController: Camera 3 disabled
+[2025-11-27 21:56:05] [INFO] CameraController: Camera 3 disabled
+[2025-11-27 21:56:06] [INFO] CameraController: Camera 3 enabled
+[2025-11-27 21:56:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:08] [INFO] CameraController: Camera 2 enabled
+[2025-11-27 21:56:08] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:09] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 21:56:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:11] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:11] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:12] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:12] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:13] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:13] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:13] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:14] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:14] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:14] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:14] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:15] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:15] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:16] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:16] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:17] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:17] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:18] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:18] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:19] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:19] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:19] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:20] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:20] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:21] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:21] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:22] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:22] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:23] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:23] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:24] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:24] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:25] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:27] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:27] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:28] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:28] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:29] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:29] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:30] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:31] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:31] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:32] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:32] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:33] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:33] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:34] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:34] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:35] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:36] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:36] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:37] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:37] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:38] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:38] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:39] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:39] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:40] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:42] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:42] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:44] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:44] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:45] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:45] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:49] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:49] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:50] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:50] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:51] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:51] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:52] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:52] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:54] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:54] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:56] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:56] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:56] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:56] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:56] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:56] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:57] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:57] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:57] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:58] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:58] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:59] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:59] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:56:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:56:59] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:56:59] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:00] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:00] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:00] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:00] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:00] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:00] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:01] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:01] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:02] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:02] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:03] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:03] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:03] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:03] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:04] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:04] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:05] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:05] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:06] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:06] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:06] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:06] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:07] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:07] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:08] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:08] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:11] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:11] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:12] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:12] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:13] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:13] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:14] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:14] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:14] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:14] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:14] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:14] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:15] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:15] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:16] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:16] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:17] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:17] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:18] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:19] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:19] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:19] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:19] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:19] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:19] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:20] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:20] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:21] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:21] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:22] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:22] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:23] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:23] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:24] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:25] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:25] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:27] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:27] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:28] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:28] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:29] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:30] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:30] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:31] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:31] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:32] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:32] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:33] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:33] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:34] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:34] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:35] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:36] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:36] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:37] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:37] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:38] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:38] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:39] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:39] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:40] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:42] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:42] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:44] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:44] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:45] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:49] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:49] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:50] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:50] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:51] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:51] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:52] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:52] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:54] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:54] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:56] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:56] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:56] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:57] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:57] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:57] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:57] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:57] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:57] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:58] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:58] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:59] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:59] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:57:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:57:59] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:57:59] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:00] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:00] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:00] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:00] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:00] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:00] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:01] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:01] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:02] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:02] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:02] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:03] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:03] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:03] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:04] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:04] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:05] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:05] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:06] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:06] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:06] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:06] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:07] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:07] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:08] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:08] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:11] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:11] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:12] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:12] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:13] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:13] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:13] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:13] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:14] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:14] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:14] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:15] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:15] [INFO] ConfigManager: Safety zone 1 deleted
+[2025-11-27 21:58:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:15] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:16] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:16] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:17] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:17] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:18] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:18] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:19] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:19] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:19] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:19] [INFO] ConfigManager: Safety zone 2 deleted
+[2025-11-27 21:58:19] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:19] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:19] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:20] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:21] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:21] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:22] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:22] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:23] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:23] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:24] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:24] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:25] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:25] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:27] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:28] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:28] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:29] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:29] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:30] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:30] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:31] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:31] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:32] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:32] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:33] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:34] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:34] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:34] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 21:58:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:36] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 21:58:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:37] [INFO] CameraController: Camera 2 enabled
+[2025-11-27 21:58:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:37] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:38] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:38] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 21:58:38] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:39] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:39] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 21:58:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:40] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:40] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:42] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:42] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:44] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:44] [INFO] CameraController: Camera 2 zoomed in
+[2025-11-27 21:58:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:44] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:45] [INFO] CameraController: Camera 2 zoomed in
+[2025-11-27 21:58:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:45] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:46] [INFO] CameraController: Camera 2 zoomed out
+[2025-11-27 21:58:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:46] [INFO] CameraController: Camera 2 zoomed out
+[2025-11-27 21:58:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:49] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 21:58:49] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 21:58:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 21:58:50] [INFO] ConfigManager: Configuration saved
+[2025-11-27 21:58:50] [INFO] System: System turned OFF
+[2025-11-27 21:58:50] [INFO] CameraController: All cameras stopped
+[2025-11-27 21:58:50] [INFO] ConfigManager: Configuration saved
+[2025-11-27 21:58:50] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-27 22:03:57] [INFO] ConfigManager: System configuration loaded
+[2025-11-27 22:03:57] [INFO] SensorController: Loaded 10 sensors from storage
+[2025-11-27 22:03:57] [INFO] CameraController: Loaded 3 cameras from storage
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 1 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 2 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 3 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 4 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 5 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 6 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 7 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 8 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 9 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 10 removed
+[2025-11-27 22:03:57] [INFO] CameraController: Camera 1 removed
+[2025-11-27 22:03:57] [INFO] CameraController: Camera 2 removed
+[2025-11-27 22:03:57] [INFO] CameraController: Camera 3 removed
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 1 (WINDOOR) added at DR Window 1
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 2 (WINDOOR) added at DR Window 2
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 3 (WINDOOR) added at Kitchen Window
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 4 (WINDOOR) added at LR Window 1
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 5 (WINDOOR) added at LR Window 2
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 6 (WINDOOR) added at LR Window 3
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 7 (WINDOOR) added at Hallway Door
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 8 (WINDOOR) added at Kitchen Door
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 9 (MOTION) added at Motion DR-LR
+[2025-11-27 22:03:57] [INFO] SensorController: Sensor 10 (MOTION) added at Motion Kitchen
+[2025-11-27 22:03:57] [INFO] CameraController: Camera 1 (Dining Room Camera) added at Dining Room
+[2025-11-27 22:03:57] [INFO] CameraController: Camera 2 (Kitchen Camera) added at Kitchen
+[2025-11-27 22:03:57] [INFO] CameraController: Camera 3 (Living Room Camera) added at Living Room
+[2025-11-27 22:03:57] [INFO] System: System turned ON
+[2025-11-27 22:04:00] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:00] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:00] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:01] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:02] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:02] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:02] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 22:04:02] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:03] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:03] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:06] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:06] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:08] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:13] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:13] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:14] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:14] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:17] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:04:17] [INFO] System: System turned OFF
+[2025-11-27 22:04:17] [INFO] CameraController: All cameras stopped
+[2025-11-27 22:04:17] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:04:17] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-27 22:04:19] [INFO] ConfigManager: System configuration loaded
+[2025-11-27 22:04:19] [INFO] SensorController: Loaded 10 sensors from storage
+[2025-11-27 22:04:19] [INFO] CameraController: Loaded 3 cameras from storage
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 1 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 2 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 3 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 4 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 5 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 6 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 7 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 8 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 9 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 10 removed
+[2025-11-27 22:04:19] [INFO] CameraController: Camera 1 removed
+[2025-11-27 22:04:19] [INFO] CameraController: Camera 2 removed
+[2025-11-27 22:04:19] [INFO] CameraController: Camera 3 removed
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 1 (WINDOOR) added at DR Window 1
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 2 (WINDOOR) added at DR Window 2
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 3 (WINDOOR) added at Kitchen Window
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 4 (WINDOOR) added at LR Window 1
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 5 (WINDOOR) added at LR Window 2
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 6 (WINDOOR) added at LR Window 3
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 7 (WINDOOR) added at Hallway Door
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 8 (WINDOOR) added at Kitchen Door
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 9 (MOTION) added at Motion DR-LR
+[2025-11-27 22:04:19] [INFO] SensorController: Sensor 10 (MOTION) added at Motion Kitchen
+[2025-11-27 22:04:19] [INFO] CameraController: Camera 1 (Dining Room Camera) added at Dining Room
+[2025-11-27 22:04:19] [INFO] CameraController: Camera 2 (Kitchen Camera) added at Kitchen
+[2025-11-27 22:04:19] [INFO] CameraController: Camera 3 (Living Room Camera) added at Living Room
+[2025-11-27 22:04:19] [INFO] System: System turned ON
+[2025-11-27 22:04:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:23] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:23] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:24] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:25] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:25] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:27] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:27] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:28] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:28] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:29] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:29] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:30] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:04:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:30] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 22:04:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:04:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:04:46] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:04:46] [INFO] System: System turned OFF
+[2025-11-27 22:04:46] [INFO] CameraController: All cameras stopped
+[2025-11-27 22:04:46] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:04:46] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-27 22:08:32] [INFO] ConfigManager: System configuration loaded
+[2025-11-27 22:08:32] [INFO] SensorController: Loaded 10 sensors from storage
+[2025-11-27 22:08:32] [INFO] CameraController: Loaded 3 cameras from storage
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 1 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 2 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 3 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 4 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 5 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 6 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 7 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 8 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 9 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 10 removed
+[2025-11-27 22:08:32] [INFO] CameraController: Camera 1 removed
+[2025-11-27 22:08:32] [INFO] CameraController: Camera 2 removed
+[2025-11-27 22:08:32] [INFO] CameraController: Camera 3 removed
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 1 (WINDOOR) added at DR Window 1
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 2 (WINDOOR) added at DR Window 2
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 3 (WINDOOR) added at Kitchen Window
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 4 (WINDOOR) added at LR Window 1
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 5 (WINDOOR) added at LR Window 2
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 6 (WINDOOR) added at LR Window 3
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 7 (WINDOOR) added at Hallway Door
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 8 (WINDOOR) added at Kitchen Door
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 9 (MOTION) added at Motion DR-LR
+[2025-11-27 22:08:32] [INFO] SensorController: Sensor 10 (MOTION) added at Motion Kitchen
+[2025-11-27 22:08:32] [INFO] CameraController: Camera 1 (Dining Room Camera) added at Dining Room
+[2025-11-27 22:08:32] [INFO] CameraController: Camera 2 (Kitchen Camera) added at Kitchen
+[2025-11-27 22:08:32] [INFO] CameraController: Camera 3 (Living Room Camera) added at Living Room
+[2025-11-27 22:08:32] [INFO] System: System turned ON
+[2025-11-27 22:08:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:36] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:36] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:37] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 22:08:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:38] [INFO] CameraController: Camera 2 enabled
+[2025-11-27 22:08:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:38] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:39] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:39] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 22:08:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:40] [INFO] CameraController: Camera 2 enabled
+[2025-11-27 22:08:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:40] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:40] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:40] [INFO] CameraController: Camera 3 disabled
+[2025-11-27 22:08:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:41] [INFO] CameraController: Camera 3 enabled
+[2025-11-27 22:08:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:42] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:42] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:08:42] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:43] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:08:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:44] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:08:44] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:44] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:08:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:45] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:45] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:08:45] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:45] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:08:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:46] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:08:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:47] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:08:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:48] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:08:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:48] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:08:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:49] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:49] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:08:49] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:50] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:08:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:50] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:50] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:08:51] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:51] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:08:51] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:51] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:51] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:08:52] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:52] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:08:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:52] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:54] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:54] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:56] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:56] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:56] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:57] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:08:57] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:57] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:57] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:08:57] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:57] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:58] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:08:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:58] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 22:08:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:08:58] [INFO] CameraController: Camera 3 disabled
+[2025-11-27 22:09:01] [INFO] CameraController: Camera 3 disabled
+[2025-11-27 22:09:02] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 22:09:02] [INFO] CameraController: Camera 3 enabled
+[2025-11-27 22:09:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:03] [INFO] CameraController: Camera 3 disabled
+[2025-11-27 22:09:03] [INFO] CameraController: Camera 3 enabled
+[2025-11-27 22:09:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:04] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 22:09:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:04] [INFO] CameraController: Camera 2 enabled
+[2025-11-27 22:09:04] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:05] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:05] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:09:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:09:05] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:09:06] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:06] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:06] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:09:07] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:07] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:09:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:09:07] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:07] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:08] [INFO] CameraController: Camera 1 disabled
+[2025-11-27 22:09:08] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:08] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:08] [INFO] CameraController: Camera 1 enabled
+[2025-11-27 22:09:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:09:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:09:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:09:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:09:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:09:11] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:09:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:09:12] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:09:12] [INFO] System: System turned OFF
+[2025-11-27 22:09:12] [INFO] CameraController: All cameras stopped
+[2025-11-27 22:09:12] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:09:12] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-27 22:10:41] [INFO] ConfigManager: System configuration loaded
+[2025-11-27 22:10:41] [INFO] SensorController: Loaded 10 sensors from storage
+[2025-11-27 22:10:41] [INFO] CameraController: Loaded 3 cameras from storage
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 1 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 2 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 3 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 4 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 5 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 6 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 7 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 8 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 9 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 10 removed
+[2025-11-27 22:10:41] [INFO] CameraController: Camera 1 removed
+[2025-11-27 22:10:41] [INFO] CameraController: Camera 2 removed
+[2025-11-27 22:10:41] [INFO] CameraController: Camera 3 removed
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 1 (WINDOOR) added at DR Window 1
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 2 (WINDOOR) added at DR Window 2
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 3 (WINDOOR) added at Kitchen Window
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 4 (WINDOOR) added at LR Window 1
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 5 (WINDOOR) added at LR Window 2
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 6 (WINDOOR) added at LR Window 3
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 7 (WINDOOR) added at Hallway Door
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 8 (WINDOOR) added at Kitchen Door
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 9 (MOTION) added at Motion DR-LR
+[2025-11-27 22:10:41] [INFO] SensorController: Sensor 10 (MOTION) added at Motion Kitchen
+[2025-11-27 22:10:41] [INFO] CameraController: Camera 1 (Dining Room Camera) added at Dining Room
+[2025-11-27 22:10:41] [INFO] CameraController: Camera 2 (Kitchen Camera) added at Kitchen
+[2025-11-27 22:10:41] [INFO] CameraController: Camera 3 (Living Room Camera) added at Living Room
+[2025-11-27 22:10:41] [INFO] System: System turned ON
+[2025-11-27 22:10:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:45] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:49] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:49] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:49] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:50] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:50] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:50] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:50] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:51] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:51] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:51] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:51] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:52] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:52] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:54] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:56] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:56] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:56] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:56] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:56] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:56] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:57] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:57] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:57] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:57] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:57] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:57] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:58] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:58] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:58] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:58] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:59] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:59] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:10:59] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:10:59] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:10:59] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:00] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:00] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:00] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:01] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:01] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:01] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:01] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:02] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:02] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:02] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:02] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:02] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:03] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:03] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:03] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:03] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:03] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:04] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:04] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:04] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:04] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:05] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:05] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:05] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:05] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:06] [INFO] CameraController: Camera 3 disabled
+[2025-11-27 22:11:06] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:06] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:07] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:07] [INFO] CameraController: Camera 3 disabled
+[2025-11-27 22:11:07] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:07] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:08] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:08] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:08] [INFO] CameraController: Camera 3 enabled
+[2025-11-27 22:11:08] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:08] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:08] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:09] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:09] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:09] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:10] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:10] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:10] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:11] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:11] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:11] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:11] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:12] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:12] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:12] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:13] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:13] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:13] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:13] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:13] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:14] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:14] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:14] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:14] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:14] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:14] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:15] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:15] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:15] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:15] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:16] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:16] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:16] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:16] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:17] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:17] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:17] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:18] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:18] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:18] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:18] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:19] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:19] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:19] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:19] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:19] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:19] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:20] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:20] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:20] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:20] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:21] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:21] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:21] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:21] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:22] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:22] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:22] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:22] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:23] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:23] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:23] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:24] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:24] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:24] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:24] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:25] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:25] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:25] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:25] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:26] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:26] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:26] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:27] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:27] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:27] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:27] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:28] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:28] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:28] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:29] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:29] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:29] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:29] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:30] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:30] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:30] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:30] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:31] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:31] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:31] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:31] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:32] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:32] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:32] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:32] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:33] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:33] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:33] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:33] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:34] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:34] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:34] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:35] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:35] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:35] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:35] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:36] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:11:36] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:11:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:11:37] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:11:37] [INFO] System: System turned OFF
+[2025-11-27 22:11:37] [INFO] CameraController: All cameras stopped
+[2025-11-27 22:11:37] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:11:37] [INFO] ConfigManager: Configuration Manager shutdown
+[2025-11-27 22:12:32] [INFO] ConfigManager: System configuration loaded
+[2025-11-27 22:12:32] [INFO] SensorController: Loaded 10 sensors from storage
+[2025-11-27 22:12:32] [INFO] CameraController: Loaded 3 cameras from storage
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 1 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 2 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 3 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 4 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 5 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 6 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 7 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 8 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 9 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 10 removed
+[2025-11-27 22:12:32] [INFO] CameraController: Camera 1 removed
+[2025-11-27 22:12:32] [INFO] CameraController: Camera 2 removed
+[2025-11-27 22:12:32] [INFO] CameraController: Camera 3 removed
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 1 (WINDOOR) added at DR Window 1
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 2 (WINDOOR) added at DR Window 2
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 3 (WINDOOR) added at Kitchen Window
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 4 (WINDOOR) added at LR Window 1
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 5 (WINDOOR) added at LR Window 2
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 6 (WINDOOR) added at LR Window 3
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 7 (WINDOOR) added at Hallway Door
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 8 (WINDOOR) added at Kitchen Door
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 9 (MOTION) added at Motion DR-LR
+[2025-11-27 22:12:32] [INFO] SensorController: Sensor 10 (MOTION) added at Motion Kitchen
+[2025-11-27 22:12:32] [INFO] CameraController: Camera 1 (Dining Room Camera) added at Dining Room
+[2025-11-27 22:12:32] [INFO] CameraController: Camera 2 (Kitchen Camera) added at Kitchen
+[2025-11-27 22:12:32] [INFO] CameraController: Camera 3 (Living Room Camera) added at Living Room
+[2025-11-27 22:12:32] [INFO] System: System turned ON
+[2025-11-27 22:12:36] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:36] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:36] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:37] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:37] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:37] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:37] [INFO] CameraController: Camera 2 disabled
+[2025-11-27 22:12:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:38] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:38] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:38] [INFO] CameraController: Camera 2 enabled
+[2025-11-27 22:12:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:39] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:39] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:39] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:39] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:40] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:40] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:40] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:40] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:41] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:41] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:41] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:42] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:42] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:42] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:43] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:43] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:43] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:44] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:44] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:44] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:44] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:45] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:45] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:45] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:45] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:46] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:46] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:46] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:47] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:47] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:47] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:48] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:48] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:48] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:48] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:12:51] [INFO] ConfigManager: Alert email sent to aptcheung62@gmail.com
+[2025-11-27 22:12:51] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:51] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:51] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:52] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:52] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:52] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:53] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:53] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:53] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:54] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:54] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:54] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:54] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:55] [INFO] CameraController: Camera 1 view accessed
+[2025-11-27 22:12:55] [INFO] CameraController: Camera 2 view accessed
+[2025-11-27 22:12:55] [INFO] CameraController: Camera 3 view accessed
+[2025-11-27 22:12:57] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:12:57] [INFO] System: System turned OFF
+[2025-11-27 22:12:57] [INFO] CameraController: All cameras stopped
+[2025-11-27 22:12:57] [INFO] ConfigManager: Configuration saved
+[2025-11-27 22:12:57] [INFO] ConfigManager: Configuration Manager shutdown

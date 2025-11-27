@@ -19,6 +19,9 @@ venv/
 # Log files
 *.log
 
+data/
+*.log
+
 # Asset files that might change frequently
 *.jpg
 *.png

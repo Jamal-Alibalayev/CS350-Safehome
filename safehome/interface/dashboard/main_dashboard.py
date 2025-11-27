@@ -24,6 +24,7 @@ class MainDashboard(tk.Toplevel):
         self.login_window = login_window
         self.user_id = user_id
 
+
         # 윈도우 설정
         self.title("SafeHome - Dashboard")
         self.geometry("1400x900")
@@ -224,8 +225,12 @@ class MainDashboard(tk.Toplevel):
             ).pack(side="left")
 
             # 카메라 이미지
-            img_label = tk.Label(cam_container, bg="black")
-            img_label.pack(padx=5, pady=5, fill="both", expand=True)
+            display_frame = tk.Frame(cam_container, width=400, height=300, bg="black")
+            display_frame.pack(padx=5, pady=5)
+            display_frame.pack_propagate(False) # Prevent resizing
+
+            img_label = tk.Label(display_frame, bg="black")
+            img_label.pack(fill="both", expand=True)
             self.camera_labels[camera.camera_id] = img_label
 
             # PTZ 제어 버튼
@@ -242,6 +247,16 @@ class MainDashboard(tk.Toplevel):
             # Zoom buttons
             tk.Button(control_frame, text="+", command=lambda c=camera: self._zoom_camera(c, "in")).grid(row=0, column=2, sticky="ew")
             tk.Button(control_frame, text="-", command=lambda c=camera: self._zoom_camera(c, "out")).grid(row=2, column=0, sticky="ew")
+
+            # Enable/Disable buttons
+            toggle_frame = tk.Frame(control_frame, bg="#ecf0f1")
+            toggle_frame.grid(row=3, column=0, columnspan=3, sticky="ew", pady=(5,0))
+            toggle_frame.grid_columnconfigure(0, weight=1)
+            toggle_frame.grid_columnconfigure(1, weight=1)
+
+            tk.Button(toggle_frame, text="Enable", command=lambda c=camera: self._toggle_camera(c, True), bg="#27ae60", fg="white").grid(row=0, column=0, sticky="ew", padx=(0,2))
+            tk.Button(toggle_frame, text="Disable", command=lambda c=camera: self._toggle_camera(c, False), bg="#e74c3c", fg="white").grid(row=0, column=1, sticky="ew", padx=(2,0))
+
 
     def _create_control_buttons(self, parent):
         """Arm/Disarm 제어 버튼 및 센서 시뮬레이터"""
@@ -452,15 +467,21 @@ class MainDashboard(tk.Toplevel):
         """카메라 이미지 갱신"""
         for cam_id, label in self.camera_labels.items():
             try:
+                camera = self.system.camera_controller.get_camera(cam_id)
+                if camera and not camera.is_enabled:
+                    label.config(image='', text="Disabled", compound="center", fg="white", font=("Arial", 12, "bold"))
+                    continue
+
                 img = self.system.camera_controller.get_camera_view(cam_id)
                 if img:
-                    # 리사이즈
                     img_resized = img.resize((400, 300), Image.Resampling.LANCZOS)
                     photo = ImageTk.PhotoImage(img_resized)
-                    label.config(image=photo)
+                    label.config(image=photo, text="")
                     label.image = photo
+                else:
+                    label.config(image='', text="No Signal", compound="center", fg="red", font=("Arial", 12, "bold"))
             except Exception as e:
-                label.config(text=f"Camera Error\n{str(e)[:30]}", fg="red")
+                label.config(image='', text=f"Camera Error\n{str(e)[:30]}", compound="center", fg="red")
 
     def _update_sensors(self):
         """센서 리스트 갱신"""
@@ -530,6 +551,13 @@ class MainDashboard(tk.Toplevel):
     def _zoom_camera(self, camera, direction):
         """카메라 줌"""
         self.system.camera_controller.zoom_camera(camera.camera_id, direction)
+
+    def _toggle_camera(self, camera, enable: bool):
+        """Enable or disable a camera."""
+        if enable:
+            self.system.camera_controller.enable_camera(camera.camera_id)
+        else:
+            self.system.camera_controller.disable_camera(camera.camera_id)
 
     def _open_zone_manager(self):
         """Zone 관리자 열기"""
