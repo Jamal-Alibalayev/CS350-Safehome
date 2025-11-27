@@ -60,22 +60,21 @@ class SafeHomeSensorTest(tk.Toplevel):
         ).pack(side="left")
 
         # 메인 컨테이너
-        main_container = tk.Frame(self, bg="#ecf0f1")
-        main_container.pack(fill="both", expand=True, padx=15, pady=15)
+        paned_window = ttk.PanedWindow(self, orient=tk.HORIZONTAL)
+        paned_window.pack(fill="both", expand=True, padx=15, pady=15)
 
         # 좌측: Floor Plan 및 센서 목록
-        left_panel = tk.Frame(main_container, bg="#ecf0f1")
-        left_panel.pack(side="left", fill="both", expand=True, padx=(0, 10))
+        left_panel = tk.Frame(paned_window, bg="#ecf0f1")
+        paned_window.add(left_panel, weight=2)
 
         self._create_floorplan_section(left_panel)
         self._create_sensor_list(left_panel)
 
         # 우측: 센서 제어 패널
-        right_panel = tk.Frame(main_container, bg="#ecf0f1", width=400)
-        right_panel.pack(side="right", fill="both", padx=(10, 0))
-        right_panel.pack_propagate(False)
+        right_panel = tk.Frame(paned_window, bg="#ecf0f1")
+        paned_window.add(right_panel, weight=1)
 
-        self._create_control_panels(right_panel)
+        self._create_right_panel(right_panel)
 
     def _create_floorplan_section(self, parent):
         """Floor Plan 이미지 표시"""
@@ -173,6 +172,41 @@ class SafeHomeSensorTest(tk.Toplevel):
         style.configure("Treeview", rowheight=28, font=("Arial", 10))
         style.configure("Treeview.Heading", font=("Arial", 10, "bold"))
 
+    def _create_right_panel(self, parent):
+        """Create a scrollable right panel for controls."""
+        canvas = tk.Canvas(parent, bg="#ecf0f1", highlightthickness=0)
+        scrollbar = ttk.Scrollbar(parent, orient="vertical", command=canvas.yview)
+        scrollable_frame = tk.Frame(canvas, bg="#ecf0f1")
+
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        def _on_mousewheel(event):
+            if event.num == 4 or (hasattr(event, 'delta') and event.delta > 0):
+                canvas.yview_scroll(-1, "units")
+            elif event.num == 5 or (hasattr(event, 'delta') and event.delta < 0):
+                canvas.yview_scroll(1, "units")
+
+        def _bind_mousewheel_recursively(widget):
+            widget.bind("<MouseWheel>", _on_mousewheel)
+            widget.bind("<Button-4>", _on_mousewheel)
+            widget.bind("<Button-5>", _on_mousewheel)
+            for child in widget.winfo_children():
+                _bind_mousewheel_recursively(child)
+
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+        
+        self._create_control_panels(scrollable_frame)
+
+        # Bind events after a short delay to ensure all widgets are created
+        self.after(100, lambda: _bind_mousewheel_recursively(scrollable_frame))
+
     def _create_control_panels(self, parent):
         """센서 제어 패널"""
         # Window/Door 제어
@@ -183,7 +217,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bg="white",
             fg="#2c3e50"
         )
-        wd_frame.pack(fill="x", pady=(0, 15))
+        wd_frame.pack(fill="x", pady=(0, 15), padx=10)
 
         wd_content = tk.Frame(wd_frame, bg="white")
         wd_content.pack(padx=15, pady=15)
@@ -281,7 +315,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bg="white",
             fg="#2c3e50"
         )
-        md_frame.pack(fill="x", pady=(0, 15))
+        md_frame.pack(fill="x", pady=(0, 15), padx=10)
 
         md_content = tk.Frame(md_frame, bg="white")
         md_content.pack(padx=15, pady=15)
@@ -379,7 +413,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bg="white",
             fg="#2c3e50"
         )
-        quick_frame.pack(fill="x")
+        quick_frame.pack(fill="x", padx=10)
 
         quick_content = tk.Frame(quick_frame, bg="white")
         quick_content.pack(padx=15, pady=15)
@@ -428,6 +462,264 @@ class SafeHomeSensorTest(tk.Toplevel):
             activebackground="#2980b9",
             activeforeground="black"
         ).pack(pady=5, fill="x", expand=True)
+
+    
+    def _create_control_panels(self, parent):
+        """센서 제어 패널"""
+        # Window/Door 제어
+        wd_frame = tk.LabelFrame(
+            parent,
+            text="🚪 Window/Door Sensors",
+            font=("Arial", 12, "bold"),
+            bg="white",
+            fg="#2c3e50"
+        )
+        wd_frame.pack(fill="x", pady=(0, 15), padx=10)
+
+        wd_content = tk.Frame(wd_frame, bg="white")
+        wd_content.pack(padx=15, pady=15)
+
+        # ID 입력
+        tk.Label(wd_content, text="Sensor ID:", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        self.wd_id_var = tk.StringVar()
+        tk.Entry(wd_content, textvariable=self.wd_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
+
+        # ID 범위 표시
+        self.wd_range_label = tk.Label(wd_content, text="Available IDs: N/A", font=("Arial", 9), bg="white", fg="#7f8c8d")
+        self.wd_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
+
+        # 센서 제어
+        tk.Label(wd_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white").grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
+
+        btn_frame1 = tk.Frame(wd_content, bg="white")
+        btn_frame1.grid(row=3, column=0, columnspan=2, pady=5)
+
+        tk.Button(
+            btn_frame1,
+            text="🟢 ARM SENSOR",
+            bg="#27ae60",
+            fg="black",
+            font=("Helvetica", 11, "bold"),
+            width=15,
+            height=2,
+            command=lambda: self._handle_windoor_sensor("arm"),
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#229954",
+            activeforeground="black"
+        ).pack(side="left", padx=5)
+
+        tk.Button(
+            btn_frame1,
+            text="🔴 DISARM SENSOR",
+            bg="#e74c3c",
+            fg="black",
+            font=("Helvetica", 11, "bold"),
+            width=15,
+            height=2,
+            command=lambda: self._handle_windoor_sensor("disarm"),
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#c0392b",
+            activeforeground="black"
+        ).pack(side="left", padx=5)
+
+        # Door/Window 제어
+        tk.Label(wd_content, text="Door/Window State:", font=("Arial", 10, "bold"), bg="white").grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
+
+        btn_frame2 = tk.Frame(wd_content, bg="white")
+        btn_frame2.grid(row=5, column=0, columnspan=2, pady=5)
+
+        tk.Button(
+            btn_frame2,
+            text="🚪 OPEN",
+            bg="#3498db",
+            fg="black",
+            font=("Helvetica", 11, "bold"),
+            width=15,
+            height=2,
+            command=lambda: self._handle_windoor("open"),
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#2980b9",
+            activeforeground="black"
+        ).pack(side="left", padx=5)
+
+        tk.Button(
+            btn_frame2,
+            text="🚪 CLOSE",
+            bg="#95a5a6",
+            fg="black",
+            font=("Helvetica", 11, "bold"),
+            width=15,
+            height=2,
+            command=lambda: self._handle_windoor("close"),
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#7f8c8d",
+            activeforeground="black"
+        ).pack(side="left", padx=5)
+
+        # Motion Detector 제어
+        md_frame = tk.LabelFrame(
+            parent,
+            text="👁️ Motion Detectors",
+            font=("Arial", 12, "bold"),
+            bg="white",
+            fg="#2c3e50"
+        )
+        md_frame.pack(fill="x", pady=(0, 15), padx=10)
+
+        md_content = tk.Frame(md_frame, bg="white")
+        md_content.pack(padx=15, pady=15)
+
+        # ID 입력
+        tk.Label(md_content, text="Detector ID:", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        self.md_id_var = tk.StringVar()
+        tk.Entry(md_content, textvariable=self.md_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
+
+        # ID 범위 표시
+        self.md_range_label = tk.Label(md_content, text="Available IDs: N/A", font=("Arial", 9), bg="white", fg="#7f8c8d")
+        self.md_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
+
+        # 센서 제어
+        tk.Label(md_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white").grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
+
+        btn_frame3 = tk.Frame(md_content, bg="white")
+        btn_frame3.grid(row=3, column=0, columnspan=2, pady=5)
+
+        tk.Button(
+            btn_frame3,
+            text="🟢 ARM SENSOR",
+            bg="#27ae60",
+            fg="black",
+            font=("Helvetica", 11, "bold"),
+            width=15,
+            height=2,
+            command=lambda: self._handle_motion_sensor("arm"),
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#229954",
+            activeforeground="black"
+        ).pack(side="left", padx=5)
+
+        tk.Button(
+            btn_frame3,
+            text="🔴 DISARM SENSOR",
+            bg="#e74c3c",
+            fg="black",
+            font=("Helvetica", 11, "bold"),
+            width=15,
+            height=2,
+            command=lambda: self._handle_motion_sensor("disarm"),
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#c0392b",
+            activeforeground="black"
+        ).pack(side="left", padx=5)
+
+        # Motion 제어
+        tk.Label(md_content, text="Motion State:", font=("Arial", 10, "bold"), bg="white").grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
+
+        btn_frame4 = tk.Frame(md_content, bg="white")
+        btn_frame4.grid(row=5, column=0, columnspan=2, pady=5)
+
+        tk.Button(
+            btn_frame4,
+            text="👁️ DETECT MOTION",
+            bg="#9b59b6",
+            fg="black",
+            font=("Helvetica", 11, "bold"),
+            width=15,
+            height=2,
+            command=lambda: self._handle_motion("detect"),
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#8e44ad",
+            activeforeground="black"
+        ).pack(side="left", padx=5)
+
+        tk.Button(
+            btn_frame4,
+            text="⚪ CLEAR MOTION",
+            bg="#95a5a6",
+            fg="black",
+            font=("Helvetica", 11, "bold"),
+            width=15,
+            height=2,
+            command=lambda: self._handle_motion("clear"),
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#7f8c8d",
+            activeforeground="black"
+        ).pack(side="left", padx=5)
+
+        # Quick Actions
+        quick_frame = tk.LabelFrame(
+            parent,
+            text="⚡ Quick Actions",
+            font=("Arial", 12, "bold"),
+            bg="white",
+            fg="#2c3e50"
+        )
+        quick_frame.pack(fill="x", padx=10)
+
+        quick_content = tk.Frame(quick_frame, bg="white")
+        quick_content.pack(padx=15, pady=15)
+
+        tk.Button(
+            quick_content,
+            text="🟢 ARM ALL SENSORS",
+            bg="#27ae60",
+            fg="black",
+            font=("Helvetica", 12, "bold"),
+            height=2,
+            command=self._arm_all,
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#229954",
+            activeforeground="black"
+        ).pack(pady=5, fill="x", expand=True)
+
+        tk.Button(
+            quick_content,
+            text="🔴 DISARM ALL SENSORS",
+            bg="#e74c3c",
+            fg="black",
+            font=("Helvetica", 12, "bold"),
+            height=2,
+            command=self._disarm_all,
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#c0392b",
+            activeforeground="black"
+        ).pack(pady=5, fill="x", expand=True)
+
+        tk.Button(
+            quick_content,
+            text="🔄 RESET ALL STATES",
+            bg="#3498db",
+            fg="black",
+            font=("Helvetica", 12, "bold"),
+            height=2,
+            command=self._reset_all,
+            relief="groove",
+            bd=3,
+            cursor="hand2",
+            activebackground="#2980b9",
+            activeforeground="black"
+        ).pack(pady=5, fill="x", expand=True)
+
 
     def _update_id_ranges(self):
         """센서 ID 범위 업데이트"""
