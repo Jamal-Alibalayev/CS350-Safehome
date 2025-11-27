@@ -108,32 +108,32 @@ class MainDashboard(tk.Toplevel):
         self._build_quick_controls(qa_card, embed=True)
 
     def _add_ptz_controls(self, parent, cam):
-        def make_btn(txt, cmd, bg, fg="#e5e7eb"):
-            return tk.Button(parent, text=txt, command=cmd,
-                             font=("Segoe UI", 9, "bold"), width=8, height=1,
+        """Compact cross-style PTZ controls (↑ ↓ ← → with zoom +/- corners)."""
+        grid = tk.Frame(parent, bg="#111827")
+        grid.grid(row=0, column=0, sticky="nsew")
+
+        def make_btn(txt, cmd, bg="#1e293b", fg="#e5e7eb"):
+            return tk.Button(grid, text=txt, command=cmd,
+                             font=("Segoe UI", 9, "bold"), width=5, height=1,
                              bg=bg, fg=fg, relief="flat", bd=1, cursor="hand2",
                              activebackground=bg, activeforeground=fg)
 
-        buttons = [
-            ("UP", lambda c=cam: self._tilt_camera(c, "up"), "#1e293b"),
-            ("DOWN", lambda c=cam: self._tilt_camera(c, "down"), "#1e293b"),
-            ("LEFT", lambda c=cam: self._pan_camera(c, "left"), "#1e293b"),
-            ("RIGHT", lambda c=cam: self._pan_camera(c, "right"), "#1e293b"),
-            ("ZOOM +", lambda c=cam: self._zoom_camera(c, "in"), "#16a34a"),
-            ("ZOOM -", lambda c=cam: self._zoom_camera(c, "out"), "#f59e0b"),
-        ]
+        # Layout similar to the reference UI
+        make_btn("↑", lambda c=cam: self._tilt_camera(c, "up")).grid(row=0, column=1, padx=2, pady=2, sticky="nsew")
+        make_btn("←", lambda c=cam: self._pan_camera(c, "left")).grid(row=1, column=0, padx=2, pady=2, sticky="nsew")
+        make_btn("→", lambda c=cam: self._pan_camera(c, "right")).grid(row=1, column=2, padx=2, pady=2, sticky="nsew")
+        make_btn("↓", lambda c=cam: self._tilt_camera(c, "down")).grid(row=2, column=1, padx=2, pady=2, sticky="nsew")
+        make_btn("+", lambda c=cam: self._zoom_camera(c, "in"), bg="#16a34a", fg="#111827").grid(row=0, column=2, padx=2, pady=2, sticky="nsew")
+        make_btn("-", lambda c=cam: self._zoom_camera(c, "out"), bg="#f59e0b", fg="#111827").grid(row=2, column=0, padx=2, pady=2, sticky="nsew")
 
-        for idx, (txt, cmd, bg) in enumerate(buttons):
-            make_btn(txt, cmd, bg, fg="#111827" if "ZOOM -" in txt else "#e5e7eb")\
-                .grid(row=0, column=idx, padx=3, pady=5, sticky="nsew")
-
-        parent.grid_rowconfigure(0, weight=1)
-        for c in range(len(buttons)):
-            parent.grid_columnconfigure(c, weight=1)
+        for r in range(3):
+            grid.grid_rowconfigure(r, weight=1)
+        for c in range(3):
+            grid.grid_columnconfigure(c, weight=1)
 
         # Camera enable/disable/password controls
         ctrl_row = tk.Frame(parent, bg="#111827")
-        ctrl_row.grid(row=1, column=0, columnspan=len(buttons), sticky="ew", pady=(4, 0))
+        ctrl_row.grid(row=1, column=0, sticky="ew", pady=(4, 0))
         small_btn = dict(font=("Segoe UI", 8, "bold"), width=6, height=1, relief="ridge", bd=1, cursor="hand2")
         tk.Button(ctrl_row, text="Enable", command=lambda c=cam: self._toggle_camera(c, True),
                   bg="#0ea5e9", fg="white", **small_btn).pack(side="left", padx=2)

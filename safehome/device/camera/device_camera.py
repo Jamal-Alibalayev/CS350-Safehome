@@ -17,6 +17,7 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
         self.cameraId = 0
         self.time = 0
         self.pan = 0
+        self.tilt = 0
         self.zoom = 2
         self.imgSource = None
         self.centerWidth = 0
@@ -60,11 +61,12 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
             if self.imgSource is not None:
                 zoomed = self.SOURCE_SIZE * (10 - self.zoom) // 10
                 panned = self.pan * self.SOURCE_SIZE // 5
+                tilted = self.tilt * self.SOURCE_SIZE // 5
                 
                 left = self.centerWidth + panned - zoomed
-                top = self.centerHeight - zoomed
+                top = self.centerHeight + tilted - zoomed
                 right = self.centerWidth + panned + zoomed
-                bottom = self.centerHeight + zoomed
+                bottom = self.centerHeight + tilted + zoomed
                 
                 # Crop and resize to fill the view
                 try:
@@ -124,6 +126,24 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
             self.zoom -= 1
             if self.zoom < 1:
                 self.zoom += 1
+                return False
+            return True
+
+    def tilt_up(self):
+        """Tilt camera up (synchronized)."""
+        with self._lock:
+            self.tilt -= 1
+            if self.tilt < -5:
+                self.tilt = -5
+                return False
+            return True
+
+    def tilt_down(self):
+        """Tilt camera down (synchronized)."""
+        with self._lock:
+            self.tilt += 1
+            if self.tilt > 5:
+                self.tilt = 5
                 return False
             return True
     

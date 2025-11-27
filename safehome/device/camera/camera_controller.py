@@ -228,6 +228,46 @@ class CameraController:
 
         return success
 
+    def tilt_camera(self, camera_id: int, direction: str, password: Optional[str] = None) -> bool:
+        """
+        Tilt camera up or down with password verification
+
+        Args:
+            camera_id: Camera ID
+            direction: 'up' or 'down'
+            password: Password for camera access (if required)
+
+        Returns:
+            True if successful, False otherwise
+        """
+        camera = self.get_camera(camera_id)
+        if not camera:
+            return False
+
+        # Check password if camera has one
+        if camera.has_password() and not camera.verify_password(password):
+            if self.logger:
+                self.logger.add_log(
+                    f"Camera {camera_id} tilt denied: Invalid password",
+                    level="WARNING",
+                    source="CameraController"
+                )
+            return False
+
+        success = False
+        if direction.lower() == 'up':
+            success = camera.tilt_up()
+        elif direction.lower() == 'down':
+            success = camera.tilt_down()
+
+        if success and self.logger:
+            self.logger.add_log(
+                f"Camera {camera_id} tilted {direction}",
+                source="CameraController"
+            )
+
+        return success
+
     def enable_camera(self, camera_id: int) -> bool:
         """
         Enable a camera

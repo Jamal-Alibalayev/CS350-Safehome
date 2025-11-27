@@ -122,6 +122,36 @@ class SafeHomeCamera:
             print(f"Error zooming out: {e}")
             return False
 
+    def tilt_up(self) -> bool:
+        """
+        Tilt camera up
+
+        Returns:
+            True if successful, False if limit reached
+        """
+        if not self.is_enabled:
+            return False
+        try:
+            return self.hardware.tilt_up()
+        except Exception as e:
+            print(f"Error tilting up: {e}")
+            return False
+
+    def tilt_down(self) -> bool:
+        """
+        Tilt camera down
+
+        Returns:
+            True if successful, False if limit reached
+        """
+        if not self.is_enabled:
+            return False
+        try:
+            return self.hardware.tilt_down()
+        except Exception as e:
+            print(f"Error tilting down: {e}")
+            return False
+
     def enable(self):
         """Enable camera (turn on)"""
         self.is_enabled = True
@@ -174,6 +204,7 @@ class SafeHomeCamera:
             'is_enabled': self.is_enabled,
             'has_password': self.has_password(),
             'pan_angle': getattr(self.hardware, 'pan', 0),
+            'tilt_angle': getattr(self.hardware, 'tilt', 0),
             'zoom_level': getattr(self.hardware, 'zoom', 2)
         }
 
