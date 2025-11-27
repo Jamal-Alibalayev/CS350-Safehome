@@ -264,7 +264,7 @@ class ZoneManagerWindow(tk.Toplevel):
         self.selected_zone_id = zone_id
 
         # Get zone info
-        zone = self.system.config.get_zone(zone_id)
+        zone = self.system.config.get_safety_zone(zone_id)
         if not zone:
             return
 
@@ -292,7 +292,7 @@ class ZoneManagerWindow(tk.Toplevel):
                 self.sensor_tree.insert(
                     "",
                     "end",
-                    values=(sensor_type, sensor.name, status)
+                    values=(sensor_type, sensor.location, status)
                 )
 
     def _add_zone(self):
@@ -309,7 +309,7 @@ class ZoneManagerWindow(tk.Toplevel):
             messagebox.showwarning("No Selection", "Please select a zone to edit")
             return
 
-        zone = self.system.config.get_zone(self.selected_zone_id)
+        zone = self.system.config.get_safety_zone(self.selected_zone_id)
         if not zone:
             return
 
@@ -325,7 +325,7 @@ class ZoneManagerWindow(tk.Toplevel):
             messagebox.showwarning("No Selection", "Please select a zone to delete")
             return
 
-        zone = self.system.config.get_zone(self.selected_zone_id)
+        zone = self.system.config.get_safety_zone(self.selected_zone_id)
         if not zone:
             return
 
@@ -343,7 +343,7 @@ class ZoneManagerWindow(tk.Toplevel):
                     sensor.zone_id = None
 
             # Delete zone
-            success = self.system.config.remove_safety_zone(self.selected_zone_id)
+            success = self.system.config.delete_safety_zone(self.selected_zone_id)
 
             if success:
                 messagebox.showinfo("Success", f"Zone '{zone.name}' deleted successfully")
@@ -359,7 +359,7 @@ class ZoneManagerWindow(tk.Toplevel):
             messagebox.showwarning("No Selection", "Please select a zone first")
             return
 
-        zone = self.system.config.get_zone(self.selected_zone_id)
+        zone = self.system.config.get_safety_zone(self.selected_zone_id)
         if not zone:
             return
 
@@ -511,12 +511,14 @@ class EditZoneDialog(tk.Toplevel):
             return
 
         # Update zone name
-        self.zone.name = new_name
-        self.system.config.save_configuration()
+        success = self.system.config.update_safety_zone(self.zone.zone_id, zone_name=new_name)
 
-        messagebox.showinfo("Success", "Zone updated successfully")
-        self.result = True
-        self.destroy()
+        if success:
+            messagebox.showinfo("Success", "Zone updated successfully")
+            self.result = True
+            self.destroy()
+        else:
+            messagebox.showerror("Error", f"Failed to update zone '{self.zone.name}'")
 
 
 class AssignSensorDialog(tk.Toplevel):
@@ -565,9 +567,9 @@ class AssignSensorDialog(tk.Toplevel):
         for sensor_id, sensor in self.system.sensor_controller.sensors.items():
             self.sensor_ids.append(sensor_id)
             sensor_type = "Motion" if sensor.sensor_type == "MOTION" else "Door/Window"
-            zone_info = f"(Zone: {self.system.config.get_zone(sensor.zone_id).name})" if sensor.zone_id else "(Unassigned)"
+            zone_info = f"(Zone: {self.system.config.get_safety_zone(sensor.zone_id).name})" if sensor.zone_id else "(Unassigned)"
 
-            self.sensor_listbox.insert("end", f"{sensor.name} - {sensor_type} {zone_info}")
+            self.sensor_listbox.insert("end", f"{sensor.location} - {sensor_type} {zone_info}")
 
             # Pre-select sensors already in this zone
             if sensor.zone_id == self.zone.zone_id:

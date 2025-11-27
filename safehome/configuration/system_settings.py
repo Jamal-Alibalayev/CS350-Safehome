@@ -10,7 +10,7 @@ class SystemSettings:
     """
     # Control Panel passwords
     master_password: str = "1234"           # Master password (4 digits)
-    guest_password: Optional[str] = None    # Guest password (4 digits, optional)
+    guest_password: Optional[str] = "0000"    # Guest password (4 digits, optional)
 
     # Web interface passwords
     web_password_1: str = "webpass1"        # Web password 1 (8 characters)

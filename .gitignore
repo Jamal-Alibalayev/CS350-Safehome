@@ -1,0 +1,24 @@
+# macOS specific files
+.DS_Store
+
+# Python specific files
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE-specific files (e.g., PyCharm)
+.idea/
+
+# Virtual environment
+venv/
+.venv/
+
+# Database files
+*.db
+
+# Log files
+*.log
+
+# Asset files that might change frequently
+*.jpg
+*.png

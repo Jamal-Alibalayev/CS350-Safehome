@@ -31,8 +31,18 @@ class DeviceSensorTester(ABC):
     @staticmethod
     def showSensorTester():
         """Show the sensor tester GUI."""
+        # if window exists, just show it
         if DeviceSensorTester.safeHomeSensorTest is not None:
-            return
+            try:
+                if DeviceSensorTester.safeHomeSensorTest.winfo_exists():
+                    DeviceSensorTester.safeHomeSensorTest.deiconify()
+                    DeviceSensorTester.safeHomeSensorTest.lift()
+                    return
+            except Exception:
+                # window is dead
+                DeviceSensorTester.safeHomeSensorTest = None
+        
+        # create a new window
         try:
             import os
             if os.environ.get("SAFEHOME_HEADLESS") == "1":
@@ -44,15 +54,8 @@ class DeviceSensorTester(ABC):
                 root = tk.Tk()
                 root.withdraw()
             gui = SafeHomeSensorTest(master=root)
-            # Mirror Java setVisible(true)
-            try:
-                gui.deiconify()
-                gui.lift()
-            except Exception:
-                pass
             DeviceSensorTester.safeHomeSensorTest = gui
             DeviceSensorTester.safehome_sensor_test = gui
         except Exception:
-            # Fail silently in environments without display/Tkinter
             DeviceSensorTester.safeHomeSensorTest = None
             DeviceSensorTester.safehome_sensor_test = None

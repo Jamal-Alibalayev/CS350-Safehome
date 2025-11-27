@@ -7,6 +7,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 from .device_sensor_tester import DeviceSensorTester
+from pathlib import Path
 
 
 class SafeHomeSensorTest(tk.Toplevel):
@@ -89,7 +90,8 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         try:
             # Floor plan 이미지 로드
-            img_path = "/Users/kaibaek/IdeaProjects/CS350-Safehome/assets/images/floorplan.png"
+            script_dir = Path(__file__).parent
+            img_path = (script_dir / ".." / ".." / ".." / "assets" / "images" / "floorplan.png").resolve()
             img = Image.open(img_path)
             img = img.resize((600, 300), Image.Resampling.LANCZOS)
             photo = ImageTk.PhotoImage(img)
@@ -388,7 +390,6 @@ class SafeHomeSensorTest(tk.Toplevel):
             bg="#27ae60",
             fg="black",
             font=("Helvetica", 12, "bold"),
-            width=32,
             height=2,
             command=self._arm_all,
             relief="groove",
@@ -396,7 +397,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             cursor="hand2",
             activebackground="#229954",
             activeforeground="black"
-        ).pack(pady=5)
+        ).pack(pady=5, fill="x", expand=True)
 
         tk.Button(
             quick_content,
@@ -404,7 +405,6 @@ class SafeHomeSensorTest(tk.Toplevel):
             bg="#e74c3c",
             fg="black",
             font=("Helvetica", 12, "bold"),
-            width=32,
             height=2,
             command=self._disarm_all,
             relief="groove",
@@ -412,7 +412,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             cursor="hand2",
             activebackground="#c0392b",
             activeforeground="black"
-        ).pack(pady=5)
+        ).pack(pady=5, fill="x", expand=True)
 
         tk.Button(
             quick_content,
@@ -420,7 +420,6 @@ class SafeHomeSensorTest(tk.Toplevel):
             bg="#3498db",
             fg="black",
             font=("Helvetica", 12, "bold"),
-            width=32,
             height=2,
             command=self._reset_all,
             relief="groove",
@@ -428,7 +427,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             cursor="hand2",
             activebackground="#2980b9",
             activeforeground="black"
-        ).pack(pady=5)
+        ).pack(pady=5, fill="x", expand=True)
 
     def _update_id_ranges(self):
         """센서 ID 범위 업데이트"""

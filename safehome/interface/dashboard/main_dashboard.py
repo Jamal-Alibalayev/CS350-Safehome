@@ -207,7 +207,7 @@ class MainDashboard(tk.Toplevel):
             ).pack(side="left")
 
             # 카메라 이미지
-            img_label = tk.Label(cam_container, bg="black", width=50, height=20)
+            img_label = tk.Label(cam_container, bg="black")
             img_label.pack(padx=5, pady=5, fill="both", expand=True)
             self.camera_labels[camera.camera_id] = img_label
 
@@ -557,4 +557,4 @@ class MainDashboard(tk.Toplevel):
         if messagebox.askokcancel("Quit", "Shutdown SafeHome System?"):
             self.system.shutdown()
             self.login_window.destroy()
-            self.destroy()
+
