@@ -209,10 +209,10 @@ class SafeHomeSensorTest(tk.Toplevel):
 
     def _create_control_panels(self, parent):
         """센서 제어 패널"""
-        # Window/Door 제어
+        # Window/Door 제어 (combined IDs 1-8)
         wd_frame = tk.LabelFrame(
             parent,
-            text="🚪 Window/Door Sensors",
+            text="🚪 Window/Door Sensors (IDs 1-8)",
             font=("Arial", 12, "bold"),
             bg="white",
             fg="#2c3e50"
@@ -223,12 +223,12 @@ class SafeHomeSensorTest(tk.Toplevel):
         wd_content.pack(padx=15, pady=15)
 
         # ID 입력
-        tk.Label(wd_content, text="Sensor ID:", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        tk.Label(wd_content, text="Sensor ID (1-8):", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
         self.wd_id_var = tk.StringVar()
         tk.Entry(wd_content, textvariable=self.wd_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
 
         # ID 범위 표시
-        self.wd_range_label = tk.Label(wd_content, text="Available IDs: N/A", font=("Arial", 9), bg="white", fg="#7f8c8d")
+        self.wd_range_label = tk.Label(wd_content, text="Available IDs: 1-8 (1-6 windows, 7-8 doors)", font=("Arial", 9), bg="white", fg="#7f8c8d")
         self.wd_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
 
         # 센서 제어
@@ -239,7 +239,7 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         tk.Button(
             btn_frame1,
-            text="🟢 ARM SENSOR",
+            text="🟢 ARM (1-8)",
             bg="#27ae60",
             fg="black",
             font=("Helvetica", 11, "bold"),
@@ -255,7 +255,7 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         tk.Button(
             btn_frame1,
-            text="🔴 DISARM SENSOR",
+            text="🔴 DISARM (1-8)",
             bg="#e74c3c",
             fg="black",
             font=("Helvetica", 11, "bold"),
@@ -321,12 +321,12 @@ class SafeHomeSensorTest(tk.Toplevel):
         md_content.pack(padx=15, pady=15)
 
         # ID 입력
-        tk.Label(md_content, text="Detector ID:", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        tk.Label(md_content, text="Detector ID (9-10):", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
         self.md_id_var = tk.StringVar()
         tk.Entry(md_content, textvariable=self.md_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
 
         # ID 범위 표시
-        self.md_range_label = tk.Label(md_content, text="Available IDs: N/A", font=("Arial", 9), bg="white", fg="#7f8c8d")
+        self.md_range_label = tk.Label(md_content, text="Available IDs: 9-10", font=("Arial", 9), bg="white", fg="#7f8c8d")
         self.md_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
 
         # 센서 제어
@@ -722,36 +722,12 @@ class SafeHomeSensorTest(tk.Toplevel):
 
 
     def _update_id_ranges(self):
-        """센서 ID 범위 업데이트"""
-        # Window/Door ID 범위
-        wd_ids = []
-        scan = DeviceSensorTester.head_WinDoorSensor
-        while scan is not None:
-            sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
-            if sensor_id is not None:
-                wd_ids.append(sensor_id)
-            scan = getattr(scan, "next", None)
-
-        if wd_ids:
-            wd_ids.sort()
-            self.wd_range_label.config(text=f"Available IDs: {min(wd_ids)}-{max(wd_ids)} ({len(wd_ids)} sensors)")
-        else:
-            self.wd_range_label.config(text="Available IDs: No sensors registered")
-
-        # Motion Detector ID 범위
-        md_ids = []
-        scan = DeviceSensorTester.head_MotionDetector
-        while scan is not None:
-            sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
-            if sensor_id is not None:
-                md_ids.append(sensor_id)
-            scan = getattr(scan, "next", None)
-
-        if md_ids:
-            md_ids.sort()
-            self.md_range_label.config(text=f"Available IDs: {min(md_ids)}-{max(md_ids)} ({len(md_ids)} detectors)")
-        else:
-            self.md_range_label.config(text="Available IDs: No detectors registered")
+        """센서 ID 범위 업데이트 (고정 개수)"""
+        # Fixed ranges by requirement
+        self.wd_range_label.config(text="Fixed Window/Door IDs: 1-8")
+        if hasattr(self, "door_range_label"):
+            self.door_range_label.config(text="Fixed Door IDs: 1-2")
+        self.md_range_label.config(text="Fixed Motion IDs: 9-10")
 
     def _update_status(self):
         """센서 상태 업데이트 (500ms마다)"""
@@ -759,63 +735,118 @@ class SafeHomeSensorTest(tk.Toplevel):
         for item in self.sensor_tree.get_children():
             self.sensor_tree.delete(item)
 
-        # Update Window/Door sensors
+        # Build lookup tables from linked lists
+        windoor_map = {}
         scan = DeviceSensorTester.head_WinDoorSensor
         while scan is not None:
-            sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", "?"))
-            name = getattr(scan, "name", f"WinDoor {sensor_id}")
+            sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
+            if sid is not None:
+                windoor_map[sid] = scan
+            scan = getattr(scan, "next", getattr(scan, "next_sensor", None))
 
-            # Get armed state
-            if callable(getattr(scan, "test_armed_state", None)):
-                try:
-                    armed = bool(scan.test_armed_state())
-                except:
-                    armed = False
-            else:
-                armed = getattr(scan, "armed", getattr(scan, "enabled", False))
-
-            # Get opened state
-            opened = getattr(scan, "opened", False)
-
-            sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
-            door_status = "🚪 Open" if opened else "🚪 Closed"
-
-            self.sensor_tree.insert(
-                "",
-                "end",
-                values=(sensor_id, "Window/Door", name, sensor_status, door_status)
-            )
-
-            scan = getattr(scan, "next", None)
-
-        # Update Motion Detectors
+        motion_map = {}
         scan = DeviceSensorTester.head_MotionDetector
         while scan is not None:
-            sensor_id = getattr(scan, "sensor_id", getattr(scan, "sensorID", "?"))
-            name = getattr(scan, "name", f"Motion {sensor_id}")
+            sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
+            if sid is not None:
+                motion_map[sid] = scan
+            scan = getattr(scan, "next", getattr(scan, "next_sensor", None))
 
-            # Get armed state
-            if callable(getattr(scan, "test_armed_state", None)):
-                try:
-                    armed = bool(scan.test_armed_state())
-                except:
-                    armed = False
+        # Expected Windows 1-6 with locations
+        window_locations = {
+            1: "Dining Room",
+            2: "Dining Room",
+            3: "Kitchen",
+            4: "Living Room",
+            5: "Living Room",
+            6: "Living Room",
+        }
+        for sid in range(1, 7):
+            sensor = windoor_map.get(sid)
+            name = f"Window {sid} ({window_locations.get(sid,'')})"
+
+            if sensor:
+                armed = False
+                if callable(getattr(sensor, "test_armed_state", None)):
+                    try:
+                        armed = bool(sensor.test_armed_state())
+                    except Exception:
+                        armed = False
+                else:
+                    armed = getattr(sensor, "armed", getattr(sensor, "enabled", False))
+                opened = getattr(sensor, "opened", False)
+                sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
+                door_status = "🚪 Open" if opened else "🚪 Closed"
             else:
-                armed = getattr(scan, "enabled", getattr(scan, "armed", False))
-
-            # Get detected state
-            detected = getattr(scan, "detected", False)
-
-            sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
-            motion_status = "👁️ Detected" if detected else "⚪ Clear"
+                sensor_status = "⚪ Not Connected"
+                door_status = "N/A"
 
             self.sensor_tree.insert(
                 "",
                 "end",
-                values=(sensor_id, "Motion", name, sensor_status, motion_status)
+                values=(sid, "Window", name, sensor_status, door_status)
             )
 
-            scan = getattr(scan, "next", None)
+        # Expected Doors 1-2 (map to underlying IDs 7-8)
+        door_locations = {7: "Entrance", 8: "Kitchen"}
+        for sid in range(7, 9):
+            sensor = windoor_map.get(sid)
+            display_id = sid - 6
+            name = f"Door {display_id} ({door_locations.get(sid,'')})"
+
+            if sensor:
+                armed = False
+                if callable(getattr(sensor, "test_armed_state", None)):
+                    try:
+                        armed = bool(sensor.test_armed_state())
+                    except Exception:
+                        armed = False
+                else:
+                    armed = getattr(sensor, "armed", getattr(sensor, "enabled", False))
+                opened = getattr(sensor, "opened", False)
+                sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
+                door_status = "🚪 Open" if opened else "🚪 Closed"
+            else:
+                sensor_status = "⚪ Not Connected"
+                door_status = "N/A"
+
+            self.sensor_tree.insert(
+                "",
+                "end",
+                values=(sid, "Door", name, sensor_status, door_status)
+            )
+
+        # Expected Motion detectors (user IDs 9-10 -> underlying IDs 1-2)
+        motion_locations = {
+            9: "Dining→Entrance→Living (cross-room)",
+            10: "Kitchen diagonal (top-right to bottom-left)"
+        }
+        for user_sid in range(9, 11):
+            actual_id = user_sid - 8  # underlying sensor id (1-2)
+            sensor = motion_map.get(actual_id)
+            name = f"Motion {user_sid} ({motion_locations.get(user_sid,'')})"
+
+            if sensor:
+                armed = False
+                if callable(getattr(sensor, "test_armed_state", None)):
+                    try:
+                        armed = bool(sensor.test_armed_state())
+                    except Exception:
+                        armed = False
+                else:
+                    armed = getattr(sensor, "enabled", getattr(sensor, "armed", False))
+                detected = getattr(sensor, "detected", False)
+                sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
+                motion_status = "👁️ Detected" if detected else "⚪ Clear"
+            else:
+                sensor_status = "⚪ Not Connected"
+                motion_status = "N/A"
+
+            self.sensor_tree.insert(
+                "",
+                "end",
+                values=(user_sid, "Motion", name, sensor_status, motion_status)
+            )
 
         # Schedule next update
         self.after(500, self._update_status)
@@ -831,6 +862,11 @@ class SafeHomeSensorTest(tk.Toplevel):
             sensor_id = int(sensor_id_str)
         except ValueError:
             messagebox.showerror("Invalid Input", "Sensor ID must be a number")
+            return
+
+        # Validate fixed range
+        if sensor_id < 1 or sensor_id > 8:
+            messagebox.showerror("Invalid Input", "Valid Window/Door IDs are 1-8 (1-6 windows, 7-8 doors)")
             return
 
         # Find sensor
@@ -905,12 +941,18 @@ class SafeHomeSensorTest(tk.Toplevel):
             messagebox.showerror("Invalid Input", "Detector ID must be a number")
             return
 
+        if sensor_id < 9 or sensor_id > 10:
+            messagebox.showerror("Invalid Input", "Valid Motion IDs are 9-10")
+            return
+
+        actual_id = sensor_id - 8  # underlying id
+
         # Find detector
         scan = DeviceSensorTester.head_MotionDetector
         found = False
         while scan is not None:
             sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
-            if sid == sensor_id:
+            if sid == actual_id:
                 found = True
                 if action == "arm":
                     if hasattr(scan, "arm"):
@@ -941,12 +983,18 @@ class SafeHomeSensorTest(tk.Toplevel):
             messagebox.showerror("Invalid Input", "Detector ID must be a number")
             return
 
+        if sensor_id < 9 or sensor_id > 10:
+            messagebox.showerror("Invalid Input", "Valid Motion IDs are 9-10")
+            return
+
+        actual_id = sensor_id - 8
+
         # Find detector
         scan = DeviceSensorTester.head_MotionDetector
         found = False
         while scan is not None:
             sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
-            if sid == sensor_id:
+            if sid == actual_id:
                 found = True
                 if action == "detect":
                     if hasattr(scan, "intrude"):
