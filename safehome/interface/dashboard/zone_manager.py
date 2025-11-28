@@ -34,8 +34,24 @@ class ZoneManagerWindow(tk.Toplevel):
         # UI 구성
         self._create_ui()
 
+        # Register for automatic updates
+        self.system.config.register_zone_update_callback(self._refresh_zones)
+
         # 초기 데이터 로드
         self._refresh_zones()
+
+        # Unregister callback on close
+        self.protocol("WM_DELETE_WINDOW", self._on_close)
+
+    def _on_close(self):
+        """Unregister callback and close the window."""
+        # It's good practice to unregister callbacks to avoid memory leaks
+        # Though in this simple case it might not be strictly necessary.
+        try:
+            self.system.config.zone_update_callbacks.remove(self._refresh_zones)
+        except ValueError:
+            pass  # Callback was already removed or never added
+        self.destroy()
 
     def _center_window(self):
         """윈도우를 화면 중앙에 배치"""
@@ -237,6 +253,10 @@ class ZoneManagerWindow(tk.Toplevel):
         zones = self.system.config.get_all_zones()
 
         for zone in zones:
+            # Defensive check: Do not display zones with no ID to prevent crashes.
+            if zone.zone_id is None:
+                continue
+
             # Count sensors in this zone
             sensor_count = sum(
                 1 for sensor in self.system.sensor_controller.sensors.values()
@@ -301,7 +321,8 @@ class ZoneManagerWindow(tk.Toplevel):
         self.wait_window(dialog)
 
         if dialog.result:
-            self._refresh_zones()
+            # The callback will handle the refresh, just show the message
+            messagebox.showinfo("Success", f"Zone '{dialog.new_name}' created successfully")
 
     def _edit_zone(self):
         """Zone 편집"""
@@ -317,7 +338,8 @@ class ZoneManagerWindow(tk.Toplevel):
         self.wait_window(dialog)
 
         if dialog.result:
-            self._refresh_zones()
+            # The callback will handle the refresh, just show the message
+            messagebox.showinfo("Success", "Zone updated successfully")
 
     def _delete_zone(self):
         """Zone 삭제"""
@@ -337,19 +359,28 @@ class ZoneManagerWindow(tk.Toplevel):
         )
 
         if confirm:
-            # Unassign all sensors in this zone
-            for sensor in self.system.sensor_controller.sensors.values():
-                if sensor.zone_id == self.selected_zone_id:
-                    sensor.zone_id = None
+            # Unassign all sensors in this zone first
+            sensors_in_zone = [s for s in self.system.sensor_controller.get_all_sensors() if s.zone_id == self.selected_zone_id]
+            for sensor in sensors_in_zone:
+                sensor.zone_id = None
+                # Persist this change if your system requires it, e.g., by calling a save method
+                # self.system.sensor_controller.save_sensor(sensor) # Assuming such a method exists
 
-            # Delete zone
+            # Now, delete the zone
             success = self.system.config.delete_safety_zone(self.selected_zone_id)
 
             if success:
-                messagebox.showinfo("Success", f"Zone '{zone.name}' deleted successfully")
+                # 1. Clear selection and details panel
                 self.selected_zone_id = None
                 self.zone_name_label.config(text="Select a zone to view details")
+                for item in self.sensor_tree.get_children():
+                    self.sensor_tree.delete(item)
+
+                # 2. Refresh the main zone list
                 self._refresh_zones()
+
+                # 3. Now, show confirmation
+                messagebox.showinfo("Success", f"Zone '{zone.name}' deleted successfully")
             else:
                 messagebox.showerror("Error", "Failed to delete zone")
 
@@ -369,6 +400,7 @@ class ZoneManagerWindow(tk.Toplevel):
         if dialog.result:
             self._refresh_zones()
             self._refresh_zone_sensors(self.selected_zone_id)
+            messagebox.showinfo("Success", f"Sensors assigned to '{zone.name}' successfully")
 
 
 class AddZoneDialog(tk.Toplevel):
@@ -378,6 +410,7 @@ class AddZoneDialog(tk.Toplevel):
         super().__init__(parent)
         self.system = system
         self.result = False
+        self.new_name = ""
 
         self.title("Add New Zone")
         self.geometry("400x200")
@@ -438,7 +471,7 @@ class AddZoneDialog(tk.Toplevel):
         zone = self.system.config.add_safety_zone(name)
 
         if zone:
-            messagebox.showinfo("Success", f"Zone '{name}' created successfully")
+            self.new_name = name
             self.result = True
             self.destroy()
         else:
@@ -514,7 +547,6 @@ class EditZoneDialog(tk.Toplevel):
         success = self.system.config.update_safety_zone(self.zone.zone_id, zone_name=new_name)
 
         if success:
-            messagebox.showinfo("Success", "Zone updated successfully")
             self.result = True
             self.destroy()
         else:
@@ -617,6 +649,5 @@ class AssignSensorDialog(tk.Toplevel):
         # Save configuration
         self.system.config.save_configuration()
 
-        messagebox.showinfo("Success", f"Sensors assigned to '{self.zone.name}' successfully")
         self.result = True
         self.destroy()

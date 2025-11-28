@@ -45,15 +45,34 @@ class ConfigurationManager:
         # 5. Initialize Login Manager
         self.login_manager = LoginManager(self.settings, self.storage)
 
-        # 6. Load Safety Zones from database
-        self.zones = self._load_or_create_zones()
-        self.current_zone_index = 0
+        # 6. Initialize Safety Zones in DB if they don't exist
+        if not self.storage.load_all_safety_zones():
+            self.logger.add_log("No safety zones found in DB, creating defaults.", source="ConfigManager")
+            zone1 = SafetyZone(None, "Living Room")
+            zone2 = SafetyZone(None, "Bedroom")
+            self.storage.save_safety_zone(zone1)
+            self.storage.save_safety_zone(zone2)
 
         # 7. Load SafeHome Modes from database
         self.modes = self._load_safehome_modes()
 
         # 8. Current state
         self.current_mode = SafeHomeMode.DISARMED
+
+        # 9. UI Callbacks
+        self.zone_update_callbacks = []
+
+    def register_zone_update_callback(self, callback):
+        """Register a callback function to be called when zones are updated."""
+        self.zone_update_callbacks.append(callback)
+
+    def _notify_zone_update(self):
+        """Notify all registered callbacks about a zone update."""
+        for callback in self.zone_update_callbacks:
+            try:
+                callback()
+            except Exception as e:
+                print(f"Error in zone update callback: {e}")
 
     def send_email_alert(self, subject: str, body: str) -> bool:
         """
@@ -87,18 +106,6 @@ class ConfigurationManager:
             print(f"[Email] Failed to send alert: {e}")
             return False
 
-    def _load_or_create_zones(self) -> List[SafetyZone]:
-        """Load safety zones from database or create defaults"""
-        zones = self.storage.load_all_safety_zones()
-        if not zones:
-            # Create default zones
-            zone1 = SafetyZone(None, "Living Room")
-            zone2 = SafetyZone(None, "Bedroom")
-            self.storage.save_safety_zone(zone1)
-            self.storage.save_safety_zone(zone2)
-            zones = [zone1, zone2]
-        return zones
-
     def _load_safehome_modes(self) -> dict:
         """Load SafeHome modes from database"""
         modes_data = self.db_manager.get_safehome_modes()
@@ -113,12 +120,30 @@ class ConfigurationManager:
         return modes
 
     def save_configuration(self):
-        """Save all configuration to database and JSON"""
+        """Save all configuration to database"""
         self.storage.save_settings(self.settings)
-        # Save all zones
-        for zone in self.zones:
-            self.storage.save_safety_zone(zone)
         self.logger.add_log("Configuration saved", source="ConfigManager")
+
+    def reset_configuration(self):
+        """Reset all system settings to their default values"""
+        # 1. Reset settings to default by creating a new SystemSettings instance
+        self.settings = SystemSettings()
+
+        # 2. Delete all existing safety zones from the database
+        self.storage.delete_all_safety_zones()
+
+        # 3. Re-create the default safety zones in the database
+        zone1 = SafetyZone(None, "Living Room")
+        zone2 = SafetyZone(None, "Bedroom")
+        self.storage.save_safety_zone(zone1)
+        self.storage.save_safety_zone(zone2)
+
+        # 4. Save the new default configuration to the database
+        self.save_configuration()
+
+        self.logger.add_log("System configuration has been reset to defaults",
+                            level="WARNING", source="ConfigManager")
+        self._notify_zone_update()
 
     # ===== Mode Management =====
 
@@ -149,68 +174,66 @@ class ConfigurationManager:
 
     # ===== Safety Zone Management =====
 
-    def get_current_zone(self) -> SafetyZone:
-        """Get currently selected safety zone"""
-        if 0 <= self.current_zone_index < len(self.zones):
-            return self.zones[self.current_zone_index]
-        return None
-
-    def next_zone(self) -> SafetyZone:
-        """Switch to next zone and return it"""
-        if self.zones:
-            self.current_zone_index = (self.current_zone_index + 1) % len(self.zones)
-            return self.get_current_zone()
-        return None
-
     def get_safety_zone(self, zone_id: int) -> Optional[SafetyZone]:
-        """Get safety zone by ID"""
-        for zone in self.zones:
+        """Get a single safety zone by ID directly from the database."""
+        # This could be optimized by adding a `load_one_zone` method to StorageManager
+        all_zones = self.get_all_safety_zones()
+        for zone in all_zones:
             if zone.zone_id == zone_id:
                 return zone
         return None
 
     def get_all_safety_zones(self) -> List[SafetyZone]:
-        """Get all safety zones"""
-        return self.zones
+        """Get all safety zones directly from the database."""
+        return self.storage.load_all_safety_zones()
 
-    def add_safety_zone(self, zone_name: str) -> SafetyZone:
-        """Add a new safety zone"""
-        zone = SafetyZone(None, zone_name)
-        self.storage.save_safety_zone(zone)
-        self.zones.append(zone)
-        self.logger.add_log(f"Safety zone '{zone_name}' created", source="ConfigManager")
-        return zone
+    def add_safety_zone(self, zone_name: str) -> Optional[SafetyZone]:
+        """Adds a new safety zone to the database and returns the created object."""
+        # Create a temporary object to insert
+        zone_to_add = SafetyZone(None, zone_name)
+        
+        # Save to DB and get the new ID back
+        new_id = self.storage.save_safety_zone(zone_to_add)
+
+        # If we got a valid ID, fetch the complete object back from the DB
+        if new_id is not None:
+            self.logger.add_log(f"Safety zone '{zone_name}' created with ID {new_id}", source="ConfigManager")
+            self._notify_zone_update()
+            # Return the definitive object from the source of truth
+            return self.storage.load_safety_zone_by_id(new_id)
+            
+        return None
 
     def update_safety_zone(self, zone_id: int, zone_name: Optional[str] = None,
-                           is_armed: Optional[bool] = None):
-        """Update safety zone properties"""
-        zone = self.get_safety_zone(zone_id)
-        if not zone:
+                           is_armed: Optional[bool] = None) -> bool:
+        """Update safety zone properties in the database."""
+        # First, get the current state of the zone to prevent overwriting attributes
+        zone_to_update = self.get_safety_zone(zone_id)
+        if not zone_to_update:
             return False
 
+        # Apply the changes
         if zone_name is not None:
-            zone.name = zone_name
+            zone_to_update.name = zone_name
         if is_armed is not None:
-            zone.is_armed = is_armed
-
-        self.storage.save_safety_zone(zone)
+            zone_to_update.is_armed = is_armed
+        
+        # Save the fully updated object
+        self.storage.save_safety_zone(zone_to_update)
         self.logger.add_log(f"Safety zone {zone_id} updated", source="ConfigManager")
+        self._notify_zone_update()
         return True
 
     def delete_safety_zone(self, zone_id: int) -> bool:
-        """Delete a safety zone"""
-        zone = self.get_safety_zone(zone_id)
-        if not zone:
-            return False
-
+        """Delete a safety zone from the database."""
         self.storage.delete_safety_zone(zone_id)
-        self.zones = [z for z in self.zones if z.zone_id != zone_id]
         self.logger.add_log(f"Safety zone {zone_id} deleted", source="ConfigManager")
+        self._notify_zone_update()
         return True
 
     def get_all_zones(self) -> List[SafetyZone]:
-        """Get list of all safety zones"""
-        return self.zones
+        """Alias for get_all_safety_zones for backward compatibility."""
+        return self.get_all_safety_zones()
 
     # ===== System Management =====
 

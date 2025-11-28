@@ -24,6 +24,8 @@ class MainDashboard(tk.Toplevel):
         self.login_window = login_window
         self.user_id = user_id
 
+        # Register for zone updates
+        self.system.config.register_zone_update_callback(self._update_zones)
 
         # 윈도우 설정
         self.title("SafeHome - Dashboard")
@@ -451,9 +453,6 @@ class MainDashboard(tk.Toplevel):
             # 센서 상태 업데이트
             self._update_sensors()
 
-            # Zone 목록 업데이트
-            self._update_zones()
-
             # 헤더 업데이트
             self._update_header()
 
@@ -634,11 +633,34 @@ class MainDashboard(tk.Toplevel):
         tk.Button(btn_row, text="Save", bg="#27ae60", fg="white",
                   font=("Arial", 11, "bold"), relief="flat", cursor="hand2",
                   command=lambda: self._save_settings(popup, entries)).pack(side="left", padx=6, ipadx=14, ipady=6)
+
+        # Reset Button
+        tk.Button(btn_row, text="Reset System", bg="#c0392b", fg="white",
+                  font=("Arial", 11, "bold"), relief="flat", cursor="hand2",
+                  command=lambda: self._reset_system(popup)).pack(side="left", padx=6, ipadx=14, ipady=6)
+
         tk.Button(btn_row, text="Close", bg="#95a5a6", fg="white",
                   font=("Arial", 11, "bold"), relief="flat", cursor="hand2",
                   command=popup.destroy).pack(side="right", padx=6, ipadx=14, ipady=6)
 
         container.grid_columnconfigure(1, weight=1)
+
+    def _reset_system(self, popup):
+        """Reset system to factory defaults after confirmation."""
+        if messagebox.askyesno("Confirm Reset",
+                               "Are you sure you want to reset all system settings?\n"
+                               "This will restore default passwords and delete all safety zones. "
+                               "This action cannot be undone.",
+                               icon='warning'):
+            try:
+                self.system.config.reset_configuration()
+                popup.destroy()
+                messagebox.showinfo("System Reset",
+                                    "The system has been reset to factory defaults.\n"
+                                    "You will now be logged out.")
+                self._logout()
+            except Exception as e:
+                messagebox.showerror("Reset Error", f"Failed to reset system: {e}")
 
     def _save_settings(self, popup, entries):
         s = self.system.config.settings

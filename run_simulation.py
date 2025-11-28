@@ -16,38 +16,12 @@ from safehome.interface.web import api_server
 def setup_hardware(system: System):
     """
     Initialize virtual hardware based on fixed floor plan
-    Floor plan has 3 rooms: Dining Room (DR), Kitchen (KIT), Living Room (LR)
+    This function now calls the system's reset configuration to ensure a clean slate.
     """
-    print("\n[Setup] Initializing Virtual Hardware (Fixed Floor Plan)...")
-
-    # 0. Clear existing hardware from database (fresh start)
-    print("  [Cleanup] Removing old hardware from database...")
-
-    # Remove all existing sensors
-    sensor_ids_to_remove = list(system.sensor_controller.sensors.keys())
-    for sensor_id in sensor_ids_to_remove:
-        system.sensor_controller.remove_sensor(sensor_id)
-
-    # Remove all existing cameras
-    camera_ids_to_remove = list(system.camera_controller.cameras.keys())
-    for camera_id in camera_ids_to_remove:
-        system.camera_controller.remove_camera(camera_id)
-
-    print(f"      - Removed {len(sensor_ids_to_remove)} old sensors")
-    print(f"      - Removed {len(camera_ids_to_remove)} old cameras")
-
-    # 1. Setup Safety Zones - 3 fixed zones based on floor plan
-    print("  [Zones] Setting up safety zones...")
-    zones = system.config.get_all_zones()
-
-    # Clear existing zones and create the 3 fixed zones
-    zone_names = ["Dining Room", "Kitchen", "Living Room"]
-    existing_zone_names = [z.name for z in zones]
-
-    for zone_name in zone_names:
-        if zone_name not in existing_zone_names:
-            zone = system.config.add_safety_zone(zone_name)
-            print(f"      - Created zone: {zone_name} (ID: {zone.zone_id})")
+    print("\n[Setup] Resetting system to default hardware configuration...")
+    # This single call robustly clears the DB, resets ID counters, and creates default zones.
+    system.config.reset_configuration()
+    print("  [Zones] System reset. Default zones created.")
 
     zones = system.config.get_all_zones()
     print(f"  [Zones] Total zones: {len(zones)}")

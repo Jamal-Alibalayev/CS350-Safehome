@@ -20,6 +20,11 @@ class StorageManager:
         """
         self.db = db_manager
 
+    def _check_db(self):
+        """Raise an exception if the database is not initialized."""
+        if not self.db:
+            raise ValueError("Database connection is not available in StorageManager")
+
     # ===== JSON-based methods (backward compatibility) =====
 
     def save_settings_to_json(self, settings: SystemSettings):
@@ -67,9 +72,7 @@ class StorageManager:
 
     def save_settings_to_db(self, settings: SystemSettings):
         """Save SystemSettings to database"""
-        if not self.db:
-            return
-
+        self._check_db()
         self.db.update_system_settings(
             master_password=settings.master_password,
             guest_password=settings.guest_password,
@@ -91,9 +94,7 @@ class StorageManager:
 
     def load_settings_from_db(self) -> Optional[dict]:
         """Load settings from database"""
-        if not self.db:
-            return None
-
+        self._check_db()
         row = self.db.get_system_settings()
         if not row:
             return None
@@ -118,11 +119,9 @@ class StorageManager:
             "max_login_attempts": row_dict.get('max_login_attempts', 3)
         }
 
-    def save_safety_zone(self, zone: SafetyZone):
-        """Save or update a SafetyZone to database"""
-        if not self.db:
-            return
-
+    def save_safety_zone(self, zone: SafetyZone) -> Optional[int]:
+        """Save or update a SafetyZone to database and return its ID."""
+        self._check_db()
         if zone.zone_id is None:
             # Insert new zone
             query = """
@@ -132,6 +131,7 @@ class StorageManager:
             self.db.execute_query(query, (zone.name, zone.is_armed))
             self.db.commit()
             zone.zone_id = self.db.get_last_insert_id()
+            return zone.zone_id
         else:
             # Update existing zone
             query = """
@@ -141,12 +141,11 @@ class StorageManager:
             """
             self.db.execute_query(query, (zone.name, zone.is_armed, zone.zone_id))
             self.db.commit()
+            return zone.zone_id
 
     def load_all_safety_zones(self) -> List[SafetyZone]:
         """Load all SafetyZones from database"""
-        if not self.db:
-            return []
-
+        self._check_db()
         rows = self.db.get_safety_zones()
         zones = []
         for row in rows:
@@ -155,20 +154,44 @@ class StorageManager:
             zones.append(zone)
         return zones
 
+    def load_safety_zone_by_id(self, zone_id: int) -> Optional[SafetyZone]:
+        """Load a single SafetyZone from database by its ID."""
+        self._check_db()
+        row = self.db.execute_query("SELECT * FROM safety_zones WHERE zone_id = ?", (zone_id,), fetch_one=True)
+        if row:
+            zone = SafetyZone(row['zone_id'], row['zone_name'])
+            zone.is_armed = bool(row['is_armed'])
+            return zone
+        return None
+
     def delete_safety_zone(self, zone_id: int):
         """Delete a SafetyZone from database"""
-        if not self.db:
-            return
-
+        self._check_db()
         query = "DELETE FROM safety_zones WHERE zone_id = ?"
         self.db.execute_query(query, (zone_id,))
         self.db.commit()
 
+    def delete_all_safety_zones(self):
+        """Delete all SafetyZones from database and reset the auto-increment counter."""
+        self._check_db()
+        # Delete all rows from the table
+        delete_query = "DELETE FROM safety_zones"
+        self.db.execute_query(delete_query)
+
+        # Reset the auto-increment counter for the table
+        # This is specific to SQLite
+        reset_query = "DELETE FROM sqlite_sequence WHERE name='safety_zones'"
+        try:
+            self.db.execute_query(reset_query)
+        except Exception as e:
+            # This might fail if the table was not created with AUTOINCREMENT, which is fine.
+            print(f"Could not reset sequence for safety_zones, this might be expected: {e}")
+
+        self.db.commit()
+
     def save_sensor(self, sensor_id: int, sensor_type: str, location: str, zone_id: Optional[int] = None):
         """Save sensor to database"""
-        if not self.db:
-            return
-
+        self._check_db()
         query = """
             INSERT INTO sensors (sensor_id, sensor_type, sensor_location, zone_id)
             VALUES (?, ?, ?, ?)
@@ -182,26 +205,20 @@ class StorageManager:
 
     def load_all_sensors(self) -> List[dict]:
         """Load all sensors from database"""
-        if not self.db:
-            return []
-
+        self._check_db()
         rows = self.db.get_sensors()
         return [dict(row) for row in rows]
 
     def delete_sensor(self, sensor_id: int):
         """Delete sensor from database"""
-        if not self.db:
-            return
-
+        self._check_db()
         query = "DELETE FROM sensors WHERE sensor_id = ?"
         self.db.execute_query(query, (sensor_id,))
         self.db.commit()
 
     def save_camera(self, camera_id: int, name: str, location: str, password: Optional[str] = None):
         """Save camera to database"""
-        if not self.db:
-            return
-
+        self._check_db()
         query = """
             INSERT INTO cameras (camera_id, camera_name, camera_location, camera_password)
             VALUES (?, ?, ?, ?)
@@ -215,35 +232,27 @@ class StorageManager:
 
     def load_all_cameras(self) -> List[dict]:
         """Load all cameras from database"""
-        if not self.db:
-            return []
-
+        self._check_db()
         rows = self.db.get_cameras()
         return [dict(row) for row in rows]
 
     def delete_camera(self, camera_id: int):
         """Delete a camera from database"""
-        if not self.db:
-            return
-
+        self._check_db()
         query = "DELETE FROM cameras WHERE camera_id = ?"
         self.db.execute_query(query, (camera_id,))
         self.db.commit()
 
     def update_camera_password(self, camera_id: int, password: Optional[str]):
         """Update camera password"""
-        if not self.db:
-            return
-
+        self._check_db()
         query = "UPDATE cameras SET camera_password = ? WHERE camera_id = ?"
         self.db.execute_query(query, (password, camera_id))
         self.db.commit()
 
     def save_log(self, log):
         """Save log entry to database"""
-        if not self.db:
-            return
-
+        self._check_db()
         self.db.add_event_log(
             event_type=log.level,
             event_message=log.message,
@@ -253,9 +262,7 @@ class StorageManager:
     def get_logs(self, limit: int = 100, event_type: Optional[str] = None,
                   start_date: Optional[str] = None, end_date: Optional[str] = None) -> List[dict]:
         """Get logs from database with filters"""
-        if not self.db:
-            return []
-
+        self._check_db()
         rows = self.db.get_event_logs(
             event_type=event_type,
             start_date=start_date,
@@ -266,9 +273,7 @@ class StorageManager:
 
     def get_unseen_logs(self, limit: int = 100, event_type: Optional[str] = "ALARM") -> List[dict]:
         """Get logs not marked as seen"""
-        if not self.db:
-            return []
-
+        self._check_db()
         query = """
             SELECT e.*
             FROM event_logs e
@@ -287,7 +292,8 @@ class StorageManager:
 
     def mark_logs_seen(self, log_ids: List[int]):
         """Mark specified log IDs as seen"""
-        if not self.db or not log_ids:
+        self._check_db()
+        if not log_ids:
             return
         values = [(lid,) for lid in log_ids]
         self.db.execute_many("INSERT OR IGNORE INTO event_log_seen (log_id) VALUES (?)", values)
@@ -295,9 +301,7 @@ class StorageManager:
 
     def get_sensors_for_mode(self, mode_name: str) -> List[int]:
         """Get list of sensor IDs for a given SafeHomeMode"""
-        if not self.db:
-            return []
-
+        self._check_db()
         query = """
             SELECT mss.sensor_id
             FROM mode_sensor_mapping mss
@@ -309,9 +313,7 @@ class StorageManager:
 
     def save_mode_sensor_mapping(self, mode_name: str, sensor_ids: List[int]):
         """Save sensor mapping for a SafeHomeMode"""
-        if not self.db:
-            return
-
+        self._check_db()
         # Get mode_id
         query = "SELECT mode_id FROM safehome_modes WHERE mode_name = ?"
         row = self.db.execute_query(query, (mode_name,), fetch_one=True)
