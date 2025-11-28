@@ -1,6 +1,7 @@
 from typing import Dict, List, Optional
 from PIL import Image
 from .safehome_camera import SafeHomeCamera
+from safehome.configuration.login_manager import LoginManager
 
 
 class CameraController:
@@ -10,17 +11,19 @@ class CameraController:
     Based on SRS requirements UC19-25 for camera access control
     """
 
-    def __init__(self, storage_manager=None, logger=None):
+    def __init__(self, storage_manager=None, logger=None, login_manager=None):
         """
         Initialize Camera Controller
 
         Args:
             storage_manager: StorageManager for persistence
             logger: LogManager for logging events
+            login_manager: LoginManager for user authentication
         """
         self.cameras: Dict[int, SafeHomeCamera] = {}  # {camera_id: SafeHomeCamera instance}
         self.storage = storage_manager
         self.logger = logger
+        self.login_manager = login_manager
         self._next_camera_id = 1  # Auto-increment camera ID
 
     def add_camera(self, name: str, location: str, password: Optional[str] = None) -> SafeHomeCamera:
@@ -270,16 +273,25 @@ class CameraController:
 
         return success
 
-    def enable_camera(self, camera_id: int) -> bool:
+    def enable_camera(self, camera_id: int, role: str) -> bool:
         """
         Enable a camera
 
         Args:
             camera_id: Camera ID
-
+            role: The role of the user requesting the action.
         Returns:
-            True if enabled, False if not found
+            True if enabled, False if not found or permission denied.
         """
+        if role != "admin":
+            if self.logger:
+                self.logger.add_log(
+                    f"User with role '{role}' tried to enable camera {camera_id}. Denied.",
+                    level="WARNING",
+                    source="CameraController"
+                )
+            return False
+
         camera = self.get_camera(camera_id)
         if not camera:
             return False
@@ -294,16 +306,25 @@ class CameraController:
 
         return True
 
-    def disable_camera(self, camera_id: int) -> bool:
+    def disable_camera(self, camera_id: int, role: str) -> bool:
         """
         Disable a camera
 
         Args:
             camera_id: Camera ID
-
+            role: The role of the user requesting the action.
         Returns:
-            True if disabled, False if not found
+            True if disabled, False if not found or permission denied.
         """
+        if role != "admin":
+            if self.logger:
+                self.logger.add_log(
+                    f"User with role '{role}' tried to disable camera {camera_id}. Denied.",
+                    level="WARNING",
+                    source="CameraController"
+                )
+            return False
+
         camera = self.get_camera(camera_id)
         if not camera:
             return False

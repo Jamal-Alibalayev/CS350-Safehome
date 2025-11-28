@@ -16,6 +16,9 @@ venv/
 # Database files
 *.db
 
+data/
+*.db
+
 # Log files
 *.log
 

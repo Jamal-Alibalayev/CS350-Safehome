@@ -555,9 +555,9 @@ class MainDashboard(tk.Toplevel):
     def _toggle_camera(self, camera, enable: bool):
         """Enable or disable a camera."""
         if enable:
-            self.system.camera_controller.enable_camera(camera.camera_id)
+            self.system.camera_controller.enable_camera(camera.camera_id, role=self.user_id)
         else:
-            self.system.camera_controller.disable_camera(camera.camera_id)
+            self.system.camera_controller.disable_camera(camera.camera_id, role=self.user_id)
 
     def _open_zone_manager(self):
         """Zone 관리자 열기"""
