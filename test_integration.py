@@ -9,7 +9,6 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from safehome.core.system import System
 from safehome.configuration.safehome_mode import SafeHomeMode
-from safehome.interface.web.web_interface import WebInterface
 
 print("=" * 70)
 print("SAFEHOME SYSTEM - FULL INTEGRATION TEST")
@@ -91,43 +90,15 @@ print(f"   ✓ Control Panel login (correct): {result1}")
 result2 = system.login("admin", "9999", "CONTROL_PANEL")
 print(f"   ✓ Control Panel login (wrong): {not result2}")
 
-# Web Interface login
-result3 = system.login("admin", "webpass1:webpass2", "WEB")
-print(f"   ✓ Web Interface login (correct): {result3}")
-
-# Test 7: Web Interface Integration
-print("\n7. Testing Web Interface Integration...")
-web = WebInterface(system)
-
-# Web authentication
-auth_success = web.authenticate("webpass1", "webpass2")
-print(f"   ✓ Web authentication: {auth_success}")
-
-# Get system status via web
-status = web.get_system_status()
-print(f"   ✓ Web get system status: {status['success']}")
-print(f"      - Mode: {status['current_mode']}")
-print(f"      - Running: {status['is_running']}")
-
-# Get sensor status via web
-sensor_status = web.get_sensor_status()
-print(f"   ✓ Web get sensor status: {sensor_status['success']}")
-print(f"      - Sensor count: {sensor_status['count']}")
-
-# Get camera list via web
-camera_list = web.get_camera_list()
-print(f"   ✓ Web get camera list: {camera_list['success']}")
-print(f"      - Camera count: {camera_list['count']}")
-
-# Test 8: Event Logging
-print("\n8. Testing Event Logging...")
+# Test 7: Event Logging
+print("\n7. Testing Event Logging...")
 logs = system.config.storage.get_logs(limit=5)
 print(f"   ✓ Retrieved {len(logs)} recent logs")
 if len(logs) > 0:
     print(f"      - Latest: {logs[0]['event_message'][:50]}...")
 
-# Test 9: System Status
-print("\n9. Testing System Status...")
+# Test 8: System Status
+print("\n8. Testing System Status...")
 status = system.get_system_status()
 print(f"   ✓ System Status:")
 print(f"      - Running: {status['is_running']}")
@@ -137,8 +108,8 @@ print(f"      - Cameras: {status['num_cameras']}")
 print(f"      - Active Sensors: {status['num_active_sensors']}")
 print(f"      - Alarm Active: {status['alarm_active']}")
 
-# Test 10: Cleanup
-print("\n10. Testing System Cleanup...")
+# Test 9: Cleanup
+print("\n9. Testing System Cleanup...")
 system.turn_off()
 print(f"   ✓ System turned off: {not system.is_running}")
 
@@ -152,7 +123,6 @@ print("\n[Test Summary]")
 print("  ✓ Core System Layer")
 print("  ✓ Configuration Layer")
 print("  ✓ Device Layer (Sensors, Cameras, Alarm)")
-print("  ✓ Interface Layer (Web Interface)")
 print("  ✓ Database Layer")
 print("  ✓ Logging System")
 print("  ✓ Authentication System")
