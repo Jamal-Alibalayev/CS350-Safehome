@@ -133,9 +133,12 @@ class ZoneManagerWindow(tk.Toplevel):
             btn_frame,
             text="➕ Add Zone",
             font=("Arial", 11),
-            bg="#27ae60",
-            fg="white",
-            relief="flat",
+            bg="#e0f4e0",
+            fg="black",
+            activebackground="#c2e6c2",
+            activeforeground="black",
+            relief="ridge",
+            bd=2,
             cursor="hand2",
             command=self._add_zone
         )
@@ -145,9 +148,12 @@ class ZoneManagerWindow(tk.Toplevel):
             btn_frame,
             text="✏️ Edit Zone",
             font=("Arial", 11),
-            bg="#3498db",
-            fg="white",
-            relief="flat",
+            bg="#e0e7ff",
+            fg="black",
+            activebackground="#cbd6ff",
+            activeforeground="black",
+            relief="ridge",
+            bd=2,
             cursor="hand2",
             command=self._edit_zone
         )
@@ -157,9 +163,12 @@ class ZoneManagerWindow(tk.Toplevel):
             btn_frame,
             text="🗑️ Delete Zone",
             font=("Arial", 11),
-            bg="#e74c3c",
-            fg="white",
-            relief="flat",
+            bg="#ffe0e0",
+            fg="black",
+            activebackground="#ffc2c2",
+            activeforeground="black",
+            relief="ridge",
+            bd=2,
             cursor="hand2",
             command=self._delete_zone
         )
@@ -235,9 +244,12 @@ class ZoneManagerWindow(tk.Toplevel):
             assign_btn_frame,
             text="📍 Assign Sensors",
             font=("Arial", 11),
-            bg="#9b59b6",
-            fg="white",
-            relief="flat",
+            bg="#f2e6ff",
+            fg="black",
+            activebackground="#e2ccff",
+            activeforeground="black",
+            relief="ridge",
+            bd=2,
             cursor="hand2",
             command=self._assign_sensors
         )

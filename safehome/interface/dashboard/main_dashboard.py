@@ -5,6 +5,7 @@ Unified monitoring and control interface
 
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
+from typing import Optional
 from PIL import Image, ImageTk
 from safehome.configuration.safehome_mode import SafeHomeMode
 
@@ -23,6 +24,11 @@ class MainDashboard(tk.Toplevel):
         self.system = system
         self.login_window = login_window
         self.user_id = user_id
+        self.permissions = self._build_permissions(user_id)
+        # Cache camera passwords entered during this session to avoid reprompt loops
+        self.camera_password_cache = {}      # {camera_id: password_str}
+        self.camera_password_prompted = set()  # camera_ids we've already prompted for during auto-refresh
+        self.camera_access_failed = set()    # camera_ids with recent failed access
 
         # Register for zone updates
         self.system.config.register_zone_update_callback(self._update_zones)
@@ -43,6 +49,19 @@ class MainDashboard(tk.Toplevel):
 
         # 종료 처리
         self.protocol("WM_DELETE_WINDOW", self._on_close)
+
+    def _build_permissions(self, user_id: str) -> dict:
+        """Define permissions per role (guest is view-only for security/surveillance control)."""
+        is_admin = user_id == "admin"
+        return {
+            "control_modes": is_admin,
+            "panic": is_admin,
+            "view_logs": is_admin,
+            "manage_zones": is_admin,
+            # Allow guests to view and move cameras; keep power toggles admin-only.
+            "camera_ptz": True,
+            "sensor_sim": is_admin,
+        }
 
     def _create_ui(self):
         """UI 구성"""
@@ -68,6 +87,9 @@ class MainDashboard(tk.Toplevel):
         self._create_sensor_section(right_panel)
         self._create_zone_section(right_panel)
         self._create_quick_actions(right_panel)
+
+        # Ensure safety zones are populated on initial load (guest/admin)
+        self._update_zones()
 
     def _create_header(self):
         """상단 헤더 바"""
@@ -190,6 +212,8 @@ class MainDashboard(tk.Toplevel):
 
         self.camera_labels = {}
         cameras = list(self.system.camera_controller.cameras.values())
+        ptz_state = tk.NORMAL if self.permissions["camera_ptz"] else tk.DISABLED
+        toggle_state = tk.NORMAL  # allow click then enforce via permission checks
 
         if not cameras:
             tk.Label(
@@ -244,14 +268,14 @@ class MainDashboard(tk.Toplevel):
             control_frame.grid_columnconfigure((0, 1, 2), weight=1)
 
             # Cross-key layout
-            tk.Button(control_frame, text="^", command=lambda c=camera: self._tilt_camera(c, "up")).grid(row=0, column=1, sticky="ew")
-            tk.Button(control_frame, text="<", command=lambda c=camera: self._pan_camera(c, "left")).grid(row=1, column=0, sticky="ew")
-            tk.Button(control_frame, text=">", command=lambda c=camera: self._pan_camera(c, "right")).grid(row=1, column=2, sticky="ew")
-            tk.Button(control_frame, text="v", command=lambda c=camera: self._tilt_camera(c, "down")).grid(row=2, column=1, sticky="ew")
+            tk.Button(control_frame, text="^", state=ptz_state, command=lambda c=camera: self._tilt_camera(c, "up")).grid(row=0, column=1, sticky="ew")
+            tk.Button(control_frame, text="<", state=ptz_state, command=lambda c=camera: self._pan_camera(c, "left")).grid(row=1, column=0, sticky="ew")
+            tk.Button(control_frame, text=">", state=ptz_state, command=lambda c=camera: self._pan_camera(c, "right")).grid(row=1, column=2, sticky="ew")
+            tk.Button(control_frame, text="v", state=ptz_state, command=lambda c=camera: self._tilt_camera(c, "down")).grid(row=2, column=1, sticky="ew")
             
             # Zoom buttons
-            tk.Button(control_frame, text="+", command=lambda c=camera: self._zoom_camera(c, "in")).grid(row=0, column=2, sticky="ew")
-            tk.Button(control_frame, text="-", command=lambda c=camera: self._zoom_camera(c, "out")).grid(row=2, column=0, sticky="ew")
+            tk.Button(control_frame, text="+", state=ptz_state, command=lambda c=camera: self._zoom_camera(c, "in")).grid(row=0, column=2, sticky="ew")
+            tk.Button(control_frame, text="-", state=ptz_state, command=lambda c=camera: self._zoom_camera(c, "out")).grid(row=2, column=0, sticky="ew")
 
             # Enable/Disable buttons
             toggle_frame = tk.Frame(control_frame, bg="#ecf0f1")
@@ -259,8 +283,63 @@ class MainDashboard(tk.Toplevel):
             toggle_frame.grid_columnconfigure(0, weight=1)
             toggle_frame.grid_columnconfigure(1, weight=1)
 
-            tk.Button(toggle_frame, text="Enable", command=lambda c=camera: self._toggle_camera(c, True), bg="#27ae60", fg="white").grid(row=0, column=0, sticky="ew", padx=(0,2))
-            tk.Button(toggle_frame, text="Disable", command=lambda c=camera: self._toggle_camera(c, False), bg="#e74c3c", fg="white").grid(row=0, column=1, sticky="ew", padx=(2,0))
+            tk.Button(
+                toggle_frame,
+                text="Enable",
+                state=toggle_state,
+                command=lambda c=camera: self._toggle_camera(c, True),
+                bg="#e0f4e0",
+                fg="black",
+                activebackground="#c2e6c2",
+                activeforeground="black",
+                font=("Arial", 10, "bold"),
+                relief="ridge",
+                bd=2
+            ).grid(row=0, column=0, sticky="ew", padx=(0,2))
+            tk.Button(
+                toggle_frame,
+                text="Disable",
+                state=toggle_state,
+                command=lambda c=camera: self._toggle_camera(c, False),
+                bg="#f8d7da",
+                fg="black",
+                activebackground="#f1b0b7",
+                activeforeground="black",
+                font=("Arial", 10, "bold"),
+                relief="ridge",
+                bd=2
+            ).grid(row=0, column=1, sticky="ew", padx=(2,0))
+
+            # Password management row (admin only)
+            if self.user_id == "admin":
+                pwd_frame = tk.Frame(cam_container, bg="#ecf0f1")
+                pwd_frame.pack(fill="x", padx=5, pady=(2, 6))
+                tk.Button(
+                    pwd_frame,
+                    text="Set/Change",
+                    command=lambda c=camera: self._set_camera_password(c),
+                    bg="#e0e7ff",
+                    fg="black",
+                    activebackground="#cbd6ff",
+                    activeforeground="black",
+                    font=("Arial", 10, "bold"),
+                    relief="ridge",
+                    bd=2,
+                    width=10
+                ).pack(side="left", expand=True, fill="x", padx=2)
+                tk.Button(
+                    pwd_frame,
+                    text="Delete",
+                    command=lambda c=camera: self._delete_camera_password(c),
+                    bg="#ffe0e0",
+                    fg="black",
+                    activebackground="#ffc2c2",
+                    activeforeground="black",
+                    font=("Arial", 10, "bold"),
+                    relief="ridge",
+                    bd=2,
+                    width=8
+                ).pack(side="left", expand=True, fill="x", padx=(2, 0))
 
 
     def _create_control_buttons(self, parent):
@@ -474,14 +553,39 @@ class MainDashboard(tk.Toplevel):
                     label.config(image='', text="Disabled", compound="center", fg="white", font=("Arial", 12, "bold"))
                     continue
 
-                img = self.system.camera_controller.get_camera_view(cam_id)
+                # Handle password requirement
+                password = None
+                if camera and camera.has_password():
+                    if self.user_id == "admin":
+                        password = self.camera_password_cache.get(cam_id)
+                        if not password:
+                            if cam_id not in self.camera_password_prompted:
+                                self._prompt_camera_password(cam_id, force=True)
+                                self.camera_password_prompted.add(cam_id)
+                                password = self.camera_password_cache.get(cam_id)
+                        if not password:
+                            label.config(image='', text="Password Required", compound="center", fg="orange", font=("Arial", 12, "bold"))
+                            continue
+                    else:
+                        # Guest: do not prompt, just indicate protected
+                        label.config(image='', text="Password Protected", compound="center", fg="orange", font=("Arial", 12, "bold"))
+                        continue
+
+                img = self.system.camera_controller.get_camera_view(cam_id, password=password)
                 if img:
+                    self.camera_access_failed.discard(cam_id)
                     img_resized = img.resize((400, 300), Image.Resampling.LANCZOS)
                     photo = ImageTk.PhotoImage(img_resized)
                     label.config(image=photo, text="")
                     label.image = photo
                 else:
-                    label.config(image='', text="No Signal", compound="center", fg="red", font=("Arial", 12, "bold"))
+                    # If password protected and failed, clear cached password to force re-entry
+                    if camera and camera.has_password():
+                        self.camera_password_cache.pop(cam_id, None)
+                        self.camera_access_failed.add(cam_id)
+                        label.config(image='', text="Access Denied", compound="center", fg="red", font=("Arial", 12, "bold"))
+                    else:
+                        label.config(image='', text="No Signal", compound="center", fg="red", font=("Arial", 12, "bold"))
             except Exception as e:
                 label.config(image='', text=f"Camera Error\n{str(e)[:30]}", compound="center", fg="red")
 
@@ -504,7 +608,8 @@ class MainDashboard(tk.Toplevel):
         """Zone 목록 갱신"""
         self.zone_listbox.delete(0, tk.END)
 
-        for zone in self.system.config.get_all_zones():
+        zones = self.system.config.get_all_zones()
+        for zone in zones:
             sensors = self.system.sensor_controller.get_sensors_by_zone(zone.zone_id)
             status = "●" if zone.is_armed else "○"
             self.zone_listbox.insert(
@@ -527,8 +632,25 @@ class MainDashboard(tk.Toplevel):
                 fg="#e74c3c"
             )
 
+    def _prompt_camera_password(self, camera_id: int, force: bool = False):
+        """Prompt user for a camera password and cache it."""
+        if not force and camera_id in self.camera_password_cache:
+            return
+        pwd = simpledialog.askstring("Camera Password", f"Enter password for camera {camera_id}:", show="*")
+        if pwd:
+            self.camera_password_cache[camera_id] = pwd
+            self.camera_password_prompted.discard(camera_id)
+            self.camera_access_failed.discard(camera_id)
+        else:
+            # Clear cache to avoid repeated failed attempts
+            self.camera_password_cache.pop(camera_id, None)
+            self.camera_password_prompted.add(camera_id)
+
     def _set_mode(self, mode):
         """모드 설정"""
+        if not self.permissions["control_modes"]:
+            messagebox.showwarning("Permission Denied", "Guest account cannot change system mode.")
+            return
         if mode == SafeHomeMode.DISARMED:
             self.system.disarm_system()
             messagebox.showinfo("Success", "System Disarmed")
@@ -544,39 +666,127 @@ class MainDashboard(tk.Toplevel):
 
     def _pan_camera(self, camera, direction):
         """카메라 패닝"""
-        self.system.camera_controller.pan_camera(camera.camera_id, direction)
+        if not self.permissions["camera_ptz"]:
+            messagebox.showwarning("Permission Denied", "Guest account cannot control cameras.")
+            return
+        pwd = None
+        if self.user_id == "admin":
+            pwd = self.camera_password_cache.get(camera.camera_id)
+        self.system.camera_controller.pan_camera(camera.camera_id, direction, password=pwd)
 
     def _tilt_camera(self, camera, direction):
         """카메라 틸팅"""
-        self.system.camera_controller.tilt_camera(camera.camera_id, direction)
+        if not self.permissions["camera_ptz"]:
+            messagebox.showwarning("Permission Denied", "Guest account cannot control cameras.")
+            return
+        pwd = None
+        if self.user_id == "admin":
+            pwd = self.camera_password_cache.get(camera.camera_id)
+        self.system.camera_controller.tilt_camera(camera.camera_id, direction, password=pwd)
 
     def _zoom_camera(self, camera, direction):
         """카메라 줌"""
-        self.system.camera_controller.zoom_camera(camera.camera_id, direction)
+        if not self.permissions["camera_ptz"]:
+            messagebox.showwarning("Permission Denied", "Guest account cannot control cameras.")
+            return
+        pwd = None
+        if self.user_id == "admin":
+            pwd = self.camera_password_cache.get(camera.camera_id)
+        self.system.camera_controller.zoom_camera(camera.camera_id, direction, password=pwd)
 
     def _toggle_camera(self, camera, enable: bool):
         """Enable or disable a camera."""
         success = False
+        if self.user_id != "admin":
+            messagebox.showwarning("Permission Denied", "Guest users do not have permission to change camera status.")
+            return
+
+        # Require password when enabling/disabling; if none exists and disabling, instruct admin to set one first.
+        if not camera.has_password() and not enable:
+            messagebox.showinfo("Camera Password", "Set a camera password before disabling this camera.")
+            return
+
+        pwd = None
+        if camera.has_password():
+            pwd = simpledialog.askstring("Camera Password", f"Enter password for camera {camera.camera_id}:", show="*")
+            if not pwd:
+                messagebox.showwarning("Camera Password", "No password entered. Action cancelled.")
+                return
+            if not camera.verify_password(pwd):
+                messagebox.showerror("Camera Password", "Invalid password or camera locked. Please try again.")
+                return
+            self.camera_password_cache[camera.camera_id] = pwd
+
         if enable:
             success = self.system.camera_controller.enable_camera(camera.camera_id, role=self.user_id)
         else:
             success = self.system.camera_controller.disable_camera(camera.camera_id, role=self.user_id)
 
-        if not success and self.user_id == "guest":
-            messagebox.showwarning("Permission Denied", "Guest users do not have permission to change camera status.")
+        if not success:
+            messagebox.showerror("Camera", "Failed to change camera state. Check permissions or lock status.")
+
+    def _set_camera_password(self, camera):
+        """Admin flow: set/change camera password with confirmation."""
+        if self.user_id != "admin":
+            messagebox.showwarning("Permission Denied", "Only admin can change camera passwords.")
+            return
+        old_pwd = None
+        if camera.has_password():
+            old_pwd = simpledialog.askstring("Current Password", f"Enter current password for camera {camera.camera_id}:", show="*")
+        new_pwd = simpledialog.askstring("New Password", f"Enter new password for camera {camera.camera_id}:", show="*")
+        if not new_pwd:
+            return
+        confirm_pwd = simpledialog.askstring("Confirm Password", "Re-enter new password:", show="*")
+        if confirm_pwd is None:
+            return
+        success = self.system.camera_controller.set_camera_password(
+            camera.camera_id,
+            new_password=new_pwd,
+            old_password=old_pwd,
+            confirm_password=confirm_pwd
+        )
+        if success:
+            self.camera_password_cache[camera.camera_id] = new_pwd
+            messagebox.showinfo("Camera Password", "Password updated successfully.")
+        else:
+            messagebox.showerror("Camera Password", "Failed to update password. Check current password or lockout.")
+
+    def _delete_camera_password(self, camera):
+        """Admin flow: delete camera password."""
+        if self.user_id != "admin":
+            messagebox.showwarning("Permission Denied", "Only admin can delete camera passwords.")
+            return
+        old_pwd = None
+        if camera.has_password():
+            old_pwd = simpledialog.askstring("Current Password", f"Enter current password for camera {camera.camera_id}:", show="*")
+        success = self.system.camera_controller.delete_camera_password(camera.camera_id, old_password=old_pwd)
+        if success:
+            self.camera_password_cache.pop(camera.camera_id, None)
+            messagebox.showinfo("Camera Password", "Password removed.")
+        else:
+            messagebox.showerror("Camera Password", "Failed to remove password. Check current password or lockout.")
 
     def _open_zone_manager(self):
         """Zone 관리자 열기"""
+        if not self.permissions["manage_zones"]:
+            messagebox.showwarning("Permission Denied", "Guest account cannot manage zones.")
+            return
         from .zone_manager import ZoneManagerWindow
         ZoneManagerWindow(self.system, self)
 
     def _open_log_viewer(self):
         """로그 뷰어 열기"""
+        if not self.permissions["view_logs"]:
+            messagebox.showwarning("Permission Denied", "Guest account cannot view system logs.")
+            return
         from .log_viewer import LogViewerWindow
         LogViewerWindow(self.system, self)
 
     def _trigger_panic(self):
         """패닉 알람"""
+        if not self.permissions["panic"]:
+            messagebox.showwarning("Permission Denied", "Guest account cannot trigger panic alarm.")
+            return
         if messagebox.askyesno("Panic Alarm", "Trigger panic alarm?"):
             self.system.config.set_mode(SafeHomeMode.PANIC)
             self.system.alarm.ring()
@@ -584,6 +794,9 @@ class MainDashboard(tk.Toplevel):
 
     def _silence_alarm(self):
         """알람 끄기"""
+        if not self.permissions["panic"]:
+            messagebox.showwarning("Permission Denied", "Guest account cannot silence the alarm.")
+            return
         self.system.alarm.stop()
         messagebox.showinfo("Alarm", "Alarm silenced")
 
@@ -634,16 +847,22 @@ class MainDashboard(tk.Toplevel):
         btn_row = tk.Frame(container, bg="#ecf0f1")
         btn_row.grid(row=10, column=0, columnspan=2, sticky="ew", pady=(14, 6))
         tk.Button(btn_row, text="Save", bg="#27ae60", fg="white",
-                  font=("Arial", 11, "bold"), relief="flat", cursor="hand2",
+                  font=("Arial", 11, "bold"),
+                  relief="ridge", bd=2, cursor="hand2",
+                  activebackground="#27ae60", activeforeground="white",
                   command=lambda: self._save_settings(popup, entries)).pack(side="left", padx=6, ipadx=14, ipady=6)
 
         # Reset Button
         tk.Button(btn_row, text="Reset System", bg="#c0392b", fg="white",
-                  font=("Arial", 11, "bold"), relief="flat", cursor="hand2",
+                  font=("Arial", 11, "bold"),
+                  relief="ridge", bd=2, cursor="hand2",
+                  activebackground="#c0392b", activeforeground="white",
                   command=lambda: self._reset_system(popup)).pack(side="left", padx=6, ipadx=14, ipady=6)
 
         tk.Button(btn_row, text="Close", bg="#95a5a6", fg="white",
-                  font=("Arial", 11, "bold"), relief="flat", cursor="hand2",
+                  font=("Arial", 11, "bold"),
+                  relief="ridge", bd=2, cursor="hand2",
+                  activebackground="#95a5a6", activeforeground="white",
                   command=popup.destroy).pack(side="right", padx=6, ipadx=14, ipady=6)
 
         container.grid_columnconfigure(1, weight=1)
@@ -699,6 +918,9 @@ class MainDashboard(tk.Toplevel):
 
     def _open_sensor_simulator(self):
         """센서 시뮬레이터 열기"""
+        if not self.permissions["sensor_sim"]:
+            messagebox.showwarning("Permission Denied", "Guest account cannot open the sensor simulator.")
+            return
         try:
             from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
             DeviceSensorTester.showSensorTester()
@@ -718,4 +940,3 @@ class MainDashboard(tk.Toplevel):
         if messagebox.askokcancel("Quit", "Shutdown SafeHome System?"):
             self.system.shutdown()
             self.login_window.destroy()
-

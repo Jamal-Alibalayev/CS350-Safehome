@@ -113,10 +113,12 @@ class LogViewerWindow(tk.Toplevel):
             control_frame,
             text="🔄 Refresh",
             font=("Arial", 10),
-            bg="#3498db",
-            fg="white",
+            bg="#e0e7ff",
+            fg="black",
             relief="flat",
             cursor="hand2",
+            activebackground="#cbd6ff",
+            activeforeground="black",
             command=self._refresh_logs
         )
         refresh_btn.pack(side="left", padx=10)
@@ -138,10 +140,12 @@ class LogViewerWindow(tk.Toplevel):
             control_frame,
             text="🗑️ Clear Logs",
             font=("Arial", 10),
-            bg="#e74c3c",
-            fg="white",
+            bg="#ffe0e0",
+            fg="black",
             relief="flat",
             cursor="hand2",
+            activebackground="#ffc2c2",
+            activeforeground="black",
             command=self._clear_logs
         )
         clear_btn.pack(side="right", padx=5)

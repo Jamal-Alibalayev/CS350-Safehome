@@ -1,4 +1,5 @@
 from typing import Optional
+import time
 from PIL import Image
 from .device_camera import DeviceCamera
 
@@ -10,7 +11,15 @@ class SafeHomeCamera:
     Implements camera control with password protection (SRS UC19-25)
     """
 
-    def __init__(self, camera_id: int, name: str, location: str, password: Optional[str] = None):
+    def __init__(
+        self,
+        camera_id: int,
+        name: str,
+        location: str,
+        password: Optional[str] = None,
+        max_attempts: int = 3,
+        lockout_seconds: int = 300,
+    ):
         """
         Initialize SafeHome Camera
 
@@ -19,12 +28,18 @@ class SafeHomeCamera:
             name: Camera name
             location: Physical location description
             password: Optional password for camera access
+            max_attempts: How many wrong tries before lock
+            lockout_seconds: Lock duration in seconds
         """
         self.camera_id = camera_id
         self.name = name
         self.location = location
         self.password = password
         self.is_enabled = True
+        self.max_attempts = max_attempts
+        self.lockout_seconds = lockout_seconds
+        self.failed_attempts = 0
+        self.locked_until = 0.0
 
         # Create hardware device instance
         self.hardware = DeviceCamera()
@@ -49,7 +64,7 @@ class SafeHomeCamera:
         Returns:
             PIL Image if camera is enabled, None otherwise
         """
-        if not self.is_enabled:
+        if not self.is_enabled or self._is_locked():
             return None
 
         try:
@@ -65,7 +80,7 @@ class SafeHomeCamera:
         Returns:
             True if successful, False if limit reached
         """
-        if not self.is_enabled:
+        if not self.is_enabled or self._is_locked():
             return False
 
         try:
@@ -81,7 +96,7 @@ class SafeHomeCamera:
         Returns:
             True if successful, False if limit reached
         """
-        if not self.is_enabled:
+        if not self.is_enabled or self._is_locked():
             return False
 
         try:
@@ -97,7 +112,7 @@ class SafeHomeCamera:
         Returns:
             True if successful, False if limit reached
         """
-        if not self.is_enabled:
+        if not self.is_enabled or self._is_locked():
             return False
 
         try:
@@ -113,7 +128,7 @@ class SafeHomeCamera:
         Returns:
             True if successful, False if limit reached
         """
-        if not self.is_enabled:
+        if not self.is_enabled or self._is_locked():
             return False
 
         try:
@@ -129,7 +144,7 @@ class SafeHomeCamera:
         Returns:
             True if successful, False if limit reached
         """
-        if not self.is_enabled:
+        if not self.is_enabled or self._is_locked():
             return False
 
         try:
@@ -145,7 +160,7 @@ class SafeHomeCamera:
         Returns:
             True if successful, False if limit reached
         """
-        if not self.is_enabled:
+        if not self.is_enabled or self._is_locked():
             return False
 
         try:
@@ -170,6 +185,9 @@ class SafeHomeCamera:
             password: New password (None to remove password protection)
         """
         self.password = password
+        # Reset lock state on password change/removal
+        self.failed_attempts = 0
+        self.locked_until = 0.0
 
     def verify_password(self, password: Optional[str]) -> bool:
         """
@@ -183,14 +201,38 @@ class SafeHomeCamera:
         """
         # No password set - allow access
         if self.password is None:
+            self.failed_attempts = 0
+            self.locked_until = 0.0
             return True
 
+        # Check lock
+        if self._is_locked():
+            return False
+
         # Password required
-        return self.password == password
+        if self.password == password:
+            self.failed_attempts = 0
+            return True
+
+        # Wrong password handling
+        self.failed_attempts += 1
+        if self.failed_attempts >= self.max_attempts:
+            self.locked_until = time.time() + self.lockout_seconds
+        return False
 
     def has_password(self) -> bool:
         """Check if camera has password protection"""
         return self.password is not None
+
+    def _is_locked(self) -> bool:
+        """Check if camera is in lockout state."""
+        if self.locked_until and time.time() < self.locked_until:
+            return True
+        if self.locked_until and time.time() >= self.locked_until:
+            # Auto unlock after timeout
+            self.locked_until = 0.0
+            self.failed_attempts = 0
+        return False
 
     def get_status(self) -> dict:
         """

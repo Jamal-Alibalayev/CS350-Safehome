@@ -34,7 +34,8 @@ class System:
         self.camera_controller = CameraController(
             storage_manager=self.config.storage,
             logger=self.config.logger,
-            login_manager=self.config.login_manager
+            login_manager=self.config.login_manager,
+            settings=self.config.settings
         )
         self.alarm = Alarm(duration=self.config.settings.alarm_duration)
 

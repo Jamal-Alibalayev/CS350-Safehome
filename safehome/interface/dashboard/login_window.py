@@ -127,11 +127,14 @@ class LoginWindow(tk.Tk):
             form_frame,
             text="Login",
             font=("Arial", 13, "bold"),
-            bg="#27ae60",
-            fg="white",
+            bg="#e0f4e0",
+            fg="black",
+            activebackground="#c2e6c2",
+            activeforeground="black",
             width=20,
             height=2,
-            relief="flat",
+            relief="ridge",
+            bd=2,
             cursor="hand2",
             command=self._attempt_login
         )

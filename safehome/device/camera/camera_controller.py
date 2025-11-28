@@ -11,7 +11,7 @@ class CameraController:
     Based on SRS requirements UC19-25 for camera access control
     """
 
-    def __init__(self, storage_manager=None, logger=None, login_manager=None):
+    def __init__(self, storage_manager=None, logger=None, login_manager=None, settings=None):
         """
         Initialize Camera Controller
 
@@ -19,12 +19,15 @@ class CameraController:
             storage_manager: StorageManager for persistence
             logger: LogManager for logging events
             login_manager: LoginManager for user authentication
+            settings: SystemSettings (for lockout policy)
         """
         self.cameras: Dict[int, SafeHomeCamera] = {}  # {camera_id: SafeHomeCamera instance}
         self.storage = storage_manager
         self.logger = logger
         self.login_manager = login_manager
         self._next_camera_id = 1  # Auto-increment camera ID
+        self.max_attempts = getattr(settings, "max_login_attempts", 3) if settings else 3
+        self.lockout_seconds = getattr(settings, "system_lock_time", 300) if settings else 300
 
     def add_camera(self, name: str, location: str, password: Optional[str] = None) -> SafeHomeCamera:
         """
@@ -42,7 +45,14 @@ class CameraController:
         self._next_camera_id += 1
 
         # Create camera
-        camera = SafeHomeCamera(camera_id, name, location, password)
+        camera = SafeHomeCamera(
+            camera_id,
+            name,
+            location,
+            password,
+            max_attempts=self.max_attempts,
+            lockout_seconds=self.lockout_seconds
+        )
 
         # Store camera
         self.cameras[camera_id] = camera
@@ -129,7 +139,7 @@ class CameraController:
             if not camera.verify_password(password):
                 if self.logger:
                     self.logger.add_log(
-                        f"Camera {camera_id} access denied: Invalid password",
+                        f"Camera {camera_id} access denied: Invalid password or locked",
                         level="WARNING",
                         source="CameraController"
                     )
@@ -167,7 +177,7 @@ class CameraController:
         if camera.has_password() and not camera.verify_password(password):
             if self.logger:
                 self.logger.add_log(
-                    f"Camera {camera_id} pan denied: Invalid password",
+                    f"Camera {camera_id} pan denied: Invalid password or locked",
                     level="WARNING",
                     source="CameraController"
                 )
@@ -209,7 +219,7 @@ class CameraController:
         if camera.has_password() and not camera.verify_password(password):
             if self.logger:
                 self.logger.add_log(
-                    f"Camera {camera_id} tilt denied: Invalid password",
+                    f"Camera {camera_id} tilt denied: Invalid password or locked",
                     level="WARNING",
                     source="CameraController"
                 )
@@ -251,7 +261,7 @@ class CameraController:
         if camera.has_password() and not camera.verify_password(password):
             if self.logger:
                 self.logger.add_log(
-                    f"Camera {camera_id} zoom denied: Invalid password",
+                    f"Camera {camera_id} zoom denied: Invalid password or locked",
                     level="WARNING",
                     source="CameraController"
                 )
@@ -339,35 +349,89 @@ class CameraController:
 
         return True
 
-    def set_camera_password(self, camera_id: int, password: Optional[str]) -> bool:
+    def set_camera_password(self, camera_id: int, new_password: Optional[str],
+                            old_password: Optional[str] = None,
+                            confirm_password: Optional[str] = None) -> bool:
         """
-        Set or change camera password
+        Set or change camera password (requires current password if one exists).
 
         Args:
             camera_id: Camera ID
-            password: New password (None to remove password protection)
+            new_password: Desired new password (None is not allowed here; use delete_camera_password to remove)
+            old_password: Current password (required if a password is already set)
+            confirm_password: Confirmation of new password
 
         Returns:
-            True if successful, False if camera not found
+            True if successful, False otherwise
+        """
+        camera = self.get_camera(camera_id)
+        if not camera or new_password is None:
+            return False
+
+        if confirm_password is not None and new_password != confirm_password:
+            if self.logger:
+                self.logger.add_log(
+                    f"Camera {camera_id} password change failed: confirmation mismatch",
+                    level="WARNING",
+                    source="CameraController"
+                )
+            return False
+
+        # If password exists, require old_password
+        if camera.has_password():
+            if not camera.verify_password(old_password):
+                if self.logger:
+                    self.logger.add_log(
+                        f"Camera {camera_id} password change denied: invalid old password or locked",
+                        level="WARNING",
+                        source="CameraController"
+                    )
+                return False
+
+        camera.set_password(new_password)
+
+        # Update in database
+        if self.storage:
+            self.storage.update_camera_password(camera_id, new_password)
+
+        # Log event
+        if self.logger:
+            self.logger.add_log(
+                f"Camera {camera_id} password set/changed",
+                source="CameraController"
+            )
+
+        return True
+
+    def delete_camera_password(self, camera_id: int, old_password: Optional[str] = None) -> bool:
+        """
+        Remove camera password (requires current password if set).
         """
         camera = self.get_camera(camera_id)
         if not camera:
             return False
 
-        camera.set_password(password)
+        if camera.has_password():
+            if not camera.verify_password(old_password):
+                if self.logger:
+                    self.logger.add_log(
+                        f"Camera {camera_id} password delete denied: invalid old password or locked",
+                        level="WARNING",
+                        source="CameraController"
+                    )
+                return False
+
+        camera.set_password(None)
 
         # Update in database
         if self.storage:
-            self.storage.update_camera_password(camera_id, password)
+            self.storage.update_camera_password(camera_id, None)
 
-        # Log event
         if self.logger:
-            action = "set" if password else "removed"
             self.logger.add_log(
-                f"Camera {camera_id} password {action}",
+                f"Camera {camera_id} password removed",
                 source="CameraController"
             )
-
         return True
 
     def get_camera_status(self, camera_id: int) -> Optional[dict]:
@@ -412,7 +476,14 @@ class CameraController:
                 self._next_camera_id = camera_id + 1
 
             # Create camera
-            camera = SafeHomeCamera(camera_id, name, location, password)
+            camera = SafeHomeCamera(
+                camera_id,
+                name,
+                location,
+                password,
+                max_attempts=self.max_attempts,
+                lockout_seconds=self.lockout_seconds
+            )
             self.cameras[camera_id] = camera
 
         if self.logger:
