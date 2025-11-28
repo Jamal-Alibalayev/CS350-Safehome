@@ -39,7 +39,7 @@ class ConfigurationManager:
             self.settings.update_settings(**loaded_data)
 
         # 4. Initialize Log Manager
-        self.logger = LogManager()
+        self.logger = LogManager(self.storage)
         self.logger.add_log("System configuration loaded", source="ConfigManager")
         # Backward-compatible alias
         self.log_manager = self.logger

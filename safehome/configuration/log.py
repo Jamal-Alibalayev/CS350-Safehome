@@ -17,3 +17,8 @@ class Log:
 
     def __str__(self):
         return f"[{self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}] [{self.level}] {self.source}: {self.message}"
+
+    # Backward-compatible aliases
+    @property
+    def event_type(self):
+        return self.level
