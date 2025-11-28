@@ -26,3 +26,7 @@ class LogManager:
     def get_recent_logs(self, count=10):
         """获取最近的日志"""
         return self.logs[-count:]
+
+    def get_all_logs(self):
+        """获取内存中的全部日志"""
+        return list(self.logs)

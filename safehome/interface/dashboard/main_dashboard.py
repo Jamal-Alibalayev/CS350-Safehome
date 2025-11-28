@@ -876,6 +876,8 @@ class MainDashboard(tk.Toplevel):
                                icon='warning'):
             try:
                 self.system.config.reset_configuration()
+                # Reload cameras to clear any in-memory passwords/states
+                self.system.camera_controller.load_cameras_from_storage()
                 popup.destroy()
                 messagebox.showinfo("System Reset",
                                     "The system has been reset to factory defaults.\n"

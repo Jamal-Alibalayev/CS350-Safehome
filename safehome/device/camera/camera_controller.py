@@ -465,6 +465,10 @@ class CameraController:
 
         camera_data = self.storage.load_all_cameras()
 
+        # Reset in-memory state before loading to avoid duplicates
+        self.cameras.clear()
+        self._next_camera_id = 1
+
         for data in camera_data:
             camera_id = data['camera_id']
             name = data['camera_name']

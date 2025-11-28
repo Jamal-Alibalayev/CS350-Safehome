@@ -216,7 +216,9 @@ class LogViewerWindow(tk.Toplevel):
         search_text = self.search_entry.get().lower()
 
         # Get logs from system
-        logs = self.system.config.log_manager.get_all_logs()
+        cfg = self.system.config
+        log_mgr = getattr(cfg, "log_manager", None) or getattr(cfg, "logger", None)
+        logs = log_mgr.get_all_logs() if log_mgr else []
 
         # Apply filters
         filtered_logs = []

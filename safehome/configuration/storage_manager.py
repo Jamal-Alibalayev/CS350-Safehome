@@ -249,6 +249,12 @@ class StorageManager:
         self.db.execute_query(query, (password, camera_id))
         self.db.commit()
 
+    def clear_camera_passwords(self):
+        """Remove all camera passwords (used for system reset)."""
+        self._check_db()
+        self.db.execute_query("UPDATE cameras SET camera_password = NULL")
+        self.db.commit()
+
     def save_log(self, log):
         """Save log entry to database"""
         self._check_db()

@@ -41,6 +41,8 @@ class ConfigurationManager:
         # 4. Initialize Log Manager
         self.logger = LogManager()
         self.logger.add_log("System configuration loaded", source="ConfigManager")
+        # Backward-compatible alias
+        self.log_manager = self.logger
 
         # 5. Initialize Login Manager
         self.login_manager = LoginManager(self.settings, self.storage)
@@ -138,7 +140,14 @@ class ConfigurationManager:
         self.storage.save_safety_zone(zone1)
         self.storage.save_safety_zone(zone2)
 
-        # 4. Save the new default configuration to the database
+        # 4. Clear all camera passwords (reset to no protection)
+        try:
+            self.storage.clear_camera_passwords()
+        except Exception as e:
+            self.logger.add_log(f"Failed to clear camera passwords on reset: {e}",
+                                level="ERROR", source="ConfigManager")
+
+        # 5. Save the new default configuration to the database
         self.save_configuration()
 
         self.logger.add_log("System configuration has been reset to defaults",
