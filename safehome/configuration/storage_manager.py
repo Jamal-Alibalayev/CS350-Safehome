@@ -123,15 +123,14 @@ class StorageManager:
         """Save or update a SafetyZone to database and return its ID."""
         self._check_db()
         if zone.zone_id is None:
-            # Insert new zone
+            # Insert new zone and get the new ID reliably
             query = """
                 INSERT INTO safety_zones (zone_name, is_armed)
                 VALUES (?, ?)
             """
-            self.db.execute_query(query, (zone.name, zone.is_armed))
+            new_id = self.db.execute_insert_query(query, (zone.name, zone.is_armed))
             self.db.commit()
-            zone.zone_id = self.db.get_last_insert_id()
-            return zone.zone_id
+            return new_id
         else:
             # Update existing zone
             query = """

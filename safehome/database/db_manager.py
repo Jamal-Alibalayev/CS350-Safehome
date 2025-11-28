@@ -94,7 +94,30 @@ class DatabaseManager:
         elif fetch_all:
             return cursor.fetchall()
         else:
+            # For non-SELECT queries, we might want the cursor itself
+            # to get info like lastrowid, but we need a consistent return type.
+            # We will return the cursor for legacy compatibility but encourage
+            # using execute_insert_query for inserts.
             return cursor
+
+    def execute_insert_query(self, query: str, params: Tuple = ()) -> Optional[int]:
+        """
+        Execute an INSERT SQL query and return the last inserted row ID.
+
+        Args:
+            query: SQL INSERT query string
+            params: Query parameters (tuple)
+
+        Returns:
+            The ID of the last inserted row, or None if it fails.
+        """
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(query, params)
+            return cursor.lastrowid
+        except Exception as e:
+            print(f"Error during insert query: {e}")
+            return None
 
     def execute_many(self, query: str, params_list: List[Tuple]):
         """

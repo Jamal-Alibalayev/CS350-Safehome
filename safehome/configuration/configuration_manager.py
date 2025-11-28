@@ -188,20 +188,17 @@ class ConfigurationManager:
         return self.storage.load_all_safety_zones()
 
     def add_safety_zone(self, zone_name: str) -> Optional[SafetyZone]:
-        """Adds a new safety zone to the database and returns the created object."""
-        # Create a temporary object to insert
-        zone_to_add = SafetyZone(None, zone_name)
+        """Adds a new safety zone to the database."""
+        zone = SafetyZone(None, zone_name)
+        new_id = self.storage.save_safety_zone(zone)
         
-        # Save to DB and get the new ID back
-        new_id = self.storage.save_safety_zone(zone_to_add)
-
-        # If we got a valid ID, fetch the complete object back from the DB
         if new_id is not None:
+            zone.zone_id = new_id
             self.logger.add_log(f"Safety zone '{zone_name}' created with ID {new_id}", source="ConfigManager")
             self._notify_zone_update()
-            # Return the definitive object from the source of truth
-            return self.storage.load_safety_zone_by_id(new_id)
-            
+            return zone
+
+        # This should now only be reached if the DB insert truly fails
         return None
 
     def update_safety_zone(self, zone_id: int, zone_name: Optional[str] = None,

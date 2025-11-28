@@ -87,3 +87,6 @@
                     control_panel.png
                     sensor.png
 ```
+# User instruction
+
+## Login/Logout
