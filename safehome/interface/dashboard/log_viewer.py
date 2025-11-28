@@ -236,7 +236,16 @@ class LogViewerWindow(tk.Toplevel):
             filtered_logs.append(log)
 
         # Sort by timestamp (newest first)
-        filtered_logs.sort(key=lambda x: x.timestamp, reverse=True)
+        def _ts(log):
+            ts = log.timestamp
+            if isinstance(ts, str):
+                try:
+                    return datetime.fromisoformat(ts)
+                except Exception:
+                    return datetime.min
+            return ts
+
+        filtered_logs.sort(key=_ts, reverse=True)
 
         # Insert into tree
         for log in filtered_logs:
