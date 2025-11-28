@@ -87,6 +87,5 @@
                     control_panel.png
                     sensor.png
 ```
-# User instruction
-
-## Login/Logout
+# User Manual
+[User Manual](USER_MANUAL.md)
