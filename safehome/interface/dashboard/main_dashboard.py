@@ -554,10 +554,14 @@ class MainDashboard(tk.Toplevel):
 
     def _toggle_camera(self, camera, enable: bool):
         """Enable or disable a camera."""
+        success = False
         if enable:
-            self.system.camera_controller.enable_camera(camera.camera_id, role=self.user_id)
+            success = self.system.camera_controller.enable_camera(camera.camera_id, role=self.user_id)
         else:
-            self.system.camera_controller.disable_camera(camera.camera_id, role=self.user_id)
+            success = self.system.camera_controller.disable_camera(camera.camera_id, role=self.user_id)
+
+        if not success and self.user_id == "guest":
+            messagebox.showwarning("Permission Denied", "Guest users do not have permission to change camera status.")
 
     def _open_zone_manager(self):
         """Zone 관리자 열기"""
