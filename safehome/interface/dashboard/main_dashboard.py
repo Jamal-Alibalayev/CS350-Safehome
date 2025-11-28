@@ -76,7 +76,7 @@ class MainDashboard(tk.Toplevel):
 
         tk.Label(
             title_frame,
-            text="🏠 SafeHome Dashboard",
+            text="⌂ SafeHome Dashboard",
             font=("Arial", 22, "bold"),
             bg="#34495e",
             fg="white"
@@ -118,7 +118,7 @@ class MainDashboard(tk.Toplevel):
 
         tk.Button(
             button_frame,
-            text="📊 LOGS",
+            text="≡ LOGS",
             command=self._open_log_viewer,
             bg="#f39c12",
             fg="black",
@@ -133,7 +133,7 @@ class MainDashboard(tk.Toplevel):
 
         tk.Button(
             button_frame,
-            text="🚪 LOGOUT",
+            text="⎚ LOGOUT",
             command=self._logout,
             bg="#e74c3c",
             fg="black",
@@ -149,7 +149,7 @@ class MainDashboard(tk.Toplevel):
         if self.user_id == "admin":
             tk.Button(
                 button_frame,
-                text="⚙️ SETTINGS",
+                text="⚙ SETTINGS",
                 command=self._open_settings,
                 bg="#3498db",
                 fg="black",
@@ -166,7 +166,7 @@ class MainDashboard(tk.Toplevel):
         """카메라 뷰 섹션"""
         camera_frame = tk.LabelFrame(
             parent,
-            text="📹 Live Camera Feeds",
+            text="▶ Live Camera Feeds",
             font=("Arial", 13, "bold"),
             bg="white",
             fg="#2c3e50"
@@ -210,7 +210,7 @@ class MainDashboard(tk.Toplevel):
 
             tk.Label(
                 title_frame,
-                text=f"📷 {camera.name}",
+                text=f"◎ {camera.name}",
                 font=("Arial", 11, "bold"),
                 bg="#34495e",
                 fg="white"
@@ -262,7 +262,7 @@ class MainDashboard(tk.Toplevel):
         """Arm/Disarm 제어 버튼 및 센서 시뮬레이터"""
         control_frame = tk.LabelFrame(
             parent,
-            text="🎛️ System Control",
+            text="◎ System Control",
             font=("Arial", 13, "bold"),
             bg="white",
             fg="#2c3e50"
@@ -304,7 +304,7 @@ class MainDashboard(tk.Toplevel):
 
         tk.Button(
             simulator_container,
-            text="🧪 OPEN SENSOR SIMULATOR",
+            text="⚗ OPEN SENSOR SIMULATOR",
             bg="#f39c12",
             fg="black",
             font=("Helvetica", 13, "bold"),
@@ -322,7 +322,7 @@ class MainDashboard(tk.Toplevel):
         """센서 상태 섹션"""
         sensor_frame = tk.LabelFrame(
             parent,
-            text="🔍 Sensor Status",
+            text="⌕ Sensor Status",
             font=("Arial", 13, "bold"),
             bg="white",
             fg="#2c3e50"
@@ -363,7 +363,7 @@ class MainDashboard(tk.Toplevel):
         """Zone 관리 섹션"""
         zone_frame = tk.LabelFrame(
             parent,
-            text="📍 Safety Zones",
+            text="• Safety Zones",
             font=("Arial", 13, "bold"),
             bg="white",
             fg="#2c3e50"
@@ -388,7 +388,7 @@ class MainDashboard(tk.Toplevel):
 
         tk.Button(
             btn_frame,
-            text="🗺️ MANAGE ZONES",
+            text="⚐ MANAGE ZONES",
             command=self._open_zone_manager,
             bg="#48c9b0",
             fg="black",
@@ -416,8 +416,8 @@ class MainDashboard(tk.Toplevel):
         content.pack(padx=10, pady=10, fill="x")
 
         actions = [
-            ("🚨 Panic Alarm", self._trigger_panic, "#c0392b"),
-            ("🔕 Silence Alarm", self._silence_alarm, "#7f8c8d"),
+            ("⚠ Panic Alarm", self._trigger_panic, "#c0392b"),
+            ("⦸ Silence Alarm", self._silence_alarm, "#7f8c8d"),
         ]
 
         for text, command, color in actions:
@@ -488,7 +488,7 @@ class MainDashboard(tk.Toplevel):
         self.sensor_tree.delete(*self.sensor_tree.get_children())
 
         for sensor in self.system.sensor_controller.get_all_sensors():
-            status = "🟢 Armed" if sensor.is_active else "⚪ Disarmed"
+            status = "● Armed" if sensor.is_active else "○ Disarmed"
             zone_name = f"Zone {sensor.zone_id}" if sensor.zone_id else "-"
 
             self.sensor_tree.insert("", "end", values=(
@@ -504,7 +504,7 @@ class MainDashboard(tk.Toplevel):
 
         for zone in self.system.config.get_all_zones():
             sensors = self.system.sensor_controller.get_sensors_by_zone(zone.zone_id)
-            status = "🟢" if zone.is_armed else "⚪"
+            status = "●" if zone.is_armed else "○"
             self.zone_listbox.insert(
                 tk.END,
                 f"{status} {zone.name} ({len(sensors)} sensors)"

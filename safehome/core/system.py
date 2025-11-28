@@ -173,7 +173,7 @@ class System:
             level="ALARM",
             source="System"
         )
-        print(f"📞 Calling {phone}: INTRUSION at {sensor.location}")
+        print(f"☏ Calling {phone}: INTRUSION at {sensor.location}")
 
     # ===== Mode Control =====
     def arm_system(self, mode: SafeHomeMode):
