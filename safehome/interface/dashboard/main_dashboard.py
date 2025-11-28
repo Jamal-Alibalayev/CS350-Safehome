@@ -30,7 +30,10 @@ class MainDashboard(tk.Toplevel):
         # 윈도우 설정
         self.title("SafeHome - Dashboard")
         self.geometry("1400x900")
-        self.state('zoomed')  # 최대화
+        try:
+            self.state('zoomed')
+        except tk.TclError:
+            self.attributes('-zoomed', True) 
 
         # UI 구성
         self._create_ui()
