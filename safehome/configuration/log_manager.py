@@ -51,3 +51,19 @@ class LogManager:
     def get_all_logs(self) -> List[Log]:
         """获取内存中的全部日志"""
         return list(self.logs)
+
+    def clear_logs(self):
+        """Clear in-memory, file, and DB logs."""
+        self.logs = []
+        # Truncate log file
+        try:
+            with open(self.log_file, "w", encoding="utf-8") as f:
+                f.write("")  # empty file
+        except IOError as e:
+            print(f"Error clearing log file: {e}")
+        # Clear DB logs if storage present
+        if self.storage:
+            try:
+                self.storage.clear_logs()
+            except Exception as e:
+                print(f"Error clearing logs in storage: {e}")

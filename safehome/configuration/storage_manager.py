@@ -304,6 +304,11 @@ class StorageManager:
         self.db.execute_many("INSERT OR IGNORE INTO event_log_seen (log_id) VALUES (?)", values)
         self.db.commit()
 
+    def clear_logs(self):
+        """Delete all event logs and seen markers."""
+        self._check_db()
+        self.db.clear_event_logs()
+
     def get_sensors_for_mode(self, mode_name: str) -> List[int]:
         """Get list of sensor IDs for a given SafeHomeMode"""
         self._check_db()

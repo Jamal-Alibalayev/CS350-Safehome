@@ -279,6 +279,16 @@ class DatabaseManager:
 
         return self.execute_query(query, tuple(params), fetch_all=True)
 
+    def clear_event_logs(self):
+        """Delete all event logs and seen markers."""
+        # Remove seen markers first to maintain FK integrity if present
+        try:
+            self.execute_query("DELETE FROM event_log_seen")
+        except Exception:
+            pass
+        self.execute_query("DELETE FROM event_logs")
+        self.commit()
+
     def __enter__(self):
         """Context manager entry"""
         self.connect()
