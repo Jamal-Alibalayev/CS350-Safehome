@@ -24,14 +24,14 @@ class LogManager:
             except Exception as e:
                 print(f"Error preloading logs: {e}")
 
-    def add_log(self, message: str, level: str = "INFO", source: str = "System"):
+    def add_log(self, message: str, level: str = "INFO", source: str = "System", **kwargs):
         """添加一条新日志"""
-        new_log = Log(message, level=level, source=source)
+        new_log = Log(message, level=level, source=source) # **kwargs are intentionally not passed to Log constructor
         self.logs.append(new_log)
         self._write_to_file(new_log)
         if self.storage:
             try:
-                self.storage.save_log(new_log)
+                self.storage.save_log(new_log) # save_log might still need to be updated to handle kwargs if it intends to store them
             except Exception as e:
                 print(f"Error saving log to storage: {e}")
         # print(new_log)  # 可选：控制台输出
