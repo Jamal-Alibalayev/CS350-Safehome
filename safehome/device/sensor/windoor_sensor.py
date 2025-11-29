@@ -18,7 +18,7 @@ class WindowDoorSensor(Sensor):
             location: Physical location (e.g., "Front Door", "Living Room Window")
             zone_id: Safety zone this sensor belongs to
         """
-        super().__init__(sensor_id, 'WINDOOR', location, zone_id)
+        super().__init__(sensor_id, "WINDOOR", location, zone_id)
 
         # Create hardware device instance
         self.hardware = DeviceWinDoorSensor()
@@ -65,10 +65,10 @@ class WindowDoorSensor(Sensor):
 
     def simulate_open(self):
         """Simulate window/door opening (for testing)"""
-        if hasattr(self.hardware, 'intrude'):
+        if hasattr(self.hardware, "intrude"):
             self.hardware.intrude()
 
     def simulate_close(self):
         """Simulate window/door closing (for testing)"""
-        if hasattr(self.hardware, 'release'):
+        if hasattr(self.hardware, "release"):
             self.hardware.release()

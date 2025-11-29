@@ -32,8 +32,7 @@ class Alarm:
 
         self.is_ringing = True
         self._alarm_thread = threading.Thread(
-            target=self._ring_for_duration,
-            daemon=True
+            target=self._ring_for_duration, daemon=True
         )
         self._alarm_thread.start()
 
@@ -88,9 +87,10 @@ class Alarm:
             Dictionary with alarm status information
         """
         return {
-            'is_ringing': self.is_ringing,
-            'duration': self.duration,
-            'has_active_thread': self._alarm_thread is not None and self._alarm_thread.is_alive()
+            "is_ringing": self.is_ringing,
+            "duration": self.duration,
+            "has_active_thread": self._alarm_thread is not None
+            and self._alarm_thread.is_alive(),
         }
 
     def __repr__(self):

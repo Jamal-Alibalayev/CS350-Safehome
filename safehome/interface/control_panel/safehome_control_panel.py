@@ -36,15 +36,24 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
         mode = self.system.config.current_mode
 
         # 1. Update LED status
-        is_armed = mode in [SafeHomeMode.ARMED_AWAY, SafeHomeMode.ARMED_STAY,
-                           SafeHomeMode.HOME, SafeHomeMode.AWAY,
-                           SafeHomeMode.OVERNIGHT, SafeHomeMode.EXTENDED]
+        is_armed = mode in [
+            SafeHomeMode.ARMED_AWAY,
+            SafeHomeMode.ARMED_STAY,
+            SafeHomeMode.HOME,
+            SafeHomeMode.AWAY,
+            SafeHomeMode.OVERNIGHT,
+            SafeHomeMode.EXTENDED,
+        ]
         self.set_armed_led(is_armed)
         self.set_powered_led(self.system.is_running)
 
         # 2. Update LCD status text
-        self.set_display_away(mode in [SafeHomeMode.ARMED_AWAY, SafeHomeMode.AWAY, SafeHomeMode.EXTENDED])
-        self.set_display_stay(mode in [SafeHomeMode.ARMED_STAY, SafeHomeMode.HOME, SafeHomeMode.OVERNIGHT])
+        self.set_display_away(
+            mode in [SafeHomeMode.ARMED_AWAY, SafeHomeMode.AWAY, SafeHomeMode.EXTENDED]
+        )
+        self.set_display_stay(
+            mode in [SafeHomeMode.ARMED_STAY, SafeHomeMode.HOME, SafeHomeMode.OVERNIGHT]
+        )
 
         if mode == SafeHomeMode.DISARMED:
             self.set_display_not_ready(True)
@@ -92,7 +101,7 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
         msg = ""
         success = False
 
-        if key == "1":   # 1 = Arm Away
+        if key == "1":  # 1 = Arm Away
             arm_success = self.system.arm_system(SafeHomeMode.AWAY)
             if arm_success:
                 msg = "ARMED (AWAY)"
@@ -101,7 +110,7 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
                 msg = "Cannot Arm"
                 self.set_display_short_message2("Windows/Doors Open")
 
-        elif key == "2": # 2 = Arm Stay (Home)
+        elif key == "2":  # 2 = Arm Stay (Home)
             arm_success = self.system.arm_system(SafeHomeMode.HOME)
             if arm_success:
                 msg = "ARMED (HOME)"
@@ -110,12 +119,12 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
                 msg = "Cannot Arm"
                 self.set_display_short_message2("Windows/Doors Open")
 
-        elif key == "0": # 0 = Disarm
+        elif key == "0":  # 0 = Disarm
             self.system.disarm_system()
             msg = "DISARMED"
             success = True
 
-        elif key == "3": # 3 = Change Password
+        elif key == "3":  # 3 = Change Password
             self.is_changing_password = True
             self.input_buffer = ""
             self.set_display_short_message1("CHANGE PASSWORD")
@@ -156,7 +165,9 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
 
         if success:
             self.is_authenticated = True
-            self.current_valid_password = password  # Save old password for change verification
+            self.current_valid_password = (
+                password  # Save old password for change verification
+            )
             self.set_display_short_message1("Login Success")
             self.set_display_short_message2("1:Away 2:Home 3:Set 0:Disarm 9:Zone")
             self.input_buffer = ""
@@ -186,9 +197,7 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
 
         # Call System to change password
         result = self.system.change_password(
-            self.current_valid_password,
-            new_password,
-            "CONTROL_PANEL"
+            self.current_valid_password, new_password, "CONTROL_PANEL"
         )
 
         if result:
@@ -211,16 +220,35 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
 
     # --- Button event implementations ---
 
-    def button1(self): self._handle_key_input("1")
-    def button2(self): self._handle_key_input("2")
-    def button3(self): self._handle_key_input("3")
-    def button4(self): self._handle_key_input("4")
-    def button5(self): self._handle_key_input("5")
-    def button6(self): self._handle_key_input("6")
-    def button7(self): self._handle_key_input("7")
-    def button8(self): self._handle_key_input("8")
-    def button9(self): self._handle_key_input("9")
-    def button0(self): self._handle_key_input("0")
+    def button1(self):
+        self._handle_key_input("1")
+
+    def button2(self):
+        self._handle_key_input("2")
+
+    def button3(self):
+        self._handle_key_input("3")
+
+    def button4(self):
+        self._handle_key_input("4")
+
+    def button5(self):
+        self._handle_key_input("5")
+
+    def button6(self):
+        self._handle_key_input("6")
+
+    def button7(self):
+        self._handle_key_input("7")
+
+    def button8(self):
+        self._handle_key_input("8")
+
+    def button9(self):
+        self._handle_key_input("9")
+
+    def button0(self):
+        self._handle_key_input("0")
 
     def button_star(self):
         """* key: Cancel/Reset"""

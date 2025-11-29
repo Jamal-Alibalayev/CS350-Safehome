@@ -246,13 +246,13 @@ class SafeHomeCamera:
             Dictionary with camera status information
         """
         return {
-            'id': self.camera_id,
-            'name': self.name,
-            'location': self.location,
-            'is_enabled': self.is_enabled,
-            'has_password': self.has_password(),
-            'pan_angle': getattr(self.hardware, 'pan', 0),
-            'zoom_level': getattr(self.hardware, 'zoom', 2)
+            "id": self.camera_id,
+            "name": self.name,
+            "location": self.location,
+            "is_enabled": self.is_enabled,
+            "has_password": self.has_password(),
+            "pan_angle": getattr(self.hardware, "pan", 0),
+            "zoom_level": getattr(self.hardware, "zoom", 2),
         }
 
     def stop(self):

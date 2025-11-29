@@ -38,31 +38,31 @@ def setup_hardware(system: System):
 
     # Window Sensors (6 total)
     # Dining Room: S₁, S₂ (2 windows)
-    system.sensor_controller.add_sensor('WINDOOR', 'DR Window 1', zone_id=dr_zone)
-    system.sensor_controller.add_sensor('WINDOOR', 'DR Window 2', zone_id=dr_zone)
+    system.sensor_controller.add_sensor("WINDOOR", "DR Window 1", zone_id=dr_zone)
+    system.sensor_controller.add_sensor("WINDOOR", "DR Window 2", zone_id=dr_zone)
 
     # Kitchen: S₂, S₃ (1 window - using only S₃ for kitchen window)
-    system.sensor_controller.add_sensor('WINDOOR', 'Kitchen Window', zone_id=kit_zone)
+    system.sensor_controller.add_sensor("WINDOOR", "Kitchen Window", zone_id=kit_zone)
 
     # Living Room: S₄, S₅, S₆ (3 windows)
-    system.sensor_controller.add_sensor('WINDOOR', 'LR Window 1', zone_id=lr_zone)
-    system.sensor_controller.add_sensor('WINDOOR', 'LR Window 2', zone_id=lr_zone)
-    system.sensor_controller.add_sensor('WINDOOR', 'LR Window 3', zone_id=lr_zone)
+    system.sensor_controller.add_sensor("WINDOOR", "LR Window 1", zone_id=lr_zone)
+    system.sensor_controller.add_sensor("WINDOOR", "LR Window 2", zone_id=lr_zone)
+    system.sensor_controller.add_sensor("WINDOOR", "LR Window 3", zone_id=lr_zone)
 
     # Door Sensors (2 total)
     # Door 1: Hallway (between DR and LR - north end)
-    system.sensor_controller.add_sensor('WINDOOR', 'Hallway Door', zone_id=dr_zone)
+    system.sensor_controller.add_sensor("WINDOOR", "Hallway Door", zone_id=dr_zone)
 
     # Door 2: Kitchen door
-    system.sensor_controller.add_sensor('WINDOOR', 'Kitchen Door', zone_id=kit_zone)
+    system.sensor_controller.add_sensor("WINDOOR", "Kitchen Door", zone_id=kit_zone)
 
     # Motion Detectors (2 total)
     # M₁: Dining Room to Living Room (crosses zones)
     # Since motion detectors can span zones, we'll assign to DR but note it covers both
-    system.sensor_controller.add_sensor('MOTION', 'Motion DR-LR', zone_id=dr_zone)
+    system.sensor_controller.add_sensor("MOTION", "Motion DR-LR", zone_id=dr_zone)
 
     # M₂: Kitchen (diagonal, within kitchen only)
-    system.sensor_controller.add_sensor('MOTION', 'Motion Kitchen', zone_id=kit_zone)
+    system.sensor_controller.add_sensor("MOTION", "Motion Kitchen", zone_id=kit_zone)
 
     sensor_count = len(system.sensor_controller.sensors)
     print(f"  [Sensors] Added {sensor_count} sensors (6 windows, 2 doors, 2 motion)")
@@ -74,15 +74,15 @@ def setup_hardware(system: System):
     system.camera_controller._next_camera_id = 1
 
     # Camera 1: Dining Room (camera1.jpg)
-    cam1 = system.camera_controller.add_camera('Dining Room Camera', 'Dining Room')
+    cam1 = system.camera_controller.add_camera("Dining Room Camera", "Dining Room")
     print(f"      - Camera 1: {cam1.name} (ID: {cam1.camera_id})")
 
     # Camera 2: Kitchen (camera2.jpg)
-    cam2 = system.camera_controller.add_camera('Kitchen Camera', 'Kitchen')
+    cam2 = system.camera_controller.add_camera("Kitchen Camera", "Kitchen")
     print(f"      - Camera 2: {cam2.name} (ID: {cam2.camera_id})")
 
     # Camera 3: Living Room (camera3.jpg - NOT .png!)
-    cam3 = system.camera_controller.add_camera('Living Room Camera', 'Living Room')
+    cam3 = system.camera_controller.add_camera("Living Room Camera", "Living Room")
     print(f"      - Camera 3: {cam3.name} (ID: {cam3.camera_id})")
 
     camera_count = len(system.camera_controller.cameras)
@@ -149,8 +149,12 @@ def main():
         print("     - Control camera PTZ")
         print("\n[System Information - Fixed Floor Plan]")
         print(f"  - Cameras: {len(system.camera_controller.cameras)} (DR, Kitchen, LR)")
-        print(f"  - Sensors: {len(system.sensor_controller.sensors)} (6 Win, 2 Door, 2 Motion)")
-        print(f"  - Safety Zones: {len(system.config.get_all_zones())} (DR, Kitchen, LR)")
+        print(
+            f"  - Sensors: {len(system.sensor_controller.sensors)} (6 Win, 2 Door, 2 Motion)"
+        )
+        print(
+            f"  - Safety Zones: {len(system.config.get_all_zones())} (DR, Kitchen, LR)"
+        )
         print(f"  - Current Mode: {system.config.current_mode.name}")
         print(f"  - System Running: {system.is_running}")
         print("\n" + "=" * 60 + "\n")
@@ -162,6 +166,7 @@ def main():
     except Exception as e:
         print(f"\n❌ Error: {e}")
         import traceback
+
         traceback.print_exc()
         print("\n[System] Exiting due to error...")
 

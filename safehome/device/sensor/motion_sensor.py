@@ -18,7 +18,7 @@ class MotionSensor(Sensor):
             location: Physical location (e.g., "Living Room", "Hallway")
             zone_id: Safety zone this sensor belongs to
         """
-        super().__init__(sensor_id, 'MOTION', location, zone_id)
+        super().__init__(sensor_id, "MOTION", location, zone_id)
 
         # Create hardware device instance
         self.hardware = DeviceMotionDetector()
@@ -65,10 +65,10 @@ class MotionSensor(Sensor):
 
     def simulate_motion(self):
         """Simulate motion detection (for testing)"""
-        if hasattr(self.hardware, 'intrude'):
+        if hasattr(self.hardware, "intrude"):
             self.hardware.intrude()
 
     def simulate_clear(self):
         """Simulate motion clearing (for testing)"""
-        if hasattr(self.hardware, 'release'):
+        if hasattr(self.hardware, "release"):
             self.hardware.release()

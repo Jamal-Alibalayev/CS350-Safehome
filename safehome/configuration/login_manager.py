@@ -25,8 +25,9 @@ class LoginManager(LoginInterface):
         self.is_locked = {}  # Track lock status per interface type
         self.lock_timers = {}  # Track unlock timers per interface type
 
-    def validate_credentials(self, user_id: str, password: str,
-                             interface_type: str = "CONTROL_PANEL") -> bool:
+    def validate_credentials(
+        self, user_id: str, password: str, interface_type: str = "CONTROL_PANEL"
+    ) -> bool:
         """
         Validate credentials for a given interface type
 
@@ -105,18 +106,20 @@ class LoginManager(LoginInterface):
             True if valid
         """
         # Parse two-level password
-        if ':' not in password:
+        if ":" not in password:
             return False
 
-        parts = password.split(':', 1)
+        parts = password.split(":", 1)
         if len(parts) != 2:
             return False
 
         password1, password2 = parts
 
         # Validate both passwords
-        return (password1 == self.settings.web_password_1 and
-                password2 == self.settings.web_password_2)
+        return (
+            password1 == self.settings.web_password_1
+            and password2 == self.settings.web_password_2
+        )
 
     def _lock_interface(self, interface_type: str):
         """Lock interface and start unlock timer"""
@@ -146,12 +149,21 @@ class LoginManager(LoginInterface):
         """
         self.storage.db.execute_query(
             query,
-            (interface_type, username, success, self.failed_attempts.get(interface_type, 0))
+            (
+                interface_type,
+                username,
+                success,
+                self.failed_attempts.get(interface_type, 0),
+            ),
         )
         self.storage.db.commit()
 
-    def change_password(self, old_password: str, new_password: str,
-                        interface_type: str = "CONTROL_PANEL") -> bool:
+    def change_password(
+        self,
+        old_password: str,
+        new_password: str,
+        interface_type: str = "CONTROL_PANEL",
+    ) -> bool:
         """
         Change password for a given interface
 
@@ -172,8 +184,8 @@ class LoginManager(LoginInterface):
             self.settings.master_password = new_password
         elif interface_type == "WEB":
             # For web, new_password should be "pass1:pass2"
-            if ':' in new_password:
-                parts = new_password.split(':', 1)
+            if ":" in new_password:
+                parts = new_password.split(":", 1)
                 if len(parts) == 2:
                     self.settings.web_password_1 = parts[0]
                     self.settings.web_password_2 = parts[1]
@@ -184,7 +196,9 @@ class LoginManager(LoginInterface):
 
         return True
 
-    def change_guest_password(self, master_password: str, new_guest_password: str) -> bool:
+    def change_guest_password(
+        self, master_password: str, new_guest_password: str
+    ) -> bool:
         """
         Change guest password (requires master password)
 
@@ -198,7 +212,9 @@ class LoginManager(LoginInterface):
         if master_password != self.settings.master_password:
             return False
 
-        self.settings.guest_password = new_guest_password if new_guest_password else None
+        self.settings.guest_password = (
+            new_guest_password if new_guest_password else None
+        )
         return True
 
     def unlock_system(self, interface_type: str = None):

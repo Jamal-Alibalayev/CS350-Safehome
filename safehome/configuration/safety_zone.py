@@ -19,7 +19,7 @@ class SafetyZone:
         self.zone_id = zone_id
         self.name = name
         self.sensors: List[int] = []  # List of sensor IDs in this zone
-        self.is_armed: bool = False   # Armed status of this zone
+        self.is_armed: bool = False  # Armed status of this zone
 
     def add_sensor(self, sensor_id: int):
         """
@@ -56,10 +56,10 @@ class SafetyZone:
     def to_dict(self) -> dict:
         """Convert zone to dictionary"""
         return {
-            'zone_id': self.zone_id,
-            'name': self.name,
-            'sensors': self.sensors,
-            'is_armed': self.is_armed
+            "zone_id": self.zone_id,
+            "name": self.name,
+            "sensors": self.sensors,
+            "is_armed": self.is_armed,
         }
 
     def __repr__(self):

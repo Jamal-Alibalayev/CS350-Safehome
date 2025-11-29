@@ -36,7 +36,7 @@ class LoginWindow(tk.Tk):
         height = self.winfo_height()
         x = (self.winfo_screenwidth() // 2) - (width // 2)
         y = (self.winfo_screenheight() // 2) - (height // 2)
-        self.geometry(f'{width}x{height}+{x}+{y}')
+        self.geometry(f"{width}x{height}+{x}+{y}")
 
     def _create_ui(self):
         # 상단 헤더
@@ -49,7 +49,7 @@ class LoginWindow(tk.Tk):
             text="🏠 SafeHome",
             font=("Arial", 28, "bold"),
             bg="#2c3e50",
-            fg="white"
+            fg="white",
         )
         title_label.pack(pady=10)
 
@@ -58,7 +58,7 @@ class LoginWindow(tk.Tk):
             text="Security System",
             font=("Arial", 14),
             bg="#2c3e50",
-            fg="#ecf0f1"
+            fg="#ecf0f1",
         )
         subtitle_label.pack()
 
@@ -76,17 +76,13 @@ class LoginWindow(tk.Tk):
             text="Welcome Back",
             font=("Arial", 20, "bold"),
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         welcome_label.grid(row=0, column=0, columnspan=2, pady=(0, 30))
 
         # 사용자 선택
         user_label = tk.Label(
-            form_frame,
-            text="User:",
-            font=("Arial", 12),
-            bg="white",
-            fg="#34495e"
+            form_frame, text="User:", font=("Arial", 12), bg="white", fg="#34495e"
         )
         user_label.grid(row=1, column=0, pady=15, sticky="e", padx=(0, 10))
 
@@ -95,18 +91,14 @@ class LoginWindow(tk.Tk):
             values=["Admin", "Guest"],
             state="readonly",
             width=22,
-            font=("Arial", 11)
+            font=("Arial", 11),
         )
         self.user_combo.set("Admin")
         self.user_combo.grid(row=1, column=1, pady=15)
 
         # 패스워드 입력
         password_label = tk.Label(
-            form_frame,
-            text="Password:",
-            font=("Arial", 12),
-            bg="white",
-            fg="#34495e"
+            form_frame, text="Password:", font=("Arial", 12), bg="white", fg="#34495e"
         )
         password_label.grid(row=2, column=0, pady=15, sticky="e", padx=(0, 10))
 
@@ -116,7 +108,7 @@ class LoginWindow(tk.Tk):
             font=("Arial", 12),
             width=24,
             relief="solid",
-            borderwidth=1
+            borderwidth=1,
         )
         self.password_entry.grid(row=2, column=1, pady=15)
         self.password_entry.bind("<Return>", lambda e: self._attempt_login())
@@ -136,17 +128,13 @@ class LoginWindow(tk.Tk):
             relief="ridge",
             bd=2,
             cursor="hand2",
-            command=self._attempt_login
+            command=self._attempt_login,
         )
         login_btn.grid(row=3, column=0, columnspan=2, pady=30)
 
         # 상태 메시지
         self.status_label = tk.Label(
-            form_frame,
-            text="",
-            font=("Arial", 10),
-            bg="white",
-            fg="#e74c3c"
+            form_frame, text="", font=("Arial", 10), bg="white", fg="#e74c3c"
         )
         self.status_label.grid(row=4, column=0, columnspan=2)
 
@@ -157,10 +145,10 @@ class LoginWindow(tk.Tk):
         info_label = tk.Label(
             info_frame,
             text=f"System Status: {'🟢 Running' if self.system.is_running else '⚪ Stopped'} | "
-                 f"Mode: {self.system.config.current_mode.name}",
+            f"Mode: {self.system.config.current_mode.name}",
             font=("Arial", 9),
             bg="#ecf0f1",
-            fg="#7f8c8d"
+            fg="#7f8c8d",
         )
         info_label.pack(pady=10)
 
@@ -182,7 +170,9 @@ class LoginWindow(tk.Tk):
             self._open_dashboard(user_id)
         else:
             # 로그인 실패
-            locked = self.system.config.login_manager.is_locked.get("CONTROL_PANEL", False)
+            locked = self.system.config.login_manager.is_locked.get(
+                "CONTROL_PANEL", False
+            )
 
             if locked:
                 self.status_label.config(text="🔒 System locked - Too many attempts")
@@ -195,4 +185,5 @@ class LoginWindow(tk.Tk):
     def _open_dashboard(self, user_id: str):
         """Dashboard 열기"""
         from .main_dashboard import MainDashboard
+
         dashboard = MainDashboard(self.system, self, user_id)

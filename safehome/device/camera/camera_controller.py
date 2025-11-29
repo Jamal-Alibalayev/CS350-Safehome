@@ -4,6 +4,37 @@ from .safehome_camera import SafeHomeCamera
 from safehome.configuration.login_manager import LoginManager
 
 
+class CameraAccessGuard:
+    """Helper to centralize camera lookup and password/lock checks."""
+
+    def __init__(self, logger=None):
+        self.logger = logger
+
+    def require_access(
+        self,
+        camera: Optional[SafeHomeCamera],
+        camera_id: int,
+        password: Optional[str],
+        action: str,
+    ):
+        """Validate camera existence and password/lock; return camera or None."""
+        if not camera:
+            self._warn(f"Camera access denied: Camera {camera_id} not found")
+            return None
+
+        if camera.has_password() and not camera.verify_password(password):
+            self._warn(
+                f"Camera {camera_id} {action} denied: Invalid password or locked"
+            )
+            return None
+
+        return camera
+
+    def _warn(self, msg: str):
+        if self.logger:
+            self.logger.add_log(msg, level="WARNING", source="CameraController")
+
+
 class CameraController:
     """
     Camera Controller manages all cameras in the system
@@ -11,7 +42,9 @@ class CameraController:
     Based on SRS requirements UC19-25 for camera access control
     """
 
-    def __init__(self, storage_manager=None, logger=None, login_manager=None, settings=None):
+    def __init__(
+        self, storage_manager=None, logger=None, login_manager=None, settings=None
+    ):
         """
         Initialize Camera Controller
 
@@ -21,15 +54,24 @@ class CameraController:
             login_manager: LoginManager for user authentication
             settings: SystemSettings (for lockout policy)
         """
-        self.cameras: Dict[int, SafeHomeCamera] = {}  # {camera_id: SafeHomeCamera instance}
+        self.cameras: Dict[int, SafeHomeCamera] = (
+            {}
+        )  # {camera_id: SafeHomeCamera instance}
         self.storage = storage_manager
         self.logger = logger
         self.login_manager = login_manager
         self._next_camera_id = 1  # Auto-increment camera ID
-        self.max_attempts = getattr(settings, "max_login_attempts", 3) if settings else 3
-        self.lockout_seconds = getattr(settings, "system_lock_time", 300) if settings else 300
+        self.max_attempts = (
+            getattr(settings, "max_login_attempts", 3) if settings else 3
+        )
+        self.lockout_seconds = (
+            getattr(settings, "system_lock_time", 300) if settings else 300
+        )
+        self.access_guard = CameraAccessGuard(logger)
 
-    def add_camera(self, name: str, location: str, password: Optional[str] = None) -> SafeHomeCamera:
+    def add_camera(
+        self, name: str, location: str, password: Optional[str] = None
+    ) -> SafeHomeCamera:
         """
         Add a new camera to the system
 
@@ -51,7 +93,7 @@ class CameraController:
             location,
             password,
             max_attempts=self.max_attempts,
-            lockout_seconds=self.lockout_seconds
+            lockout_seconds=self.lockout_seconds,
         )
 
         # Store camera
@@ -65,7 +107,7 @@ class CameraController:
         if self.logger:
             self.logger.add_log(
                 f"Camera {camera_id} ({name}) added at {location}",
-                source="CameraController"
+                source="CameraController",
             )
 
         return camera
@@ -98,8 +140,7 @@ class CameraController:
         # Log event
         if self.logger:
             self.logger.add_log(
-                f"Camera {camera_id} removed",
-                source="CameraController"
+                f"Camera {camera_id} removed", source="CameraController"
             )
 
         return True
@@ -112,7 +153,9 @@ class CameraController:
         """Get list of all cameras"""
         return list(self.cameras.values())
 
-    def get_camera_view(self, camera_id: int, password: Optional[str] = None) -> Optional[Image.Image]:
+    def get_camera_view(
+        self, camera_id: int, password: Optional[str] = None
+    ) -> Optional[Image.Image]:
         """
         Get camera view with password verification
         Implements SRS UC19-25 camera password protection
@@ -124,40 +167,22 @@ class CameraController:
         Returns:
             PIL Image if access granted, None otherwise
         """
-        camera = self.get_camera(camera_id)
+        camera = self._get_camera_with_access(camera_id, password, action="view")
         if not camera:
-            if self.logger:
-                self.logger.add_log(
-                    f"Camera access denied: Camera {camera_id} not found",
-                    level="WARNING",
-                    source="CameraController"
-                )
             return None
 
-        # Check password if camera has one
-        if camera.has_password():
-            if not camera.verify_password(password):
-                if self.logger:
-                    self.logger.add_log(
-                        f"Camera {camera_id} access denied: Invalid password or locked",
-                        level="WARNING",
-                        source="CameraController"
-                    )
-                return None
-
-        # Get camera view
         view = camera.get_view()
 
-        # Log successful access
         if view and self.logger:
             self.logger.add_log(
-                f"Camera {camera_id} view accessed",
-                source="CameraController"
+                f"Camera {camera_id} view accessed", source="CameraController"
             )
 
         return view
 
-    def pan_camera(self, camera_id: int, direction: str, password: Optional[str] = None) -> bool:
+    def pan_camera(
+        self, camera_id: int, direction: str, password: Optional[str] = None
+    ) -> bool:
         """
         Pan camera left or right with password verification
 
@@ -169,37 +194,28 @@ class CameraController:
         Returns:
             True if successful, False otherwise
         """
-        camera = self.get_camera(camera_id)
+        camera = self._get_camera_with_access(camera_id, password, action="pan")
         if not camera:
-            return False
-
-        # Check password if camera has one
-        if camera.has_password() and not camera.verify_password(password):
-            if self.logger:
-                self.logger.add_log(
-                    f"Camera {camera_id} pan denied: Invalid password or locked",
-                    level="WARNING",
-                    source="CameraController"
-                )
             return False
 
         # Pan camera
         success = False
-        if direction.lower() == 'left':
+        if direction.lower() == "left":
             success = camera.pan_left()
-        elif direction.lower() == 'right':
+        elif direction.lower() == "right":
             success = camera.pan_right()
 
         # Log action
         if success and self.logger:
             self.logger.add_log(
-                f"Camera {camera_id} panned {direction}",
-                source="CameraController"
+                f"Camera {camera_id} panned {direction}", source="CameraController"
             )
 
         return success
 
-    def tilt_camera(self, camera_id: int, direction: str, password: Optional[str] = None) -> bool:
+    def tilt_camera(
+        self, camera_id: int, direction: str, password: Optional[str] = None
+    ) -> bool:
         """
         Tilt camera up or down with password verification
 
@@ -211,37 +227,28 @@ class CameraController:
         Returns:
             True if successful, False otherwise
         """
-        camera = self.get_camera(camera_id)
+        camera = self._get_camera_with_access(camera_id, password, action="tilt")
         if not camera:
-            return False
-
-        # Check password if camera has one
-        if camera.has_password() and not camera.verify_password(password):
-            if self.logger:
-                self.logger.add_log(
-                    f"Camera {camera_id} tilt denied: Invalid password or locked",
-                    level="WARNING",
-                    source="CameraController"
-                )
             return False
 
         # Tilt camera
         success = False
-        if direction.lower() == 'up':
+        if direction.lower() == "up":
             success = camera.tilt_up()
-        elif direction.lower() == 'down':
+        elif direction.lower() == "down":
             success = camera.tilt_down()
 
         # Log action
         if success and self.logger:
             self.logger.add_log(
-                f"Camera {camera_id} tilted {direction}",
-                source="CameraController"
+                f"Camera {camera_id} tilted {direction}", source="CameraController"
             )
 
         return success
 
-    def zoom_camera(self, camera_id: int, direction: str, password: Optional[str] = None) -> bool:
+    def zoom_camera(
+        self, camera_id: int, direction: str, password: Optional[str] = None
+    ) -> bool:
         """
         Zoom camera in or out with password verification
 
@@ -253,32 +260,21 @@ class CameraController:
         Returns:
             True if successful, False otherwise
         """
-        camera = self.get_camera(camera_id)
+        camera = self._get_camera_with_access(camera_id, password, action="zoom")
         if not camera:
-            return False
-
-        # Check password if camera has one
-        if camera.has_password() and not camera.verify_password(password):
-            if self.logger:
-                self.logger.add_log(
-                    f"Camera {camera_id} zoom denied: Invalid password or locked",
-                    level="WARNING",
-                    source="CameraController"
-                )
             return False
 
         # Zoom camera
         success = False
-        if direction.lower() == 'in':
+        if direction.lower() == "in":
             success = camera.zoom_in()
-        elif direction.lower() == 'out':
+        elif direction.lower() == "out":
             success = camera.zoom_out()
 
         # Log action
         if success and self.logger:
             self.logger.add_log(
-                f"Camera {camera_id} zoomed {direction}",
-                source="CameraController"
+                f"Camera {camera_id} zoomed {direction}", source="CameraController"
             )
 
         return success
@@ -298,7 +294,7 @@ class CameraController:
                 self.logger.add_log(
                     f"User with role '{role}' tried to enable camera {camera_id}. Denied.",
                     level="WARNING",
-                    source="CameraController"
+                    source="CameraController",
                 )
             return False
 
@@ -310,8 +306,7 @@ class CameraController:
 
         if self.logger:
             self.logger.add_log(
-                f"Camera {camera_id} enabled",
-                source="CameraController"
+                f"Camera {camera_id} enabled", source="CameraController"
             )
 
         return True
@@ -331,7 +326,7 @@ class CameraController:
                 self.logger.add_log(
                     f"User with role '{role}' tried to disable camera {camera_id}. Denied.",
                     level="WARNING",
-                    source="CameraController"
+                    source="CameraController",
                 )
             return False
 
@@ -343,15 +338,18 @@ class CameraController:
 
         if self.logger:
             self.logger.add_log(
-                f"Camera {camera_id} disabled",
-                source="CameraController"
+                f"Camera {camera_id} disabled", source="CameraController"
             )
 
         return True
 
-    def set_camera_password(self, camera_id: int, new_password: Optional[str],
-                            old_password: Optional[str] = None,
-                            confirm_password: Optional[str] = None) -> bool:
+    def set_camera_password(
+        self,
+        camera_id: int,
+        new_password: Optional[str],
+        old_password: Optional[str] = None,
+        confirm_password: Optional[str] = None,
+    ) -> bool:
         """
         Set or change camera password (requires current password if one exists).
 
@@ -373,7 +371,7 @@ class CameraController:
                 self.logger.add_log(
                     f"Camera {camera_id} password change failed: confirmation mismatch",
                     level="WARNING",
-                    source="CameraController"
+                    source="CameraController",
                 )
             return False
 
@@ -384,7 +382,7 @@ class CameraController:
                     self.logger.add_log(
                         f"Camera {camera_id} password change denied: invalid old password or locked",
                         level="WARNING",
-                        source="CameraController"
+                        source="CameraController",
                     )
                 return False
 
@@ -397,13 +395,14 @@ class CameraController:
         # Log event
         if self.logger:
             self.logger.add_log(
-                f"Camera {camera_id} password set/changed",
-                source="CameraController"
+                f"Camera {camera_id} password set/changed", source="CameraController"
             )
 
         return True
 
-    def delete_camera_password(self, camera_id: int, old_password: Optional[str] = None) -> bool:
+    def delete_camera_password(
+        self, camera_id: int, old_password: Optional[str] = None
+    ) -> bool:
         """
         Remove camera password (requires current password if set).
         """
@@ -417,7 +416,7 @@ class CameraController:
                     self.logger.add_log(
                         f"Camera {camera_id} password delete denied: invalid old password or locked",
                         level="WARNING",
-                        source="CameraController"
+                        source="CameraController",
                     )
                 return False
 
@@ -429,10 +428,19 @@ class CameraController:
 
         if self.logger:
             self.logger.add_log(
-                f"Camera {camera_id} password removed",
-                source="CameraController"
+                f"Camera {camera_id} password removed", source="CameraController"
             )
         return True
+
+    # ===== Internal helpers =====
+    def _get_camera_with_access(
+        self, camera_id: int, password: Optional[str], action: str
+    ):
+        """
+        Retrieve camera and verify password/lock state for an action.
+        """
+        camera = self.get_camera(camera_id)
+        return self.access_guard.require_access(camera, camera_id, password, action)
 
     def get_camera_status(self, camera_id: int) -> Optional[dict]:
         """
@@ -470,10 +478,10 @@ class CameraController:
         self._next_camera_id = 1
 
         for data in camera_data:
-            camera_id = data['camera_id']
-            name = data['camera_name']
-            location = data['camera_location']
-            password = data.get('camera_password')
+            camera_id = data["camera_id"]
+            name = data["camera_name"]
+            location = data["camera_location"]
+            password = data.get("camera_password")
 
             # Update next ID
             if camera_id >= self._next_camera_id:
@@ -486,14 +494,14 @@ class CameraController:
                 location,
                 password,
                 max_attempts=self.max_attempts,
-                lockout_seconds=self.lockout_seconds
+                lockout_seconds=self.lockout_seconds,
             )
             self.cameras[camera_id] = camera
 
         if self.logger:
             self.logger.add_log(
                 f"Loaded {len(camera_data)} cameras from storage",
-                source="CameraController"
+                source="CameraController",
             )
 
     def shutdown(self):
@@ -502,7 +510,4 @@ class CameraController:
             camera.stop()
 
         if self.logger:
-            self.logger.add_log(
-                "All cameras stopped",
-                source="CameraController"
-            )
+            self.logger.add_log("All cameras stopped", source="CameraController")

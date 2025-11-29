@@ -24,7 +24,9 @@ class SensorController:
         self.logger = logger
         self._next_sensor_id = 1  # Auto-increment sensor ID
 
-    def add_sensor(self, sensor_type: str, location: str, zone_id: Optional[int] = None) -> Sensor:
+    def add_sensor(
+        self, sensor_type: str, location: str, zone_id: Optional[int] = None
+    ) -> Sensor:
         """
         Add a new sensor to the system
 
@@ -43,12 +45,14 @@ class SensorController:
         self._next_sensor_id += 1
 
         # Create appropriate sensor type
-        if sensor_type.upper() == 'WINDOOR':
+        if sensor_type.upper() == "WINDOOR":
             sensor = WindowDoorSensor(sensor_id, location, zone_id)
-        elif sensor_type.upper() == 'MOTION':
+        elif sensor_type.upper() == "MOTION":
             sensor = MotionSensor(sensor_id, location, zone_id)
         else:
-            raise ValueError(f"Invalid sensor type: {sensor_type}. Must be 'WINDOOR' or 'MOTION'")
+            raise ValueError(
+                f"Invalid sensor type: {sensor_type}. Must be 'WINDOOR' or 'MOTION'"
+            )
 
         # Store sensor
         self.sensors[sensor_id] = sensor
@@ -61,7 +65,7 @@ class SensorController:
         if self.logger:
             self.logger.add_log(
                 f"Sensor {sensor_id} ({sensor_type}) added at {location}",
-                source="SensorController"
+                source="SensorController",
             )
 
         return sensor
@@ -94,8 +98,7 @@ class SensorController:
         # Log event
         if self.logger:
             self.logger.add_log(
-                f"Sensor {sensor_id} removed",
-                source="SensorController"
+                f"Sensor {sensor_id} removed", source="SensorController"
             )
 
         return True
@@ -130,7 +133,9 @@ class SensorController:
         Returns:
             List of sensors of that type
         """
-        return [s for s in self.sensors.values() if s.sensor_type == sensor_type.upper()]
+        return [
+            s for s in self.sensors.values() if s.sensor_type == sensor_type.upper()
+        ]
 
     def arm_sensor(self, sensor_id: int):
         """Arm a specific sensor"""
@@ -138,7 +143,9 @@ class SensorController:
         if sensor:
             sensor.arm()
             if self.logger:
-                self.logger.add_log(f"Sensor {sensor_id} armed", source="SensorController")
+                self.logger.add_log(
+                    f"Sensor {sensor_id} armed", source="SensorController"
+                )
 
     def disarm_sensor(self, sensor_id: int):
         """Disarm a specific sensor"""
@@ -146,7 +153,9 @@ class SensorController:
         if sensor:
             sensor.disarm()
             if self.logger:
-                self.logger.add_log(f"Sensor {sensor_id} disarmed", source="SensorController")
+                self.logger.add_log(
+                    f"Sensor {sensor_id} disarmed", source="SensorController"
+                )
 
     def arm_sensors_in_zone(self, zone_id: int):
         """
@@ -162,7 +171,7 @@ class SensorController:
         if self.logger:
             self.logger.add_log(
                 f"Armed {len(sensors)} sensors in zone {zone_id}",
-                source="SensorController"
+                source="SensorController",
             )
 
     def disarm_sensors_in_zone(self, zone_id: int):
@@ -179,7 +188,7 @@ class SensorController:
         if self.logger:
             self.logger.add_log(
                 f"Disarmed {len(sensors)} sensors in zone {zone_id}",
-                source="SensorController"
+                source="SensorController",
             )
 
     def arm_sensors(self, sensor_ids: List[int]):
@@ -199,8 +208,7 @@ class SensorController:
 
         if self.logger:
             self.logger.add_log(
-                f"All {len(self.sensors)} sensors disarmed",
-                source="SensorController"
+                f"All {len(self.sensors)} sensors disarmed", source="SensorController"
             )
 
     def poll_sensors(self) -> List[Tuple[int, Sensor]]:
@@ -228,7 +236,7 @@ class SensorController:
         Returns:
             Tuple of (all_closed: bool, open_sensors: List[Sensor])
         """
-        windoor_sensors = self.get_sensors_by_type('WINDOOR')
+        windoor_sensors = self.get_sensors_by_type("WINDOOR")
         open_sensors = []
 
         for sensor in windoor_sensors:
@@ -270,19 +278,19 @@ class SensorController:
         sensor_data = self.storage.load_all_sensors()
 
         for data in sensor_data:
-            sensor_id = data['sensor_id']
-            sensor_type = data['sensor_type']
-            location = data['sensor_location']
-            zone_id = data.get('zone_id')
+            sensor_id = data["sensor_id"]
+            sensor_type = data["sensor_type"]
+            location = data["sensor_location"]
+            zone_id = data.get("zone_id")
 
             # Update next ID
             if sensor_id >= self._next_sensor_id:
                 self._next_sensor_id = sensor_id + 1
 
             # Create sensor
-            if sensor_type == 'WINDOOR':
+            if sensor_type == "WINDOOR":
                 sensor = WindowDoorSensor(sensor_id, location, zone_id)
-            elif sensor_type == 'MOTION':
+            elif sensor_type == "MOTION":
                 sensor = MotionSensor(sensor_id, location, zone_id)
             else:
                 continue
@@ -292,5 +300,5 @@ class SensorController:
         if self.logger:
             self.logger.add_log(
                 f"Loaded {len(sensor_data)} sensors from storage",
-                source="SensorController"
+                source="SensorController",
             )

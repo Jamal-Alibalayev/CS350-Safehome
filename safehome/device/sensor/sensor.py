@@ -8,7 +8,13 @@ class Sensor(ABC):
     Wraps hardware sensor implementations and provides common interface
     """
 
-    def __init__(self, sensor_id: int, sensor_type: str, location: str, zone_id: Optional[int] = None):
+    def __init__(
+        self,
+        sensor_id: int,
+        sensor_type: str,
+        location: str,
+        zone_id: Optional[int] = None,
+    ):
         """
         Initialize Sensor
 
@@ -23,7 +29,7 @@ class Sensor(ABC):
         self.location = location
         self.zone_id = zone_id
         self.is_active = False  # Whether sensor is armed/active
-        self.hardware = None    # Hardware device instance
+        self.hardware = None  # Hardware device instance
 
     @abstractmethod
     def read(self) -> bool:
@@ -83,12 +89,12 @@ class Sensor(ABC):
             Dictionary with sensor status information
         """
         return {
-            'id': self.sensor_id,
-            'type': self.sensor_type,
-            'location': self.location,
-            'zone_id': self.zone_id,
-            'is_active': self.is_active,
-            'is_triggered': self.read() if self.is_active else False
+            "id": self.sensor_id,
+            "type": self.sensor_type,
+            "location": self.location,
+            "zone_id": self.zone_id,
+            "is_active": self.is_active,
+            "is_triggered": self.read() if self.is_active else False,
         }
 
     def __repr__(self):

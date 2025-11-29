@@ -6,8 +6,28 @@ Modern interface for testing sensors based on fixed floor plan
 import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
-from .device_sensor_tester import DeviceSensorTester
+from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
 from pathlib import Path
+
+WINDOW_IDS = tuple(range(1, 7))
+DOOR_IDS = (7, 8)
+MOTION_USER_IDS = (9, 10)
+
+WINDOW_LOCATIONS = {
+    1: "Dining Room",
+    2: "Dining Room",
+    3: "Kitchen",
+    4: "Living Room",
+    5: "Living Room",
+    6: "Living Room",
+}
+
+DOOR_LOCATIONS = {7: "Entrance", 8: "Kitchen"}
+
+MOTION_LOCATIONS = {
+    9: "Dining→Entrance→Living (cross-room)",
+    10: "Kitchen diagonal (top-right to bottom-left)",
+}
 
 
 class SafeHomeSensorTest(tk.Toplevel):
@@ -48,7 +68,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="🧪 Sensor Simulator",
             font=("Arial", 20, "bold"),
             bg="#2c3e50",
-            fg="white"
+            fg="white",
         ).pack(side="left", padx=20, pady=15)
 
         tk.Label(
@@ -56,7 +76,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="Test sensors based on fixed floor plan",
             font=("Arial", 11),
             bg="#2c3e50",
-            fg="#bdc3c7"
+            fg="#bdc3c7",
         ).pack(side="left")
 
         # 메인 컨테이너
@@ -83,14 +103,16 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="📐 Floor Plan",
             font=("Arial", 12, "bold"),
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         floorplan_frame.pack(fill="x", pady=(0, 10))
 
         try:
             # Floor plan 이미지 로드
             script_dir = Path(__file__).parent
-            img_path = (script_dir / ".." / ".." / ".." / "assets" / "images" / "floorplan.png").resolve()
+            img_path = (
+                script_dir / ".." / ".." / ".." / "assets" / "images" / "floorplan.png"
+            ).resolve()
             img = Image.open(img_path)
             img = img.resize((600, 300), Image.Resampling.LANCZOS)
             photo = ImageTk.PhotoImage(img)
@@ -104,7 +126,7 @@ class SafeHomeSensorTest(tk.Toplevel):
                 text=f"Floor plan not available\n{str(e)}",
                 font=("Arial", 10),
                 bg="white",
-                fg="#95a5a6"
+                fg="#95a5a6",
             ).pack(pady=20)
 
         # Legend
@@ -115,14 +137,18 @@ class SafeHomeSensorTest(tk.Toplevel):
             ("🔴", "Red dots = Windows (S₁-S₆)"),
             ("🔵", "Blue dots = Doors (D₁-D₂)"),
             ("📹", "Cameras (C₁-C₃)"),
-            ("👁️", "Motion Detectors (M₁-M₂)")
+            ("👁️", "Motion Detectors (M₁-M₂)"),
         ]
 
         for emoji, text in legend_items:
             item_frame = tk.Frame(legend_frame, bg="white")
             item_frame.pack(side="left", padx=10)
-            tk.Label(item_frame, text=emoji, font=("Arial", 12), bg="white").pack(side="left")
-            tk.Label(item_frame, text=text, font=("Arial", 9), bg="white", fg="#7f8c8d").pack(side="left", padx=5)
+            tk.Label(item_frame, text=emoji, font=("Arial", 12), bg="white").pack(
+                side="left"
+            )
+            tk.Label(
+                item_frame, text=text, font=("Arial", 9), bg="white", fg="#7f8c8d"
+            ).pack(side="left", padx=5)
 
     def _create_sensor_list(self, parent):
         """센서 목록 테이블"""
@@ -131,7 +157,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="📊 Sensor Status List",
             font=("Arial", 12, "bold"),
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         list_frame.pack(fill="both", expand=True)
 
@@ -141,10 +167,7 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         columns = ("ID", "Type", "Location", "Sensor", "State")
         self.sensor_tree = ttk.Treeview(
-            tree_container,
-            columns=columns,
-            show="headings",
-            height=10
+            tree_container, columns=columns, show="headings", height=10
         )
 
         # 컬럼 설정
@@ -163,7 +186,9 @@ class SafeHomeSensorTest(tk.Toplevel):
         self.sensor_tree.pack(side="left", fill="both", expand=True)
 
         # Scrollbar
-        scrollbar = ttk.Scrollbar(tree_container, orient="vertical", command=self.sensor_tree.yview)
+        scrollbar = ttk.Scrollbar(
+            tree_container, orient="vertical", command=self.sensor_tree.yview
+        )
         scrollbar.pack(side="right", fill="y")
         self.sensor_tree.configure(yscrollcommand=scrollbar.set)
 
@@ -179,17 +204,16 @@ class SafeHomeSensorTest(tk.Toplevel):
         scrollable_frame = tk.Frame(canvas, bg="#ecf0f1")
 
         scrollable_frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+            "<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
         )
 
         canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
 
         def _on_mousewheel(event):
-            if event.num == 4 or (hasattr(event, 'delta') and event.delta > 0):
+            if event.num == 4 or (hasattr(event, "delta") and event.delta > 0):
                 canvas.yview_scroll(-1, "units")
-            elif event.num == 5 or (hasattr(event, 'delta') and event.delta < 0):
+            elif event.num == 5 or (hasattr(event, "delta") and event.delta < 0):
                 canvas.yview_scroll(1, "units")
 
         def _bind_mousewheel_recursively(widget):
@@ -201,7 +225,7 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
-        
+
         self._create_control_panels(scrollable_frame)
 
         # Bind events after a short delay to ensure all widgets are created
@@ -215,7 +239,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="🚪 Window/Door Sensors (IDs 1-8)",
             font=("Arial", 12, "bold"),
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         wd_frame.pack(fill="x", pady=(0, 15), padx=10)
 
@@ -223,16 +247,30 @@ class SafeHomeSensorTest(tk.Toplevel):
         wd_content.pack(padx=15, pady=15)
 
         # ID 입력
-        tk.Label(wd_content, text="Sensor ID (1-8):", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        tk.Label(
+            wd_content, text="Sensor ID (1-8):", font=("Arial", 11), bg="white"
+        ).grid(row=0, column=0, sticky="w", pady=5)
         self.wd_id_var = tk.StringVar()
-        tk.Entry(wd_content, textvariable=self.wd_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
+        tk.Entry(
+            wd_content, textvariable=self.wd_id_var, font=("Arial", 11), width=15
+        ).grid(row=0, column=1, padx=5, pady=5)
 
         # ID 범위 표시
-        self.wd_range_label = tk.Label(wd_content, text="Available IDs: 1-8 (1-6 windows, 7-8 doors)", font=("Arial", 9), bg="white", fg="#7f8c8d")
-        self.wd_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
+        self.wd_range_label = tk.Label(
+            wd_content,
+            text="Available IDs: 1-8 (1-6 windows, 7-8 doors)",
+            font=("Arial", 9),
+            bg="white",
+            fg="#7f8c8d",
+        )
+        self.wd_range_label.grid(
+            row=1, column=0, columnspan=2, sticky="w", pady=(0, 10)
+        )
 
         # 센서 제어
-        tk.Label(wd_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white").grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
+        tk.Label(
+            wd_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white"
+        ).grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
 
         btn_frame1 = tk.Frame(wd_content, bg="white")
         btn_frame1.grid(row=3, column=0, columnspan=2, pady=5)
@@ -250,7 +288,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#229954",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -266,11 +304,16 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#c0392b",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         # Door/Window 제어
-        tk.Label(wd_content, text="Door/Window State:", font=("Arial", 10, "bold"), bg="white").grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
+        tk.Label(
+            wd_content,
+            text="Door/Window State:",
+            font=("Arial", 10, "bold"),
+            bg="white",
+        ).grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
 
         btn_frame2 = tk.Frame(wd_content, bg="white")
         btn_frame2.grid(row=5, column=0, columnspan=2, pady=5)
@@ -288,7 +331,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#2980b9",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -304,7 +347,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#7f8c8d",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         # Motion Detector 제어
@@ -313,7 +356,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="👁️ Motion Detectors",
             font=("Arial", 12, "bold"),
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         md_frame.pack(fill="x", pady=(0, 15), padx=10)
 
@@ -321,16 +364,30 @@ class SafeHomeSensorTest(tk.Toplevel):
         md_content.pack(padx=15, pady=15)
 
         # ID 입력
-        tk.Label(md_content, text="Detector ID (9-10):", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        tk.Label(
+            md_content, text="Detector ID (9-10):", font=("Arial", 11), bg="white"
+        ).grid(row=0, column=0, sticky="w", pady=5)
         self.md_id_var = tk.StringVar()
-        tk.Entry(md_content, textvariable=self.md_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
+        tk.Entry(
+            md_content, textvariable=self.md_id_var, font=("Arial", 11), width=15
+        ).grid(row=0, column=1, padx=5, pady=5)
 
         # ID 범위 표시
-        self.md_range_label = tk.Label(md_content, text="Available IDs: 9-10", font=("Arial", 9), bg="white", fg="#7f8c8d")
-        self.md_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
+        self.md_range_label = tk.Label(
+            md_content,
+            text="Available IDs: 9-10",
+            font=("Arial", 9),
+            bg="white",
+            fg="#7f8c8d",
+        )
+        self.md_range_label.grid(
+            row=1, column=0, columnspan=2, sticky="w", pady=(0, 10)
+        )
 
         # 센서 제어
-        tk.Label(md_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white").grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
+        tk.Label(
+            md_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white"
+        ).grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
 
         btn_frame3 = tk.Frame(md_content, bg="white")
         btn_frame3.grid(row=3, column=0, columnspan=2, pady=5)
@@ -348,7 +405,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#229954",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -364,11 +421,13 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#c0392b",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         # Motion 제어
-        tk.Label(md_content, text="Motion State:", font=("Arial", 10, "bold"), bg="white").grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
+        tk.Label(
+            md_content, text="Motion State:", font=("Arial", 10, "bold"), bg="white"
+        ).grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
 
         btn_frame4 = tk.Frame(md_content, bg="white")
         btn_frame4.grid(row=5, column=0, columnspan=2, pady=5)
@@ -386,7 +445,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#8e44ad",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -402,7 +461,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#7f8c8d",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         # Quick Actions
@@ -411,7 +470,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="⚡ Quick Actions",
             font=("Arial", 12, "bold"),
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         quick_frame.pack(fill="x", padx=10)
 
@@ -430,7 +489,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#229954",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(pady=5, fill="x", expand=True)
 
         tk.Button(
@@ -445,7 +504,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#c0392b",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(pady=5, fill="x", expand=True)
 
         tk.Button(
@@ -460,10 +519,9 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#2980b9",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(pady=5, fill="x", expand=True)
 
-    
     def _create_control_panels(self, parent):
         """센서 제어 패널"""
         # Window/Door 제어
@@ -472,7 +530,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="🚪 Window/Door Sensors",
             font=("Arial", 12, "bold"),
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         wd_frame.pack(fill="x", pady=(0, 15), padx=10)
 
@@ -480,16 +538,30 @@ class SafeHomeSensorTest(tk.Toplevel):
         wd_content.pack(padx=15, pady=15)
 
         # ID 입력
-        tk.Label(wd_content, text="Sensor ID:", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        tk.Label(wd_content, text="Sensor ID:", font=("Arial", 11), bg="white").grid(
+            row=0, column=0, sticky="w", pady=5
+        )
         self.wd_id_var = tk.StringVar()
-        tk.Entry(wd_content, textvariable=self.wd_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
+        tk.Entry(
+            wd_content, textvariable=self.wd_id_var, font=("Arial", 11), width=15
+        ).grid(row=0, column=1, padx=5, pady=5)
 
         # ID 범위 표시
-        self.wd_range_label = tk.Label(wd_content, text="Available IDs: N/A", font=("Arial", 9), bg="white", fg="#7f8c8d")
-        self.wd_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
+        self.wd_range_label = tk.Label(
+            wd_content,
+            text="Available IDs: N/A",
+            font=("Arial", 9),
+            bg="white",
+            fg="#7f8c8d",
+        )
+        self.wd_range_label.grid(
+            row=1, column=0, columnspan=2, sticky="w", pady=(0, 10)
+        )
 
         # 센서 제어
-        tk.Label(wd_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white").grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
+        tk.Label(
+            wd_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white"
+        ).grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
 
         btn_frame1 = tk.Frame(wd_content, bg="white")
         btn_frame1.grid(row=3, column=0, columnspan=2, pady=5)
@@ -507,7 +579,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#229954",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -523,11 +595,16 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#c0392b",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         # Door/Window 제어
-        tk.Label(wd_content, text="Door/Window State:", font=("Arial", 10, "bold"), bg="white").grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
+        tk.Label(
+            wd_content,
+            text="Door/Window State:",
+            font=("Arial", 10, "bold"),
+            bg="white",
+        ).grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
 
         btn_frame2 = tk.Frame(wd_content, bg="white")
         btn_frame2.grid(row=5, column=0, columnspan=2, pady=5)
@@ -545,7 +622,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#2980b9",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -561,7 +638,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#7f8c8d",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         # Motion Detector 제어
@@ -570,7 +647,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="👁️ Motion Detectors",
             font=("Arial", 12, "bold"),
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         md_frame.pack(fill="x", pady=(0, 15), padx=10)
 
@@ -578,16 +655,30 @@ class SafeHomeSensorTest(tk.Toplevel):
         md_content.pack(padx=15, pady=15)
 
         # ID 입력
-        tk.Label(md_content, text="Detector ID:", font=("Arial", 11), bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        tk.Label(md_content, text="Detector ID:", font=("Arial", 11), bg="white").grid(
+            row=0, column=0, sticky="w", pady=5
+        )
         self.md_id_var = tk.StringVar()
-        tk.Entry(md_content, textvariable=self.md_id_var, font=("Arial", 11), width=15).grid(row=0, column=1, padx=5, pady=5)
+        tk.Entry(
+            md_content, textvariable=self.md_id_var, font=("Arial", 11), width=15
+        ).grid(row=0, column=1, padx=5, pady=5)
 
         # ID 범위 표시
-        self.md_range_label = tk.Label(md_content, text="Available IDs: N/A", font=("Arial", 9), bg="white", fg="#7f8c8d")
-        self.md_range_label.grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 10))
+        self.md_range_label = tk.Label(
+            md_content,
+            text="Available IDs: N/A",
+            font=("Arial", 9),
+            bg="white",
+            fg="#7f8c8d",
+        )
+        self.md_range_label.grid(
+            row=1, column=0, columnspan=2, sticky="w", pady=(0, 10)
+        )
 
         # 센서 제어
-        tk.Label(md_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white").grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
+        tk.Label(
+            md_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white"
+        ).grid(row=2, column=0, columnspan=2, sticky="w", pady=(5, 5))
 
         btn_frame3 = tk.Frame(md_content, bg="white")
         btn_frame3.grid(row=3, column=0, columnspan=2, pady=5)
@@ -605,7 +696,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#229954",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -621,11 +712,13 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#c0392b",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         # Motion 제어
-        tk.Label(md_content, text="Motion State:", font=("Arial", 10, "bold"), bg="white").grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
+        tk.Label(
+            md_content, text="Motion State:", font=("Arial", 10, "bold"), bg="white"
+        ).grid(row=4, column=0, columnspan=2, sticky="w", pady=(10, 5))
 
         btn_frame4 = tk.Frame(md_content, bg="white")
         btn_frame4.grid(row=5, column=0, columnspan=2, pady=5)
@@ -643,7 +736,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#8e44ad",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -659,7 +752,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#7f8c8d",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(side="left", padx=5)
 
         # Quick Actions
@@ -668,7 +761,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             text="⚡ Quick Actions",
             font=("Arial", 12, "bold"),
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         quick_frame.pack(fill="x", padx=10)
 
@@ -687,7 +780,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#229954",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(pady=5, fill="x", expand=True)
 
         tk.Button(
@@ -702,7 +795,7 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#c0392b",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(pady=5, fill="x", expand=True)
 
         tk.Button(
@@ -717,9 +810,8 @@ class SafeHomeSensorTest(tk.Toplevel):
             bd=3,
             cursor="hand2",
             activebackground="#2980b9",
-            activeforeground="black"
+            activeforeground="black",
         ).pack(pady=5, fill="x", expand=True)
-
 
     def _update_id_ranges(self):
         """센서 ID 범위 업데이트 (고정 개수)"""
@@ -735,97 +827,67 @@ class SafeHomeSensorTest(tk.Toplevel):
         for item in self.sensor_tree.get_children():
             self.sensor_tree.delete(item)
 
-        # Build lookup tables from linked lists
-        windoor_map = {}
+        windoor_map = self._collect_windoor_map()
+        motion_map = self._collect_motion_map()
+
+        # Windows
+        for row in self._build_window_rows(windoor_map):
+            self.sensor_tree.insert("", "end", values=row)
+
+        # Doors
+        for row in self._build_door_rows(windoor_map):
+            self.sensor_tree.insert("", "end", values=row)
+
+        # Motions
+        for row in self._build_motion_rows(motion_map):
+            self.sensor_tree.insert("", "end", values=row)
+
+        # Schedule next update
+        self.after(500, self._update_status)
+
+    # ===== Helpers for status building =====
+    def _collect_windoor_map(self) -> dict:
+        """Build ID->sensor map for window/door chain."""
+        result = {}
         scan = DeviceSensorTester.head_WinDoorSensor
         while scan is not None:
             sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
             if sid is not None:
-                windoor_map[sid] = scan
+                result[sid] = scan
             scan = getattr(scan, "next", getattr(scan, "next_sensor", None))
+        return result
 
-        motion_map = {}
+    def _collect_motion_map(self) -> dict:
+        """Build ID->sensor map for motion chain."""
+        result = {}
         scan = DeviceSensorTester.head_MotionDetector
         while scan is not None:
             sid = getattr(scan, "sensor_id", getattr(scan, "sensorID", None))
             if sid is not None:
-                motion_map[sid] = scan
+                result[sid] = scan
             scan = getattr(scan, "next", getattr(scan, "next_sensor", None))
+        return result
 
-        # Expected Windows 1-6 with locations
-        window_locations = {
-            1: "Dining Room",
-            2: "Dining Room",
-            3: "Kitchen",
-            4: "Living Room",
-            5: "Living Room",
-            6: "Living Room",
-        }
-        for sid in range(1, 7):
+    def _build_window_rows(self, windoor_map: dict):
+        for sid in WINDOW_IDS:
             sensor = windoor_map.get(sid)
-            name = f"Window {sid} ({window_locations.get(sid,'')})"
+            name = f"Window {sid} ({WINDOW_LOCATIONS.get(sid,'')})"
+            sensor_status, door_status = self._get_sensor_states(sensor)
+            yield (sid, "Window", name, sensor_status, door_status)
 
-            if sensor:
-                armed = False
-                if callable(getattr(sensor, "test_armed_state", None)):
-                    try:
-                        armed = bool(sensor.test_armed_state())
-                    except Exception:
-                        armed = False
-                else:
-                    armed = getattr(sensor, "armed", getattr(sensor, "enabled", False))
-                opened = getattr(sensor, "opened", False)
-                sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
-                door_status = "🚪 Open" if opened else "🚪 Closed"
-            else:
-                sensor_status = "⚪ Not Connected"
-                door_status = "N/A"
-
-            self.sensor_tree.insert(
-                "",
-                "end",
-                values=(sid, "Window", name, sensor_status, door_status)
-            )
-
-        # Expected Doors 1-2 (map to underlying IDs 7-8)
-        door_locations = {7: "Entrance", 8: "Kitchen"}
-        for sid in range(7, 9):
-            sensor = windoor_map.get(sid)
+    def _build_door_rows(self, windoor_map: dict):
+        for sid in DOOR_IDS:
             display_id = sid - 6
-            name = f"Door {display_id} ({door_locations.get(sid,'')})"
+            name = f"Door {display_id} ({DOOR_LOCATIONS.get(sid,'')})"
+            sensor = windoor_map.get(sid)
+            sensor_status, door_status = self._get_sensor_states(sensor)
+            yield (sid, "Door", name, sensor_status, door_status)
 
-            if sensor:
-                armed = False
-                if callable(getattr(sensor, "test_armed_state", None)):
-                    try:
-                        armed = bool(sensor.test_armed_state())
-                    except Exception:
-                        armed = False
-                else:
-                    armed = getattr(sensor, "armed", getattr(sensor, "enabled", False))
-                opened = getattr(sensor, "opened", False)
-                sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
-                door_status = "🚪 Open" if opened else "🚪 Closed"
-            else:
-                sensor_status = "⚪ Not Connected"
-                door_status = "N/A"
-
-            self.sensor_tree.insert(
-                "",
-                "end",
-                values=(sid, "Door", name, sensor_status, door_status)
-            )
-
-        # Expected Motion detectors (user IDs 9-10 -> underlying IDs 1-2)
-        motion_locations = {
-            9: "Dining→Entrance→Living (cross-room)",
-            10: "Kitchen diagonal (top-right to bottom-left)"
-        }
-        for user_sid in range(9, 11):
-            actual_id = user_sid - 8  # underlying sensor id (1-2)
+    def _build_motion_rows(self, motion_map: dict):
+        for user_sid in MOTION_USER_IDS:
+            actual_id = user_sid - 8  # underlying id 1-2
             sensor = motion_map.get(actual_id)
-            name = f"Motion {user_sid} ({motion_locations.get(user_sid,'')})"
-
+            name = f"Motion {user_sid} ({MOTION_LOCATIONS.get(user_sid,'')})"
             if sensor:
                 armed = False
                 if callable(getattr(sensor, "test_armed_state", None)):
@@ -841,15 +903,26 @@ class SafeHomeSensorTest(tk.Toplevel):
             else:
                 sensor_status = "⚪ Not Connected"
                 motion_status = "N/A"
+            yield (user_sid, "Motion", name, sensor_status, motion_status)
 
-            self.sensor_tree.insert(
-                "",
-                "end",
-                values=(user_sid, "Motion", name, sensor_status, motion_status)
-            )
-
-        # Schedule next update
-        self.after(500, self._update_status)
+    def _get_sensor_states(self, sensor):
+        """Return (armed_state, open_state text) for window/door sensor."""
+        if sensor:
+            armed = False
+            if callable(getattr(sensor, "test_armed_state", None)):
+                try:
+                    armed = bool(sensor.test_armed_state())
+                except Exception:
+                    armed = False
+            else:
+                armed = getattr(sensor, "armed", getattr(sensor, "enabled", False))
+            opened = getattr(sensor, "opened", False)
+            sensor_status = "🟢 Armed" if armed else "🔴 Disarmed"
+            door_status = "🚪 Open" if opened else "🚪 Closed"
+        else:
+            sensor_status = "⚪ Not Connected"
+            door_status = "N/A"
+        return sensor_status, door_status
 
     def _handle_windoor_sensor(self, action: str):
         """Window/Door 센서 arm/disarm"""
@@ -866,7 +939,10 @@ class SafeHomeSensorTest(tk.Toplevel):
 
         # Validate fixed range
         if sensor_id < 1 or sensor_id > 8:
-            messagebox.showerror("Invalid Input", "Valid Window/Door IDs are 1-8 (1-6 windows, 7-8 doors)")
+            messagebox.showerror(
+                "Invalid Input",
+                "Valid Window/Door IDs are 1-8 (1-6 windows, 7-8 doors)",
+            )
             return
 
         # Find sensor
@@ -890,7 +966,9 @@ class SafeHomeSensorTest(tk.Toplevel):
             scan = getattr(scan, "next", None)
 
         if not found:
-            messagebox.showerror("Not Found", f"Window/Door sensor ID {sensor_id} not found")
+            messagebox.showerror(
+                "Not Found", f"Window/Door sensor ID {sensor_id} not found"
+            )
 
     def _handle_windoor(self, action: str):
         """Window/Door 열기/닫기"""
@@ -926,7 +1004,9 @@ class SafeHomeSensorTest(tk.Toplevel):
             scan = getattr(scan, "next", None)
 
         if not found:
-            messagebox.showerror("Not Found", f"Window/Door sensor ID {sensor_id} not found")
+            messagebox.showerror(
+                "Not Found", f"Window/Door sensor ID {sensor_id} not found"
+            )
 
     def _handle_motion_sensor(self, action: str):
         """Motion detector arm/disarm"""
@@ -968,7 +1048,9 @@ class SafeHomeSensorTest(tk.Toplevel):
             scan = getattr(scan, "next", None)
 
         if not found:
-            messagebox.showerror("Not Found", f"Motion detector ID {sensor_id} not found")
+            messagebox.showerror(
+                "Not Found", f"Motion detector ID {sensor_id} not found"
+            )
 
     def _handle_motion(self, action: str):
         """Motion 감지/해제"""
@@ -1010,7 +1092,9 @@ class SafeHomeSensorTest(tk.Toplevel):
             scan = getattr(scan, "next", None)
 
         if not found:
-            messagebox.showerror("Not Found", f"Motion detector ID {sensor_id} not found")
+            messagebox.showerror(
+                "Not Found", f"Motion detector ID {sensor_id} not found"
+            )
 
     def _arm_all(self):
         """모든 센서 arm"""

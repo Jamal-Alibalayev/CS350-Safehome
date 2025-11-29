@@ -34,8 +34,7 @@ class DatabaseManager:
         """
         if self.connection is None:
             self.connection = sqlite3.connect(
-                self.db_path,
-                check_same_thread=False  # Allow multi-threaded access
+                self.db_path, check_same_thread=False  # Allow multi-threaded access
             )
             # Enable foreign key constraints
             self.connection.execute("PRAGMA foreign_keys = ON")
@@ -59,7 +58,7 @@ class DatabaseManager:
         if not schema_path.exists():
             raise FileNotFoundError(f"Schema file not found: {schema_path}")
 
-        with open(schema_path, 'r') as f:
+        with open(schema_path, "r") as f:
             schema_sql = f.read()
 
         # Execute schema SQL
@@ -72,7 +71,7 @@ class DatabaseManager:
         query: str,
         params: Tuple = (),
         fetch_one: bool = False,
-        fetch_all: bool = False
+        fetch_all: bool = False,
     ) -> Any:
         """
         Execute a SQL query
@@ -86,7 +85,7 @@ class DatabaseManager:
         Returns:
             Query result (cursor, row, or rows)
         """
-        if self.connection is None: # Ensure connection is open before proceeding
+        if self.connection is None:  # Ensure connection is open before proceeding
             self.connect()
         cursor = self.connection.cursor()
         cursor.execute(query, params)
@@ -222,7 +221,7 @@ class DatabaseManager:
         sensor_id: Optional[int] = None,
         camera_id: Optional[int] = None,
         zone_id: Optional[int] = None,
-        source: str = "System"
+        source: str = "System",
     ) -> int:
         """
         Add an event log entry
@@ -236,8 +235,7 @@ class DatabaseManager:
             VALUES (?, ?, ?, ?, ?, ?)
         """
         cursor = self.execute_query(
-            query,
-            (event_type, event_message, sensor_id, camera_id, zone_id, source)
+            query, (event_type, event_message, sensor_id, camera_id, zone_id, source)
         )
         self.commit()
         return cursor.lastrowid
@@ -247,7 +245,7 @@ class DatabaseManager:
         event_type: Optional[str] = None,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
-        limit: int = 100
+        limit: int = 100,
     ) -> List[sqlite3.Row]:
         """
         Get event logs with optional filters

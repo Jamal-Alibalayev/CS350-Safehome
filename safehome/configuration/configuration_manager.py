@@ -25,6 +25,7 @@ class ConfigurationManager:
         """
         # 1. Initialize Database Manager
         from safehome.database.db_manager import DatabaseManager
+
         self.db_manager = DatabaseManager(db_path)
         self.db_manager.connect()
         self.db_manager.initialize_schema()
@@ -49,7 +50,10 @@ class ConfigurationManager:
 
         # 6. Initialize Safety Zones in DB if they don't exist
         if not self.storage.load_all_safety_zones():
-            self.logger.add_log("No safety zones found in DB, creating defaults.", source="ConfigManager")
+            self.logger.add_log(
+                "No safety zones found in DB, creating defaults.",
+                source="ConfigManager",
+            )
             zone1 = SafetyZone(None, "Living Room")
             zone2 = SafetyZone(None, "Bedroom")
             self.storage.save_safety_zone(zone1)
@@ -85,8 +89,11 @@ class ConfigurationManager:
         """
         settings = self.settings
         if not settings.alert_email:
-            self.logger.add_log("Email alert skipped: no alert_email configured",
-                                level="WARNING", source="ConfigManager")
+            self.logger.add_log(
+                "Email alert skipped: no alert_email configured",
+                level="WARNING",
+                source="ConfigManager",
+            )
             return False
         try:
             port = int(settings.smtp_port) if settings.smtp_port else 587
@@ -100,11 +107,14 @@ class ConfigurationManager:
                 server.starttls()
                 server.login(settings.smtp_user, settings.smtp_password)
                 server.send_message(msg)
-            self.logger.add_log(f"Alert email sent to {settings.alert_email}",
-                                source="ConfigManager")
+            self.logger.add_log(
+                f"Alert email sent to {settings.alert_email}", source="ConfigManager"
+            )
             return True
         except Exception as e:
-            self.logger.add_log(f"Email alert failed: {e}", level="ERROR", source="ConfigManager")
+            self.logger.add_log(
+                f"Email alert failed: {e}", level="ERROR", source="ConfigManager"
+            )
             print(f"[Email] Failed to send alert: {e}")
             return False
 
@@ -113,11 +123,11 @@ class ConfigurationManager:
         modes_data = self.db_manager.get_safehome_modes()
         modes = {}
         for mode_row in modes_data:
-            mode_name = mode_row['mode_name']
+            mode_name = mode_row["mode_name"]
             modes[mode_name] = {
-                'id': mode_row['mode_id'],
-                'name': mode_name,
-                'description': mode_row['description']
+                "id": mode_row["mode_id"],
+                "name": mode_name,
+                "description": mode_row["description"],
             }
         return modes
 
@@ -144,14 +154,20 @@ class ConfigurationManager:
         try:
             self.storage.clear_camera_passwords()
         except Exception as e:
-            self.logger.add_log(f"Failed to clear camera passwords on reset: {e}",
-                                level="ERROR", source="ConfigManager")
+            self.logger.add_log(
+                f"Failed to clear camera passwords on reset: {e}",
+                level="ERROR",
+                source="ConfigManager",
+            )
 
         # 5. Save the new default configuration to the database
         self.save_configuration()
 
-        self.logger.add_log("System configuration has been reset to defaults",
-                            level="WARNING", source="ConfigManager")
+        self.logger.add_log(
+            "System configuration has been reset to defaults",
+            level="WARNING",
+            source="ConfigManager",
+        )
         self._notify_zone_update()
 
     # ===== Mode Management =====
@@ -159,7 +175,9 @@ class ConfigurationManager:
     def set_mode(self, mode: SafeHomeMode):
         """Change system mode"""
         self.current_mode = mode
-        self.logger.add_log(f"System mode changed to {mode.name}", source="ConfigManager")
+        self.logger.add_log(
+            f"System mode changed to {mode.name}", source="ConfigManager"
+        )
 
     def get_mode(self) -> SafeHomeMode:
         """Get current system mode"""
@@ -178,7 +196,7 @@ class ConfigurationManager:
         self.storage.save_mode_sensor_mapping(mode_name, sensor_ids)
         self.logger.add_log(
             f"Mode {mode_name} configured with {len(sensor_ids)} sensors",
-            source="ConfigManager"
+            source="ConfigManager",
         )
 
     # ===== Safety Zone Management =====
@@ -200,18 +218,25 @@ class ConfigurationManager:
         """Adds a new safety zone to the database."""
         zone = SafetyZone(None, zone_name)
         new_id = self.storage.save_safety_zone(zone)
-        
+
         if new_id is not None:
             zone.zone_id = new_id
-            self.logger.add_log(f"Safety zone '{zone_name}' created with ID {new_id}", source="ConfigManager")
+            self.logger.add_log(
+                f"Safety zone '{zone_name}' created with ID {new_id}",
+                source="ConfigManager",
+            )
             self._notify_zone_update()
             return zone
 
         # This should now only be reached if the DB insert truly fails
         return None
 
-    def update_safety_zone(self, zone_id: int, zone_name: Optional[str] = None,
-                           is_armed: Optional[bool] = None) -> bool:
+    def update_safety_zone(
+        self,
+        zone_id: int,
+        zone_name: Optional[str] = None,
+        is_armed: Optional[bool] = None,
+    ) -> bool:
         """Update safety zone properties in the database."""
         # First, get the current state of the zone to prevent overwriting attributes
         zone_to_update = self.get_safety_zone(zone_id)
@@ -223,7 +248,7 @@ class ConfigurationManager:
             zone_to_update.name = zone_name
         if is_armed is not None:
             zone_to_update.is_armed = is_armed
-        
+
         # Save the fully updated object
         self.storage.save_safety_zone(zone_to_update)
         self.logger.add_log(f"Safety zone {zone_id} updated", source="ConfigManager")

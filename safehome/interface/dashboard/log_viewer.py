@@ -50,7 +50,7 @@ class LogViewerWindow(tk.Toplevel):
         height = self.winfo_height()
         x = (self.winfo_screenwidth() // 2) - (width // 2)
         y = (self.winfo_screenheight() // 2) - (height // 2)
-        self.geometry(f'{width}x{height}+{x}+{y}')
+        self.geometry(f"{width}x{height}+{x}+{y}")
 
     def _create_ui(self):
         """UI 구성"""
@@ -64,7 +64,7 @@ class LogViewerWindow(tk.Toplevel):
             text="📋 Event Log Viewer",
             font=("Arial", 18, "bold"),
             bg="#34495e",
-            fg="white"
+            fg="white",
         )
         title_label.pack(pady=15)
 
@@ -74,37 +74,27 @@ class LogViewerWindow(tk.Toplevel):
         control_frame.pack_propagate(False)
 
         # 필터 선택
-        tk.Label(
-            control_frame,
-            text="Filter:",
-            font=("Arial", 11),
-            bg="#ecf0f1"
-        ).pack(side="left", padx=(0, 5))
+        tk.Label(control_frame, text="Filter:", font=("Arial", 11), bg="#ecf0f1").pack(
+            side="left", padx=(0, 5)
+        )
 
         self.filter_combo = ttk.Combobox(
             control_frame,
             values=["All", "SENSOR", "CAMERA", "SYSTEM", "AUTH", "ALARM"],
             state="readonly",
             width=15,
-            font=("Arial", 10)
+            font=("Arial", 10),
         )
         self.filter_combo.set("All")
         self.filter_combo.pack(side="left", padx=5)
         self.filter_combo.bind("<<ComboboxSelected>>", lambda e: self._refresh_logs())
 
         # 검색
-        tk.Label(
-            control_frame,
-            text="Search:",
-            font=("Arial", 11),
-            bg="#ecf0f1"
-        ).pack(side="left", padx=(20, 5))
-
-        self.search_entry = tk.Entry(
-            control_frame,
-            font=("Arial", 10),
-            width=25
+        tk.Label(control_frame, text="Search:", font=("Arial", 11), bg="#ecf0f1").pack(
+            side="left", padx=(20, 5)
         )
+
+        self.search_entry = tk.Entry(control_frame, font=("Arial", 10), width=25)
         self.search_entry.pack(side="left", padx=5)
         self.search_entry.bind("<KeyRelease>", lambda e: self._refresh_logs())
 
@@ -119,7 +109,7 @@ class LogViewerWindow(tk.Toplevel):
             cursor="hand2",
             activebackground="#cbd6ff",
             activeforeground="black",
-            command=self._refresh_logs
+            command=self._refresh_logs,
         )
         refresh_btn.pack(side="left", padx=10)
 
@@ -131,7 +121,7 @@ class LogViewerWindow(tk.Toplevel):
             variable=self.auto_refresh_var,
             font=("Arial", 10),
             bg="#ecf0f1",
-            command=self._toggle_auto_refresh
+            command=self._toggle_auto_refresh,
         )
         auto_refresh_check.pack(side="left", padx=5)
 
@@ -146,7 +136,7 @@ class LogViewerWindow(tk.Toplevel):
             cursor="hand2",
             activebackground="#ffc2c2",
             activeforeground="black",
-            command=self._clear_logs
+            command=self._clear_logs,
         )
         clear_btn.pack(side="right", padx=5)
 
@@ -167,7 +157,7 @@ class LogViewerWindow(tk.Toplevel):
             columns=("Timestamp", "Type", "Source", "Message"),
             show="headings",
             yscrollcommand=y_scrollbar.set,
-            xscrollcommand=x_scrollbar.set
+            xscrollcommand=x_scrollbar.set,
         )
         y_scrollbar.config(command=self.log_tree.yview)
         x_scrollbar.config(command=self.log_tree.xview)
@@ -197,11 +187,7 @@ class LogViewerWindow(tk.Toplevel):
         status_frame.pack_propagate(False)
 
         self.status_label = tk.Label(
-            status_frame,
-            text="Ready",
-            font=("Arial", 9),
-            bg="#ecf0f1",
-            fg="#7f8c8d"
+            status_frame, text="Ready", font=("Arial", 9), bg="#ecf0f1", fg="#7f8c8d"
         )
         self.status_label.pack(side="left", padx=10)
 
@@ -261,7 +247,7 @@ class LogViewerWindow(tk.Toplevel):
                 "",
                 "end",
                 values=(formatted_time, log.event_type, log.source, log.message),
-                tags=(log.event_type,)
+                tags=(log.event_type,),
             )
 
         # Update status
@@ -289,7 +275,7 @@ class LogViewerWindow(tk.Toplevel):
 
         confirm = messagebox.askyesno(
             "Confirm Clear",
-            "Are you sure you want to clear all event logs?\nThis action cannot be undone."
+            "Are you sure you want to clear all event logs?\nThis action cannot be undone.",
         )
 
         if confirm:

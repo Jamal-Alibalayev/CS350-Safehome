@@ -9,6 +9,7 @@ class StorageManager:
     """
     Hybrid storage manager supporting both JSON (backup) and SQLite3 (primary)
     """
+
     CONFIG_FILE = "data/safehome_config.json"
 
     def __init__(self, db_manager=None):
@@ -33,10 +34,10 @@ class StorageManager:
             "master_password": settings.master_password,
             "entry_delay": settings.entry_delay,
             "exit_delay": settings.exit_delay,
-            "alarm_duration": settings.alarm_duration
+            "alarm_duration": settings.alarm_duration,
         }
         try:
-            with open(self.CONFIG_FILE, 'w') as f:
+            with open(self.CONFIG_FILE, "w") as f:
                 json.dump(data, f, indent=4)
             print("Settings saved to JSON successfully.")
         except IOError as e:
@@ -48,7 +49,7 @@ class StorageManager:
             return {}
 
         try:
-            with open(self.CONFIG_FILE, 'r') as f:
+            with open(self.CONFIG_FILE, "r") as f:
                 return json.load(f)
         except IOError:
             return {}
@@ -89,7 +90,7 @@ class StorageManager:
             smtp_port=settings.smtp_port,
             smtp_user=settings.smtp_user,
             smtp_password=settings.smtp_password,
-            max_login_attempts=settings.max_login_attempts
+            max_login_attempts=settings.max_login_attempts,
         )
 
     def load_settings_from_db(self) -> Optional[dict]:
@@ -101,22 +102,22 @@ class StorageManager:
 
         row_dict = dict(row)
         return {
-            "master_password": row_dict.get('master_password'),
-            "guest_password": row_dict.get('guest_password'),
-            "web_password_1": row_dict.get('web_password_1'),
-            "web_password_2": row_dict.get('web_password_2'),
-            "entry_delay": row_dict.get('entry_delay'),
-            "exit_delay": row_dict.get('exit_delay'),
-            "alarm_duration": row_dict.get('alarm_duration'),
-            "system_lock_time": row_dict.get('system_lock_time'),
-            "monitoring_phone": row_dict.get('monitoring_phone'),
-            "homeowner_phone": row_dict.get('homeowner_phone'),
-            "alert_email": row_dict.get('alert_email'),
-            "smtp_host": row_dict.get('smtp_host'),
-            "smtp_port": row_dict.get('smtp_port'),
-            "smtp_user": row_dict.get('smtp_user'),
-            "smtp_password": row_dict.get('smtp_password'),
-            "max_login_attempts": row_dict.get('max_login_attempts', 3)
+            "master_password": row_dict.get("master_password"),
+            "guest_password": row_dict.get("guest_password"),
+            "web_password_1": row_dict.get("web_password_1"),
+            "web_password_2": row_dict.get("web_password_2"),
+            "entry_delay": row_dict.get("entry_delay"),
+            "exit_delay": row_dict.get("exit_delay"),
+            "alarm_duration": row_dict.get("alarm_duration"),
+            "system_lock_time": row_dict.get("system_lock_time"),
+            "monitoring_phone": row_dict.get("monitoring_phone"),
+            "homeowner_phone": row_dict.get("homeowner_phone"),
+            "alert_email": row_dict.get("alert_email"),
+            "smtp_host": row_dict.get("smtp_host"),
+            "smtp_port": row_dict.get("smtp_port"),
+            "smtp_user": row_dict.get("smtp_user"),
+            "smtp_password": row_dict.get("smtp_password"),
+            "max_login_attempts": row_dict.get("max_login_attempts", 3),
         }
 
     def save_safety_zone(self, zone: SafetyZone) -> Optional[int]:
@@ -148,18 +149,20 @@ class StorageManager:
         rows = self.db.get_safety_zones()
         zones = []
         for row in rows:
-            zone = SafetyZone(row['zone_id'], row['zone_name'])
-            zone.is_armed = bool(row['is_armed'])
+            zone = SafetyZone(row["zone_id"], row["zone_name"])
+            zone.is_armed = bool(row["is_armed"])
             zones.append(zone)
         return zones
 
     def load_safety_zone_by_id(self, zone_id: int) -> Optional[SafetyZone]:
         """Load a single SafetyZone from database by its ID."""
         self._check_db()
-        row = self.db.execute_query("SELECT * FROM safety_zones WHERE zone_id = ?", (zone_id,), fetch_one=True)
+        row = self.db.execute_query(
+            "SELECT * FROM safety_zones WHERE zone_id = ?", (zone_id,), fetch_one=True
+        )
         if row:
-            zone = SafetyZone(row['zone_id'], row['zone_name'])
-            zone.is_armed = bool(row['is_armed'])
+            zone = SafetyZone(row["zone_id"], row["zone_name"])
+            zone.is_armed = bool(row["is_armed"])
             return zone
         return None
 
@@ -184,11 +187,19 @@ class StorageManager:
             self.db.execute_query(reset_query)
         except Exception as e:
             # This might fail if the table was not created with AUTOINCREMENT, which is fine.
-            print(f"Could not reset sequence for safety_zones, this might be expected: {e}")
+            print(
+                f"Could not reset sequence for safety_zones, this might be expected: {e}"
+            )
 
         self.db.commit()
 
-    def save_sensor(self, sensor_id: int, sensor_type: str, location: str, zone_id: Optional[int] = None):
+    def save_sensor(
+        self,
+        sensor_id: int,
+        sensor_type: str,
+        location: str,
+        zone_id: Optional[int] = None,
+    ):
         """Save sensor to database"""
         self._check_db()
         query = """
@@ -215,7 +226,9 @@ class StorageManager:
         self.db.execute_query(query, (sensor_id,))
         self.db.commit()
 
-    def save_camera(self, camera_id: int, name: str, location: str, password: Optional[str] = None):
+    def save_camera(
+        self, camera_id: int, name: str, location: str, password: Optional[str] = None
+    ):
         """Save camera to database"""
         self._check_db()
         query = """
@@ -262,24 +275,28 @@ class StorageManager:
             event_type=log.level,
             event_message=log.message,
             source=log.source,
-            sensor_id=kwargs.get('sensor_id'),
-            camera_id=kwargs.get('camera_id'),
-            zone_id=kwargs.get('zone_id')
+            sensor_id=kwargs.get("sensor_id"),
+            camera_id=kwargs.get("camera_id"),
+            zone_id=kwargs.get("zone_id"),
         )
 
-    def get_logs(self, limit: int = 100, event_type: Optional[str] = None,
-                  start_date: Optional[str] = None, end_date: Optional[str] = None) -> List[dict]:
+    def get_logs(
+        self,
+        limit: int = 100,
+        event_type: Optional[str] = None,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+    ) -> List[dict]:
         """Get logs from database with filters"""
         self._check_db()
         rows = self.db.get_event_logs(
-            event_type=event_type,
-            start_date=start_date,
-            end_date=end_date,
-            limit=limit
+            event_type=event_type, start_date=start_date, end_date=end_date, limit=limit
         )
         return [dict(row) for row in rows]
 
-    def get_unseen_logs(self, limit: int = 100, event_type: Optional[str] = "ALARM") -> List[dict]:
+    def get_unseen_logs(
+        self, limit: int = 100, event_type: Optional[str] = "ALARM"
+    ) -> List[dict]:
         """Get logs not marked as seen"""
         self._check_db()
         query = """
@@ -304,7 +321,9 @@ class StorageManager:
         if not log_ids:
             return
         values = [(lid,) for lid in log_ids]
-        self.db.execute_many("INSERT OR IGNORE INTO event_log_seen (log_id) VALUES (?)", values)
+        self.db.execute_many(
+            "INSERT OR IGNORE INTO event_log_seen (log_id) VALUES (?)", values
+        )
         self.db.commit()
 
     def clear_logs(self):
@@ -322,7 +341,7 @@ class StorageManager:
             WHERE sm.mode_name = ?
         """
         rows = self.db.execute_query(query, (mode_name,), fetch_all=True)
-        return [row['sensor_id'] for row in rows]
+        return [row["sensor_id"] for row in rows]
 
     def save_mode_sensor_mapping(self, mode_name: str, sensor_ids: List[int]):
         """Save sensor mapping for a SafeHomeMode"""
@@ -333,7 +352,7 @@ class StorageManager:
         if not row:
             return
 
-        mode_id = row['mode_id']
+        mode_id = row["mode_id"]
 
         # Delete existing mappings
         query = "DELETE FROM mode_sensor_mapping WHERE mode_id = ?"

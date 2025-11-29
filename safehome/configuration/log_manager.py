@@ -1,10 +1,12 @@
 from typing import Optional, List
 from .log import Log
 
+
 class LogManager:
     """
     管理系统的日志记录
     """
+
     def __init__(self, storage_manager=None):
         self.logs = []  # 内存日志缓存
         self.log_file = "data/safehome_events.log"
@@ -18,13 +20,15 @@ class LogManager:
                         message=row.get("event_message", ""),
                         level=row.get("event_type", "INFO"),
                         source=row.get("source", "System"),
-                        timestamp=row.get("event_timestamp")
+                        timestamp=row.get("event_timestamp"),
                     )
                     self.logs.append(log)
             except Exception as e:
                 print(f"Error preloading logs: {e}")
 
-    def add_log(self, message: str, level: str = "INFO", source: str = "System", **kwargs):
+    def add_log(
+        self, message: str, level: str = "INFO", source: str = "System", **kwargs
+    ):
         """添加一条新日志"""
         new_log = Log(message, level=level, source=source)
         self.logs.append(new_log)
@@ -40,7 +44,7 @@ class LogManager:
     def _write_to_file(self, log: Log):
         """追加写入文件"""
         try:
-            with open(self.log_file, "a", encoding='utf-8') as f:
+            with open(self.log_file, "a", encoding="utf-8") as f:
                 f.write(str(log) + "\n")
         except IOError as e:
             print(f"Error writing log: {e}")

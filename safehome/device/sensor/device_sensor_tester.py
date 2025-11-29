@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class DeviceSensorTester(ABC):
     """Abstract base class for sensor devices with testing capability."""
-    
+
     safeHomeSensorTest = None
     safehome_sensor_test = None  # alias for compatibility
     head_WinDoorSensor = None
@@ -12,22 +12,22 @@ class DeviceSensorTester(ABC):
     head_motion_detector = None  # alias
     newIdSequence_WinDoorSensor = 0
     newIdSequence_MotionDetector = 0
-    
+
     def __init__(self):
         self.next = None
         self.next_sensor = None  # alias
         self.sensor_id = 0  # alias
-    
+
     @abstractmethod
     def intrude(self):
         """Simulate intrusion/detection."""
         pass
-    
+
     @abstractmethod
     def release(self):
         """Release intrusion/detection state."""
         pass
-    
+
     @staticmethod
     def showSensorTester():
         """Show the sensor tester GUI."""
@@ -41,14 +41,16 @@ class DeviceSensorTester(ABC):
             except Exception:
                 # window is dead
                 DeviceSensorTester.safeHomeSensorTest = None
-        
+
         # create a new window
         try:
             import os
+
             if os.environ.get("SAFEHOME_HEADLESS") == "1":
                 return
             import tkinter as tk
-            from .safehome_sensor_test_gui import SafeHomeSensorTest
+            from safehome.interface.tools.sensor_simulator import SafeHomeSensorTest
+
             root = tk._default_root
             if root is None:
                 root = tk.Tk()

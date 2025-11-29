@@ -60,7 +60,7 @@ class ZoneManagerWindow(tk.Toplevel):
         height = self.winfo_height()
         x = (self.winfo_screenwidth() // 2) - (width // 2)
         y = (self.winfo_screenheight() // 2) - (height // 2)
-        self.geometry(f'{width}x{height}+{x}+{y}')
+        self.geometry(f"{width}x{height}+{x}+{y}")
 
     def _create_ui(self):
         """UI 구성"""
@@ -74,7 +74,7 @@ class ZoneManagerWindow(tk.Toplevel):
             text="🗺️ Safety Zone Manager",
             font=("Arial", 18, "bold"),
             bg="#34495e",
-            fg="white"
+            fg="white",
         )
         title_label.pack(pady=15)
 
@@ -91,7 +91,7 @@ class ZoneManagerWindow(tk.Toplevel):
             text="Safety Zones",
             font=("Arial", 14, "bold"),
             bg="#ecf0f1",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         zones_label.pack(anchor="w", pady=(0, 10))
 
@@ -108,7 +108,7 @@ class ZoneManagerWindow(tk.Toplevel):
             tree_frame,
             columns=("Name", "Sensors", "Status"),
             show="headings",
-            yscrollcommand=scrollbar.set
+            yscrollcommand=scrollbar.set,
         )
         scrollbar.config(command=self.zone_tree.yview)
 
@@ -140,7 +140,7 @@ class ZoneManagerWindow(tk.Toplevel):
             relief="ridge",
             bd=2,
             cursor="hand2",
-            command=self._add_zone
+            command=self._add_zone,
         )
         add_btn.pack(side="left", padx=(0, 5))
 
@@ -155,7 +155,7 @@ class ZoneManagerWindow(tk.Toplevel):
             relief="ridge",
             bd=2,
             cursor="hand2",
-            command=self._edit_zone
+            command=self._edit_zone,
         )
         edit_btn.pack(side="left", padx=5)
 
@@ -170,7 +170,7 @@ class ZoneManagerWindow(tk.Toplevel):
             relief="ridge",
             bd=2,
             cursor="hand2",
-            command=self._delete_zone
+            command=self._delete_zone,
         )
         delete_btn.pack(side="left", padx=5)
 
@@ -183,7 +183,7 @@ class ZoneManagerWindow(tk.Toplevel):
             text="Zone Details",
             font=("Arial", 14, "bold"),
             bg="#ecf0f1",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         detail_label.pack(anchor="w", pady=(0, 10))
 
@@ -197,7 +197,7 @@ class ZoneManagerWindow(tk.Toplevel):
             font=("Arial", 12),
             bg="white",
             fg="#7f8c8d",
-            anchor="w"
+            anchor="w",
         )
         self.zone_name_label.pack(fill="x", padx=15, pady=15)
 
@@ -207,11 +207,13 @@ class ZoneManagerWindow(tk.Toplevel):
             text="Sensors in this Zone",
             font=("Arial", 12, "bold"),
             bg="#ecf0f1",
-            fg="#2c3e50"
+            fg="#2c3e50",
         )
         sensors_label.pack(anchor="w", pady=(0, 10))
 
-        sensor_tree_frame = tk.Frame(right_frame, bg="white", relief="solid", borderwidth=1)
+        sensor_tree_frame = tk.Frame(
+            right_frame, bg="white", relief="solid", borderwidth=1
+        )
         sensor_tree_frame.pack(fill="both", expand=True)
 
         # Sensor Treeview
@@ -222,7 +224,7 @@ class ZoneManagerWindow(tk.Toplevel):
             sensor_tree_frame,
             columns=("Type", "Name", "Status"),
             show="headings",
-            yscrollcommand=sensor_scrollbar.set
+            yscrollcommand=sensor_scrollbar.set,
         )
         sensor_scrollbar.config(command=self.sensor_tree.yview)
 
@@ -251,7 +253,7 @@ class ZoneManagerWindow(tk.Toplevel):
             relief="ridge",
             bd=2,
             cursor="hand2",
-            command=self._assign_sensors
+            command=self._assign_sensors,
         )
         assign_btn.pack(side="left")
 
@@ -271,7 +273,8 @@ class ZoneManagerWindow(tk.Toplevel):
 
             # Count sensors in this zone
             sensor_count = sum(
-                1 for sensor in self.system.sensor_controller.sensors.values()
+                1
+                for sensor in self.system.sensor_controller.sensors.values()
                 if sensor.zone_id == zone.zone_id
             )
 
@@ -283,7 +286,7 @@ class ZoneManagerWindow(tk.Toplevel):
                 "",
                 "end",
                 iid=str(zone.zone_id),
-                values=(zone.name, sensor_count, status)
+                values=(zone.name, sensor_count, status),
             )
 
     def _on_zone_select(self, event):
@@ -303,7 +306,7 @@ class ZoneManagerWindow(tk.Toplevel):
         # Update zone info display
         self.zone_name_label.config(
             text=f"Zone: {zone.name} (ID: {zone.zone_id})\n"
-                 f"Status: {'Armed' if zone.is_armed else 'Disarmed'}"
+            f"Status: {'Armed' if zone.is_armed else 'Disarmed'}"
         )
 
         # Update sensor list for this zone
@@ -318,13 +321,13 @@ class ZoneManagerWindow(tk.Toplevel):
         # Get sensors in this zone
         for sensor in self.system.sensor_controller.sensors.values():
             if sensor.zone_id == zone_id:
-                sensor_type = "Motion" if sensor.sensor_type == "MOTION" else "Door/Window"
+                sensor_type = (
+                    "Motion" if sensor.sensor_type == "MOTION" else "Door/Window"
+                )
                 status = "Active" if sensor.get_status() else "Inactive"
 
                 self.sensor_tree.insert(
-                    "",
-                    "end",
-                    values=(sensor_type, sensor.location, status)
+                    "", "end", values=(sensor_type, sensor.location, status)
                 )
 
     def _add_zone(self):
@@ -334,7 +337,9 @@ class ZoneManagerWindow(tk.Toplevel):
 
         if dialog.result:
             # The callback will handle the refresh, just show the message
-            messagebox.showinfo("Success", f"Zone '{dialog.new_name}' created successfully")
+            messagebox.showinfo(
+                "Success", f"Zone '{dialog.new_name}' created successfully"
+            )
 
     def _edit_zone(self):
         """Zone 편집"""
@@ -367,12 +372,16 @@ class ZoneManagerWindow(tk.Toplevel):
         confirm = messagebox.askyesno(
             "Confirm Delete",
             f"Are you sure you want to delete zone '{zone.name}'?\n"
-            f"All sensors in this zone will be unassigned."
+            f"All sensors in this zone will be unassigned.",
         )
 
         if confirm:
             # Unassign all sensors in this zone first
-            sensors_in_zone = [s for s in self.system.sensor_controller.get_all_sensors() if s.zone_id == self.selected_zone_id]
+            sensors_in_zone = [
+                s
+                for s in self.system.sensor_controller.get_all_sensors()
+                if s.zone_id == self.selected_zone_id
+            ]
             for sensor in sensors_in_zone:
                 sensor.zone_id = None
                 # Persist this change if your system requires it, e.g., by calling a save method
@@ -392,7 +401,9 @@ class ZoneManagerWindow(tk.Toplevel):
                 self._refresh_zones()
 
                 # 3. Now, show confirmation
-                messagebox.showinfo("Success", f"Zone '{zone.name}' deleted successfully")
+                messagebox.showinfo(
+                    "Success", f"Zone '{zone.name}' deleted successfully"
+                )
             else:
                 messagebox.showerror("Error", "Failed to delete zone")
 
@@ -412,7 +423,9 @@ class ZoneManagerWindow(tk.Toplevel):
         if dialog.result:
             self._refresh_zones()
             self._refresh_zone_sensors(self.selected_zone_id)
-            messagebox.showinfo("Success", f"Sensors assigned to '{zone.name}' successfully")
+            messagebox.showinfo(
+                "Success", f"Sensors assigned to '{zone.name}' successfully"
+            )
 
 
 class AddZoneDialog(tk.Toplevel):
@@ -434,17 +447,9 @@ class AddZoneDialog(tk.Toplevel):
 
     def _create_ui(self):
         # Zone name input
-        tk.Label(
-            self,
-            text="Zone Name:",
-            font=("Arial", 12)
-        ).pack(pady=(20, 5))
+        tk.Label(self, text="Zone Name:", font=("Arial", 12)).pack(pady=(20, 5))
 
-        self.name_entry = tk.Entry(
-            self,
-            font=("Arial", 12),
-            width=30
-        )
+        self.name_entry = tk.Entry(self, font=("Arial", 12), width=30)
         self.name_entry.pack(pady=5)
         self.name_entry.focus()
 
@@ -459,7 +464,7 @@ class AddZoneDialog(tk.Toplevel):
             bg="#27ae60",
             fg="white",
             width=10,
-            command=self._create_zone
+            command=self._create_zone,
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -469,7 +474,7 @@ class AddZoneDialog(tk.Toplevel):
             bg="#95a5a6",
             fg="white",
             width=10,
-            command=self.destroy
+            command=self.destroy,
         ).pack(side="left", padx=5)
 
     def _create_zone(self):
@@ -509,17 +514,9 @@ class EditZoneDialog(tk.Toplevel):
 
     def _create_ui(self):
         # Zone name input
-        tk.Label(
-            self,
-            text="Zone Name:",
-            font=("Arial", 12)
-        ).pack(pady=(20, 5))
+        tk.Label(self, text="Zone Name:", font=("Arial", 12)).pack(pady=(20, 5))
 
-        self.name_entry = tk.Entry(
-            self,
-            font=("Arial", 12),
-            width=30
-        )
+        self.name_entry = tk.Entry(self, font=("Arial", 12), width=30)
         self.name_entry.insert(0, self.zone.name)
         self.name_entry.pack(pady=5)
         self.name_entry.focus()
@@ -535,7 +532,7 @@ class EditZoneDialog(tk.Toplevel):
             bg="#3498db",
             fg="white",
             width=10,
-            command=self._save_zone
+            command=self._save_zone,
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -545,7 +542,7 @@ class EditZoneDialog(tk.Toplevel):
             bg="#95a5a6",
             fg="white",
             width=10,
-            command=self.destroy
+            command=self.destroy,
         ).pack(side="left", padx=5)
 
     def _save_zone(self):
@@ -556,7 +553,9 @@ class EditZoneDialog(tk.Toplevel):
             return
 
         # Update zone name
-        success = self.system.config.update_safety_zone(self.zone.zone_id, zone_name=new_name)
+        success = self.system.config.update_safety_zone(
+            self.zone.zone_id, zone_name=new_name
+        )
 
         if success:
             self.result = True
@@ -587,7 +586,7 @@ class AssignSensorDialog(tk.Toplevel):
         tk.Label(
             self,
             text=f"Select sensors to assign to '{self.zone.name}'",
-            font=("Arial", 12, "bold")
+            font=("Arial", 12, "bold"),
         ).pack(pady=15)
 
         # Sensor listbox with checkboxes
@@ -601,7 +600,7 @@ class AssignSensorDialog(tk.Toplevel):
             listbox_frame,
             font=("Arial", 11),
             selectmode="multiple",
-            yscrollcommand=scrollbar.set
+            yscrollcommand=scrollbar.set,
         )
         scrollbar.config(command=self.sensor_listbox.yview)
         self.sensor_listbox.pack(fill="both", expand=True)
@@ -611,9 +610,15 @@ class AssignSensorDialog(tk.Toplevel):
         for sensor_id, sensor in self.system.sensor_controller.sensors.items():
             self.sensor_ids.append(sensor_id)
             sensor_type = "Motion" if sensor.sensor_type == "MOTION" else "Door/Window"
-            zone_info = f"(Zone: {self.system.config.get_safety_zone(sensor.zone_id).name})" if sensor.zone_id else "(Unassigned)"
+            zone_info = (
+                f"(Zone: {self.system.config.get_safety_zone(sensor.zone_id).name})"
+                if sensor.zone_id
+                else "(Unassigned)"
+            )
 
-            self.sensor_listbox.insert("end", f"{sensor.location} - {sensor_type} {zone_info}")
+            self.sensor_listbox.insert(
+                "end", f"{sensor.location} - {sensor_type} {zone_info}"
+            )
 
             # Pre-select sensors already in this zone
             if sensor.zone_id == self.zone.zone_id:
@@ -630,7 +635,7 @@ class AssignSensorDialog(tk.Toplevel):
             bg="#9b59b6",
             fg="white",
             width=10,
-            command=self._assign
+            command=self._assign,
         ).pack(side="left", padx=5)
 
         tk.Button(
@@ -640,7 +645,7 @@ class AssignSensorDialog(tk.Toplevel):
             bg="#95a5a6",
             fg="white",
             width=10,
-            command=self.destroy
+            command=self.destroy,
         ).pack(side="left", padx=5)
 
     def _assign(self):

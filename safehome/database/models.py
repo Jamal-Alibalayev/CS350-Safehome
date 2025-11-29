@@ -11,6 +11,7 @@ from datetime import datetime
 @dataclass
 class SystemSettings:
     """System Settings Model"""
+
     id: int
     master_password: str
     guest_password: Optional[str]
@@ -32,26 +33,27 @@ class SystemSettings:
         if row is None:
             return None
         return cls(
-            id=row['id'],
-            master_password=row['master_password'],
-            guest_password=row['guest_password'],
-            web_password_1=row['web_password_1'],
-            web_password_2=row['web_password_2'],
-            entry_delay=row['entry_delay'],
-            exit_delay=row['exit_delay'],
-            alarm_duration=row['alarm_duration'],
-            system_lock_time=row['system_lock_time'],
-            monitoring_phone=row['monitoring_phone'],
-            homeowner_phone=row['homeowner_phone'],
-            max_login_attempts=row['max_login_attempts'],
-            created_at=row.get('created_at'),
-            updated_at=row.get('updated_at')
+            id=row["id"],
+            master_password=row["master_password"],
+            guest_password=row["guest_password"],
+            web_password_1=row["web_password_1"],
+            web_password_2=row["web_password_2"],
+            entry_delay=row["entry_delay"],
+            exit_delay=row["exit_delay"],
+            alarm_duration=row["alarm_duration"],
+            system_lock_time=row["system_lock_time"],
+            monitoring_phone=row["monitoring_phone"],
+            homeowner_phone=row["homeowner_phone"],
+            max_login_attempts=row["max_login_attempts"],
+            created_at=row.get("created_at"),
+            updated_at=row.get("updated_at"),
         )
 
 
 @dataclass
 class SafetyZone:
     """Safety Zone Model"""
+
     zone_id: Optional[int]
     zone_name: str
     is_armed: bool = False
@@ -64,17 +66,18 @@ class SafetyZone:
         if row is None:
             return None
         return cls(
-            zone_id=row['zone_id'],
-            zone_name=row['zone_name'],
-            is_armed=bool(row['is_armed']),
-            created_at=row.get('created_at'),
-            updated_at=row.get('updated_at')
+            zone_id=row["zone_id"],
+            zone_name=row["zone_name"],
+            is_armed=bool(row["is_armed"]),
+            created_at=row.get("created_at"),
+            updated_at=row.get("updated_at"),
         )
 
 
 @dataclass
 class SafeHomeMode:
     """SafeHome Mode Model"""
+
     mode_id: Optional[int]
     mode_name: str  # HOME, AWAY, OVERNIGHT, EXTENDED
     description: Optional[str] = None
@@ -86,16 +89,17 @@ class SafeHomeMode:
         if row is None:
             return None
         return cls(
-            mode_id=row['mode_id'],
-            mode_name=row['mode_name'],
-            description=row.get('description'),
-            created_at=row.get('created_at')
+            mode_id=row["mode_id"],
+            mode_name=row["mode_name"],
+            description=row.get("description"),
+            created_at=row.get("created_at"),
         )
 
 
 @dataclass
 class Sensor:
     """Sensor Model"""
+
     sensor_id: Optional[int]
     sensor_type: str  # WINDOOR or MOTION
     sensor_location: str
@@ -109,18 +113,19 @@ class Sensor:
         if row is None:
             return None
         return cls(
-            sensor_id=row['sensor_id'],
-            sensor_type=row['sensor_type'],
-            sensor_location=row['sensor_location'],
-            zone_id=row.get('zone_id'),
-            is_active=bool(row['is_active']),
-            created_at=row.get('created_at')
+            sensor_id=row["sensor_id"],
+            sensor_type=row["sensor_type"],
+            sensor_location=row["sensor_location"],
+            zone_id=row.get("zone_id"),
+            is_active=bool(row["is_active"]),
+            created_at=row.get("created_at"),
         )
 
 
 @dataclass
 class Camera:
     """Camera Model"""
+
     camera_id: Optional[int]
     camera_name: str
     camera_location: str
@@ -136,20 +141,21 @@ class Camera:
         if row is None:
             return None
         return cls(
-            camera_id=row['camera_id'],
-            camera_name=row['camera_name'],
-            camera_location=row['camera_location'],
-            camera_password=row.get('camera_password'),
-            pan_angle=row['pan_angle'],
-            zoom_level=row['zoom_level'],
-            is_enabled=bool(row['is_enabled']),
-            created_at=row.get('created_at')
+            camera_id=row["camera_id"],
+            camera_name=row["camera_name"],
+            camera_location=row["camera_location"],
+            camera_password=row.get("camera_password"),
+            pan_angle=row["pan_angle"],
+            zoom_level=row["zoom_level"],
+            is_enabled=bool(row["is_enabled"]),
+            created_at=row.get("created_at"),
         )
 
 
 @dataclass
 class EventLog:
     """Event Log Model"""
+
     log_id: Optional[int]
     event_type: str  # INFO, WARNING, ALARM, ERROR, INTRUSION
     event_message: str
@@ -165,20 +171,21 @@ class EventLog:
         if row is None:
             return None
         return cls(
-            log_id=row['log_id'],
-            event_type=row['event_type'],
-            event_message=row['event_message'],
-            sensor_id=row.get('sensor_id'),
-            camera_id=row.get('camera_id'),
-            zone_id=row.get('zone_id'),
-            source=row['source'],
-            event_timestamp=row.get('event_timestamp')
+            log_id=row["log_id"],
+            event_type=row["event_type"],
+            event_message=row["event_message"],
+            sensor_id=row.get("sensor_id"),
+            camera_id=row.get("camera_id"),
+            zone_id=row.get("zone_id"),
+            source=row["source"],
+            event_timestamp=row.get("event_timestamp"),
         )
 
 
 @dataclass
 class LoginSession:
     """Login Session Model"""
+
     session_id: Optional[int]
     interface_type: str  # CONTROL_PANEL or WEB
     username: Optional[str] = None
@@ -193,11 +200,11 @@ class LoginSession:
         if row is None:
             return None
         return cls(
-            session_id=row['session_id'],
-            interface_type=row['interface_type'],
-            username=row.get('username'),
-            login_successful=bool(row['login_successful']),
-            failed_attempts=row['failed_attempts'],
-            login_timestamp=row.get('login_timestamp'),
-            logout_timestamp=row.get('logout_timestamp')
+            session_id=row["session_id"],
+            interface_type=row["interface_type"],
+            username=row.get("username"),
+            login_successful=bool(row["login_successful"]),
+            failed_attempts=row["failed_attempts"],
+            login_timestamp=row.get("login_timestamp"),
+            logout_timestamp=row.get("logout_timestamp"),
         )
