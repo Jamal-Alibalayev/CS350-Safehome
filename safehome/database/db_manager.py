@@ -86,6 +86,8 @@ class DatabaseManager:
         Returns:
             Query result (cursor, row, or rows)
         """
+        if self.connection is None: # Ensure connection is open before proceeding
+            self.connect()
         cursor = self.connection.cursor()
         cursor.execute(query, params)
 

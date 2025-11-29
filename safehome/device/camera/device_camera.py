@@ -191,3 +191,6 @@ class DeviceCamera(threading.Thread, InterfaceCamera):
     def stop(self):
         """Stop the camera thread."""
         self._running = False
+        if self.imgSource:
+            self.imgSource.close()
+
