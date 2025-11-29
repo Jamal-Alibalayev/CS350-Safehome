@@ -9,7 +9,7 @@ This document provides a comprehensive guide to using the SafeHome Security Syst
 To start the SafeHome system, execute the main simulation script from your terminal:
 
 ```bash
-python run_simulation.py
+python main.py
 ```
 
 This will initialize the core system, set up the virtual hardware (sensors and cameras), and launch the login window.

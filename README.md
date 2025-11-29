@@ -9,7 +9,7 @@
 └─CS350-Safehome
     │  camera1.jpg
     │  README.md
-    │  run_simulation.py                # simulation file for testing
+    │  main.py                          # simulation entry point
     │  safehome_config.json             # config file
     │  safehome_events.log
     │

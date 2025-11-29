@@ -1,8 +1,6 @@
-# run_simulation.py
 """
 SafeHome System Main Entry Point
 Initializes and runs the complete SafeHome security system with all components
-
 """
 
 import tkinter as tk
