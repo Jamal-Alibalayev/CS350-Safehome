@@ -882,7 +882,7 @@ class MainDashboard(tk.Toplevel):
                 messagebox.showinfo("System Reset",
                                     "The system has been reset to factory defaults.\n"
                                     "You will now be logged out.")
-                self._logout()
+                self._logout(force_logout=True)
             except Exception as e:
                 messagebox.showerror("Reset Error", f"Failed to reset system: {e}")
 
@@ -929,9 +929,9 @@ class MainDashboard(tk.Toplevel):
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open Sensor Simulator: {e}")
 
-    def _logout(self):
+    def _logout(self, force_logout: bool = False):
         """로그아웃"""
-        if messagebox.askyesno("Logout", "Logout and return to login screen?"):
+        if force_logout or messagebox.askyesno("Logout", "Logout and return to login screen?"):
             self.destroy()
             self.login_window.deiconify()
             self.login_window.password_entry.delete(0, tk.END)

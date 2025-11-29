@@ -255,13 +255,16 @@ class StorageManager:
         self.db.execute_query("UPDATE cameras SET camera_password = NULL")
         self.db.commit()
 
-    def save_log(self, log):
+    def save_log(self, log, **kwargs):
         """Save log entry to database"""
         self._check_db()
         self.db.add_event_log(
             event_type=log.level,
             event_message=log.message,
-            source=log.source
+            source=log.source,
+            sensor_id=kwargs.get('sensor_id'),
+            camera_id=kwargs.get('camera_id'),
+            zone_id=kwargs.get('zone_id')
         )
 
     def get_logs(self, limit: int = 100, event_type: Optional[str] = None,

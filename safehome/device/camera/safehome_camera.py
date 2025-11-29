@@ -224,6 +224,10 @@ class SafeHomeCamera:
         """Check if camera has password protection"""
         return self.password is not None
 
+    def is_locked(self) -> bool:
+        """Public method to check if camera is in lockout state."""
+        return self._is_locked()
+
     def _is_locked(self) -> bool:
         """Check if camera is in lockout state."""
         if self.locked_until and time.time() < self.locked_until:
