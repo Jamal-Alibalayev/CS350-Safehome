@@ -211,6 +211,18 @@ class SensorController:
                 f"All {len(self.sensors)} sensors disarmed", source="SensorController"
             )
 
+    def close_all_windoor_sensors(self):
+        """Ensure all window/door sensors are in a closed state."""
+        for sensor in self.sensors.values():
+            if isinstance(sensor, WindowDoorSensor):
+                sensor.simulate_close()
+        
+        if self.logger:
+            self.logger.add_log(
+                "All window/door sensors set to 'closed' state", source="SensorController"
+            )
+
+
     def poll_sensors(self) -> List[Tuple[int, Sensor]]:
         """
         Poll all active sensors for intrusion detection

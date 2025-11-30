@@ -1131,7 +1131,7 @@ class MainDashboard(tk.Toplevel):
         try:
             from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
 
-            DeviceSensorTester.showSensorTester()
+            DeviceSensorTester.showSensorTester(self.system)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open Sensor Simulator: {e}")
 

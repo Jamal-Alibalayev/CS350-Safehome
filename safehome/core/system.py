@@ -50,6 +50,10 @@ class System:
         self.sensor_controller.load_sensors_from_storage()
         self.camera_controller.load_cameras_from_storage()
 
+        # Ensure system starts in a clean, ready-to-arm state
+        self.sensor_controller.disarm_all_sensors()
+        self.sensor_controller.close_all_windoor_sensors()
+
     def turn_on(self):
         """Turn on the system"""
         self.is_running = True

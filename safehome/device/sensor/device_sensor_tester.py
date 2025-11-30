@@ -29,7 +29,7 @@ class DeviceSensorTester(ABC):
         pass
 
     @staticmethod
-    def showSensorTester():
+    def showSensorTester(system):
         """Show the sensor tester GUI."""
         # if window exists, just show it
         if DeviceSensorTester.safeHomeSensorTest is not None:
@@ -55,7 +55,7 @@ class DeviceSensorTester(ABC):
             if root is None:
                 root = tk.Tk()
                 root.withdraw()
-            gui = SafeHomeSensorTest(master=root)
+            gui = SafeHomeSensorTest(system=system, master=root)
             DeviceSensorTester.safeHomeSensorTest = gui
             DeviceSensorTester.safehome_sensor_test = gui
         except Exception:

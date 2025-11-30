@@ -12,7 +12,7 @@ To start the SafeHome system, execute the main simulation script from your termi
 python main.py
 ```
 
-This will initialize the core system, set up the virtual hardware (sensors and cameras), and launch the login window.
+This will initialize the core system with default sensors and mode configurations, set up the virtual hardware (sensors and cameras), and launch the login window.
 
 ## 2. Login
 
@@ -61,7 +61,7 @@ Below each camera, administrators will find two buttons for managing security:
 -   **Delete**: Remove the password from the camera.
 
 ### 3.3. System Control
-This panel allows you to change the system's security mode.
+This panel allows you to change the system's security mode, which directly controls the armed/disarmed state of associated sensors.
 -   **Home**: Arms the system for when you are at home (e.g., perimeter sensors active).
 -   **Away**: Arms the system for when you are away (all sensors active).
 -   **Overnight / Extended**: Special modes for travel.
@@ -104,6 +104,13 @@ The settings window allows administrators to configure core system parameters.
 
 Click **Save** to apply any changes.
 
-## 6. Sensor Simulator
+## 6. Sensor Simulator (Live Mode)
 
-The sensor simulator is a powerful tool for testing. You can open it from the "System Control" panel on the main dashboard. It displays a list of all sensors. Clicking the "Trigger" button next to a sensor will simulate that sensor detecting an event (e.g., a door opening). This is useful for testing how the system responds to intrusions in different modes.
+The Sensor Simulator is now a powerful, real-time diagnostic and control tool that directly interacts with the live sensors in your SafeHome system. You can open it from the "System Control" panel on the main dashboard.
+
+**Key Features:**
+-   **Live Sensor Status:** Displays a real-time list of all sensors, showing their current Armed/Disarmed state and their physical state (e.g., "Open"/"Closed" for window/door sensors, "Detected"/"Clear" for motion sensors). This status is synchronized with the main system.
+-   **Direct Control:** You can directly arm/disarm individual sensors or trigger/release their physical state (e.g., simulate a door opening or motion detection). Any actions taken here will immediately affect the actual system's sensor states and be reflected on the main dashboard.
+-   **Quick Actions:** Use "ARM ALL", "DISARM ALL", or "CLOSE/CLEAR ALL" to quickly manage all sensors.
+
+This tool is invaluable for testing how the system responds to different sensor states and security modes.

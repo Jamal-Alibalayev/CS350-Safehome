@@ -150,7 +150,32 @@ class ConfigurationManager:
         self.storage.save_safety_zone(zone1)
         self.storage.save_safety_zone(zone2)
 
-        # 4. Clear all camera passwords (reset to no protection)
+        # 4. Create default sensors and mode mappings for a functional out-of-the-box experience
+        sensor_definitions = [
+            (1, "WINDOOR", "Dining Room Window 1"),
+            (2, "WINDOOR", "Dining Room Window 2"),
+            (3, "WINDOOR", "Kitchen Window"),
+            (4, "WINDOOR", "Living Room Window 1"),
+            (5, "WINDOOR", "Living Room Window 2"),
+            (6, "WINDOOR", "Living Room Window 3"),
+            (7, "WINDOOR", "Entrance Door"),
+            (8, "WINDOOR", "Kitchen Door"),
+            (9, "MOTION", "Dining/Entrance/Living Area"),
+            (10, "MOTION", "Kitchen Area"),
+        ]
+        all_sensor_ids = [s[0] for s in sensor_definitions]
+        perimeter_sensor_ids = [s[0] for s in sensor_definitions if s[1] == "WINDOOR"]
+
+        for sensor_id, sensor_type, location in sensor_definitions:
+            self.storage.save_sensor(sensor_id, sensor_type, location, zone_id=None)
+
+        self.storage.save_mode_sensor_mapping("AWAY", all_sensor_ids)
+        self.storage.save_mode_sensor_mapping("EXTENDED", all_sensor_ids)
+        self.storage.save_mode_sensor_mapping("HOME", perimeter_sensor_ids)
+        self.storage.save_mode_sensor_mapping("OVERNIGHT", perimeter_sensor_ids)
+        self.storage.save_mode_sensor_mapping("DISARMED", [])
+
+        # 5. Clear all camera passwords (reset to no protection)
         try:
             self.storage.clear_camera_passwords()
         except Exception as e:
@@ -160,7 +185,7 @@ class ConfigurationManager:
                 source="ConfigManager",
             )
 
-        # 5. Save the new default configuration to the database
+        # 6. Save the new default configuration to the database
         self.save_configuration()
 
         self.logger.add_log(
