@@ -1,0 +1,274 @@
+@startuml
+title SafeHome Core Class Diagram
+skinparam classAttributeIconSize 0
+
+package "core" {
+  class System {
+    -is_running: bool
+    -is_system_locked: bool
+    +config: ConfigurationManager
+    +sensor_controller: SensorController
+    +camera_controller: CameraController
+    +alarm: Alarm
+    +turn_on()
+    +turn_off()
+    +reset()
+    +login(user_id, password, interface_type)
+    +arm_system(mode)
+    +disarm_system()
+  }
+}
+
+package "configuration" {
+  class ConfigurationManager {
+    +db_manager: DatabaseManager
+    +storage: StorageManager
+    +settings: SystemSettings
+    +logger: LogManager
+    +login_manager: LoginManager
+    +current_mode: SafeHomeMode
+    +get_all_zones(): List<SafetyZone>
+    +set_mode(mode)
+    +send_email_alert(...)
+    +reset_configuration()
+  }
+
+  class StorageManager {
+    +db: DatabaseManager
+    +save_settings(SystemSettings)
+    +load_settings(): dict
+    +save_safety_zone(zone): int
+    +load_all_safety_zones(): List<SafetyZone>
+    +save_sensor(id, type, loc, zone)
+    +save_camera(id, name, loc, pw)
+    +save_log(log, ...)
+    +get_sensors_for_mode(mode): List<int>
+  }
+
+  class DatabaseManager {
+    +connect()
+    +initialize_schema()
+    +execute_query(query, params)
+    +get_system_settings()
+    +get_sensors(zone_id)
+    +get_cameras()
+    +get_event_logs(...)
+  }
+
+  class SystemSettings {
+    +master_password: str
+    +guest_password: str
+    +web_password_1: str
+    +web_password_2: str
+    +entry_delay: int
+    +exit_delay: int
+    +alarm_duration: int
+    +system_lock_time: int
+    +monitoring_phone: str
+    +alert_email: str
+  }
+
+  enum SafeHomeMode {
+    DISARMED
+    HOME
+    AWAY
+    OVERNIGHT
+    EXTENDED
+    PANIC
+  }
+
+  class SafetyZone {
+    +zone_id: int
+    +name: str
+    +sensors: List<int>
+    +is_armed: bool
+    +arm()
+    +disarm()
+  }
+
+  class LoginManager {
+    +settings: SystemSettings
+    +validate_credentials(user_id, password, interface_type): bool
+    +change_password(old, new, interface_type): bool
+    +change_guest_password(master_pw, new_pw): bool
+    +unlock_system(interface_type)
+  }
+
+  class LogManager {
+    +logs: List<Log>
+    +add_log(message, level, source, ...)
+    +get_recent_logs(count)
+    +clear_logs()
+  }
+
+  class Log {
+    +message: str
+    +level: str
+    +timestamp: datetime
+    +source: str
+  }
+}
+
+package "devices::sensor" {
+  abstract class Sensor {
+    +sensor_id: int
+    +sensor_type: str
+    +location: str
+    +zone_id: int
+    +is_active: bool
+    +read(): bool
+    +arm()
+    +disarm()
+  }
+
+  class WindowDoorSensor {
+    +is_open(): bool
+    +simulate_open()
+    +simulate_close()
+  }
+
+  class MotionSensor {
+    +is_motion_detected(): bool
+    +simulate_motion()
+    +simulate_clear()
+  }
+
+  class DeviceWinDoorSensor
+  class DeviceMotionDetector
+
+  class SensorController {
+    +sensors: Dict<int, Sensor>
+    +add_sensor(type, location, zone): Sensor
+    +remove_sensor(id): bool
+    +poll_sensors(): List<(id, Sensor)>
+    +arm_sensors_in_zone(zone_id)
+    +disarm_all_sensors()
+    +check_all_windoor_closed(): (bool, List<Sensor>)
+    +load_sensors_from_storage()
+  }
+}
+
+package "devices::camera" {
+  class CameraController {
+    +cameras: Dict<int, SafeHomeCamera>
+    +add_camera(name, location, pw): SafeHomeCamera
+    +get_camera_view(id, pw): Image
+    +pan_camera(id, dir, pw): bool
+    +tilt_camera(id, dir, pw): bool
+    +zoom_camera(id, dir, pw): bool
+    +set_camera_password(id, new_pw, old_pw, confirm_pw): bool
+    +delete_camera_password(id, old_pw): bool
+    +load_cameras_from_storage()
+    +shutdown()
+  }
+
+  class CameraAccessGuard {
+    +require_access(camera, camera_id, password, action)
+  }
+
+  class SafeHomeCamera {
+    +camera_id: int
+    +name: str
+    +location: str
+    +password: str
+    +failed_attempts: int
+    +get_view(): Image
+    +pan_left()/pan_right()
+    +tilt_up()/tilt_down()
+    +zoom_in()/zoom_out()
+    +set_password(pw)
+    +verify_password(pw): bool
+    +is_locked(): bool
+    +enable()/disable()
+  }
+
+  class DeviceCamera {
+    +set_id(id)
+    +get_view(): Image
+    +pan_left()/pan_right()
+    +tilt_up()/tilt_down()
+    +zoom_in()/zoom_out()
+    +stop()
+  }
+}
+
+package "devices::alarm" {
+  class Alarm {
+    +duration: int
+    +is_ringing: bool
+    +ring()
+    +stop()
+    +is_active(): bool
+  }
+}
+
+package "interface::control_panel" {
+  class DeviceControlPanelAbstract
+  class SafeHomeControlPanel {
+    +system: System
+    +button0()..button9()
+    +button_star()
+    +button_sharp()
+    +button_panic()
+  }
+}
+
+package "interface::dashboard" {
+  class LoginWindow {
+    +system: System
+    +_attempt_login()
+  }
+  class MainDashboard {
+    +system: System
+    +_update_loop()
+    +_open_log_viewer()
+    +_open_settings()
+  }
+}
+
+System *-- ConfigurationManager : config
+System *-- SensorController : sensor_controller
+System *-- CameraController : camera_controller
+System *-- Alarm : alarm
+System --> SafeHomeMode
+System ..> LoginManager : via config
+
+ConfigurationManager *-- DatabaseManager : db_manager
+ConfigurationManager *-- StorageManager : storage
+ConfigurationManager *-- SystemSettings : settings
+ConfigurationManager *-- LogManager : logger
+ConfigurationManager *-- LoginManager : login_manager
+ConfigurationManager o-- SafetyZone : manages
+ConfigurationManager --> SafeHomeMode
+
+StorageManager *-- DatabaseManager
+StorageManager ..> SystemSettings
+StorageManager ..> SafetyZone
+StorageManager ..> SensorController : persists
+StorageManager ..> CameraController : persists
+StorageManager ..> LogManager : persists
+
+LoginManager --> SystemSettings
+LoginManager ..> StorageManager : log sessions
+
+LogManager *-- Log
+
+SensorController *-- Sensor
+Sensor <|-- WindowDoorSensor
+Sensor <|-- MotionSensor
+WindowDoorSensor *-- DeviceWinDoorSensor : hardware
+MotionSensor *-- DeviceMotionDetector : hardware
+
+CameraController *-- SafeHomeCamera
+CameraController o-- CameraAccessGuard
+SafeHomeCamera *-- DeviceCamera : hardware
+
+Alarm ..> SystemSettings : duration from settings
+
+DeviceControlPanelAbstract <|-- SafeHomeControlPanel
+SafeHomeControlPanel --> System
+LoginWindow --> System
+MainDashboard --> System
+LoginWindow ..> MainDashboard : creates
+
+@enduml

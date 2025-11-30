@@ -23,6 +23,9 @@ data/
 data/**/*.jpg
 data/**/*.png
 
+# Coverage artifacts
+.coverage
+
 # Asset files that might change frequently
 *.jpg
 *.png
