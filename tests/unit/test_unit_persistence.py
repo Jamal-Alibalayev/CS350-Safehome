@@ -1,5 +1,6 @@
 import os
 import sqlite3
+import json
 import pytest
 
 from safehome.database.db_manager import DatabaseManager
@@ -105,3 +106,21 @@ def test_storage_manager_mode_sensor_mapping(db):
     storage.save_sensor(1, "WINDOOR", "Door", None)
     storage.save_mode_sensor_mapping("HOME", [1])
     assert storage.get_sensors_for_mode("HOME") == [1]
+
+
+def test_storage_manager_invalid_mode_mapping(db):
+    """UT-Storage-ModeMap-Invalid: unknown mode name no-op."""
+    storage = StorageManager(db)
+    storage.save_mode_sensor_mapping("NOTAMODE", [1, 2])  # should not throw
+
+
+def test_storage_manager_check_db_and_json_errors(tmp_path):
+    """UT-Storage-CheckDb/JSON: _check_db raises; bad JSON raises decode error."""
+    storage = StorageManager(db_manager=None)
+    with pytest.raises(ValueError):
+        storage._check_db()
+    bad_json = tmp_path / "bad.json"
+    bad_json.write_text("{invalid", encoding="utf-8")
+    StorageManager.CONFIG_FILE = str(bad_json)
+    with pytest.raises(json.JSONDecodeError):
+        storage.load_settings_from_json()

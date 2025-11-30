@@ -92,6 +92,47 @@ def test_login_manager_lock_and_unlock():
     assert lm.validate_credentials("admin", settings.master_password, "CONTROL_PANEL")
 
 
+def test_login_manager_more_branches():
+    """UT-Login-Branches: web validation, guest change, lock/unlock."""
+    lm = LoginManager(SystemSettings(max_login_attempts=1, system_lock_time=0.1))
+    assert lm.validate_credentials("u", "webpass1:webpass2", "WEB")
+    assert not lm.change_guest_password("wrong", "1234")
+    assert lm.change_guest_password(lm.settings.master_password, "5555")
+    assert not lm.validate_credentials("admin", "bad", "CONTROL_PANEL")
+    assert lm.is_interface_locked("CONTROL_PANEL")
+    time.sleep(0.11)
+    lm.unlock_system()
+    assert lm.get_failed_attempts("CONTROL_PANEL") == 0
+
+
+def test_login_manager_locked_and_unknown_interface():
+    """UT-Login-LockedUnknown: locked interface returns False; unknown iface False."""
+    lm = LoginManager(SystemSettings())
+    lm.is_locked["CONTROL_PANEL"] = True
+    lm.failed_attempts["CONTROL_PANEL"] = 5
+    assert lm.validate_credentials("admin", "1234", "CONTROL_PANEL") is False
+    assert lm.validate_credentials("u", "p", "UNKNOWN") is False
+
+
+def test_login_manager_log_session(monkeypatch):
+    """UT-Login-LogSession: DB insert path executes."""
+    calls = {}
+    class FakeDB:
+        def __init__(self):
+            self.queries = []
+        def execute_query(self, q, params):
+            self.queries.append((q, params))
+        def commit(self):
+            calls["commit"] = True
+    class FakeStorage:
+        def __init__(self):
+            self.db = FakeDB()
+    storage = FakeStorage()
+    lm = LoginManager(SystemSettings(), storage_manager=storage)
+    lm._log_session("CONTROL_PANEL", "admin", True)
+    assert storage.db.queries
+
+
 def test_system_arm_disarm_and_alarm(system):
     """UT-System-ArmDisarm (SDS seq p55/p58): arming requires closed doors; alarm triggers on intrusion."""
     sys = system
@@ -129,3 +170,39 @@ def test_system_login_and_password_change(system):
     )
     assert changed
     assert sys.login("admin", "9999", "CONTROL_PANEL")
+
+
+def test_login_manager_guest_and_web_parsing():
+    """UT-Login-Guest/Web: guest with default 0000 and bad web format."""
+    lm = LoginManager(SystemSettings(guest_password=None))
+    assert lm.validate_credentials("guest", "0000", "CONTROL_PANEL")
+    assert not lm.validate_credentials("user", "missingcolon", "WEB")
+    assert not lm.validate_credentials("user", "bad:format:extra", "WEB")
+
+
+def test_sensor_controller_edge_branches(system):
+    """UT-Sensor-Edges: no-op branches and unknown type load."""
+    sc = system.sensor_controller
+    class DummyLogger:
+        def __init__(self):
+            self.logged = []
+        def add_log(self, msg, **kwargs):
+            self.logged.append(msg)
+    sc.logger = DummyLogger()
+    assert sc.remove_sensor(999) is False
+    assert sc.get_sensor_status(999) is None
+    sc.disarm_sensor(999)
+    sc.arm_sensors_in_zone(999)
+    sc.disarm_sensors_in_zone(999)
+    sc.arm_sensors([])
+    sc.disarm_all_sensors()
+    assert sc.get_all_sensor_statuses() == []
+    storage = system.config.storage
+    storage.save_sensor(5, "UNKNOWN", "Loc", None)
+    sc.load_sensors_from_storage()
+    s = sc.add_sensor("WINDOOR", "Loc1")
+    sc.arm_sensor(s.sensor_id)
+    sc.disarm_sensor(s.sensor_id)
+    sc.arm_sensors([s.sensor_id])
+    sc.disarm_all_sensors()
+    assert sc.logger.logged
