@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import Mock
 
 from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
 from safehome.device.sensor.device_motion_detector import DeviceMotionDetector
@@ -8,15 +9,21 @@ from safehome.device.sensor.windoor_sensor import WindowDoorSensor
 from safehome.device.camera.device_camera import DeviceCamera
 
 
+@pytest.fixture
+def mock_system():
+    """Provides a mock System object that can be passed to showSensorTester."""
+    return Mock()
+
+
 @pytest.fixture(autouse=True)
 def headless_env(monkeypatch):
     monkeypatch.setenv("SAFEHOME_HEADLESS", "1")
 
 
-def test_device_sensor_tester_headless_skip():
+def test_device_sensor_tester_headless_skip(mock_system):
     """UT-DeviceSensorTester-Headless: showSensorTester no-ops in headless."""
     DeviceSensorTester.safeHomeSensorTest = None
-    DeviceSensorTester.showSensorTester()
+    DeviceSensorTester.showSensorTester(mock_system)
     assert DeviceSensorTester.safeHomeSensorTest is None
 
 

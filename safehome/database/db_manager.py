@@ -34,7 +34,9 @@ class DatabaseManager:
         """
         if self.connection is None:
             self.connection = sqlite3.connect(
-                self.db_path, check_same_thread=False  # Allow multi-threaded access
+                self.db_path,
+                check_same_thread=False,  # Allow multi-threaded access
+                isolation_level=None,  # Enable autocommit mode
             )
             # Enable foreign key constraints
             self.connection.execute("PRAGMA foreign_keys = ON")
@@ -112,6 +114,8 @@ class DatabaseManager:
         Returns:
             The ID of the last inserted row, or None if it fails.
         """
+        if self.connection is None:
+            self.connect()
         cursor = self.connection.cursor()
         try:
             cursor.execute(query, params)
@@ -234,11 +238,11 @@ class DatabaseManager:
             (event_type, event_message, sensor_id, camera_id, zone_id, source)
             VALUES (?, ?, ?, ?, ?, ?)
         """
-        cursor = self.execute_query(
+        last_id = self.execute_insert_query(
             query, (event_type, event_message, sensor_id, camera_id, zone_id, source)
         )
         self.commit()
-        return cursor.lastrowid
+        return last_id
 
     def get_event_logs(
         self,
