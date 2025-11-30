@@ -11,7 +11,7 @@ A comprehensive, simulated smart home security system featuring a graphical dash
 -   **Sensor Network:** Simulates a network of window/door and motion sensors.
 -   **Safety Zone Management:** Group sensors into logical zones (e.g., "Living Room", "Upstairs") for targeted arming/disarming.
 -   **Event Logging:** View a detailed history of system events, from sensor triggers to mode changes.
--   **System Configuration:** Admins can configure system timers, user passwords, and alert contacts.
+-   **System Configuration:** Admins can configure system timers, user passwords, **email alerts and contact information**. **Includes automated email notifications for critical security events like master password changes.**
 -   **Emergency Features:** Includes an admin-only **Panic Alarm** for immediate alerts and a **Silence Alarm** function.
 -   **Built-in Sensor Simulator:** A utility to manually trigger virtual sensors to test system responses.
 
@@ -81,6 +81,8 @@ CS350-Safehome/
 ├── requirements.txt        # Project dependencies
 └── README.md               # This README file
 ```
+**Note:** The directories `virtual_device_v3/` and `virtual_device_v4/` contain example implementations provided by TAs/professors and are not actively used as part of the main SafeHome project.
+
 
 ## 📚 Documentation
 
