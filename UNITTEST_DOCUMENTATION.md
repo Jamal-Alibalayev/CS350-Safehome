@@ -57,11 +57,9 @@ This document outlines the unit testing strategy and results for the SafeHome pr
     *   `DatabaseManager`: `_ensure_db_directory`, `connect`, `disconnect`, `initialize_schema`, `execute_query`, `execute_insert_query`, `execute_many`, `commit`, `rollback`, `get_last_insert_id`, `get_system_settings`, `update_system_settings`, `get_safety_zones`, `get_safehome_modes`, `get_sensors`, `get_cameras`, `add_event_log`, `get_event_logs`, `clear_event_logs`
     *   `EventLog`: `from_db_row`
     *   `LoginSession`: `from_db_row`
-
-
-## 3. Unit Test Results
-
-### 3.1. External Communication Management
+    
+    
+    ## 3. Unit Test Results### 3.1. External Communication Management
 
 | Field                         | Description |
 |------------------------------|-------------|
@@ -2500,3 +2498,22 @@ This document outlines the unit testing strategy and results for the SafeHome pr
 
 ### 3.4. Configuration and Data Management
 *No unit tests in this category.*
+
+### 3.5 Branch Coverage
+This section details the branch coverage analysis for the project, ensuring that conditional logic within the code is adequately tested.
+
+#### File Level
+| Files/Class/Method | Branch | Cover | Missing | Coverage |
+|--------------------|--------|-------|---------|----------|
+|                    |        |       |         |          |
+
+#### Class Level
+| Files/Class/Method | Branch | Cover | Missing | Coverage |
+|--------------------|--------|-------|---------|----------|
+|                    |        |       |         |          |
+
+#### Method Level
+| Files/Class/Method | Branch | Cover | Missing | Coverage |
+|--------------------|--------|-------|---------|----------|
+|                    |        |       |         |          |
+
