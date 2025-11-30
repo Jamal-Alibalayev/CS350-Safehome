@@ -202,3 +202,18 @@ def test_device_camera_missing_file(monkeypatch):
     cam.set_id(999)
     assert "file open error" in shown.get("msg", "")
     cam.stop()
+
+
+def test_device_camera_crop_failure(monkeypatch):
+    """Force crop failure path inside get_view."""
+    cam = DeviceCamera()
+    # Provide an imgSource too small and extreme pan/zoom to trigger crop exception
+    from PIL import Image
+    cam.imgSource = Image.new("RGB", (10, 10), "black")
+    cam.centerWidth = 5
+    cam.centerHeight = 5
+    cam.zoom = 9
+    cam.pan = 10
+    view = cam.get_view()
+    assert view is not None
+    cam.stop()
