@@ -45,3 +45,17 @@ def test_alarm_ring_and_stop():
     time.sleep(0.2)
     assert not alarm.is_active()
     alarm.stop()
+
+
+def test_system_polling_start_stop(system, monkeypatch):
+    """UT-System-Polling: start/stop polling threads safely."""
+    started = {}
+
+    def fake_loop():
+        started["ran"] = True
+
+    monkeypatch.setattr(system, "_sensor_polling_loop", fake_loop)
+    system._start_sensor_polling()
+    time.sleep(0.05)
+    system._stop_sensor_polling()
+    assert started.get("ran")
