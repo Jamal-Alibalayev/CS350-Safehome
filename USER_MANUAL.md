@@ -34,16 +34,31 @@ The main dashboard is the central hub for monitoring and controlling your SafeHo
 ![Main Dashboard](docs/dashboard_overview.png) (*Note: Image path is a placeholder.*)
 
 ### 3.1. Header Bar
--   **Title**: Displays the application name.
--   **System Status**: Shows the current system mode (e.g., `DISARMED`, `AWAY`) and running status.
+-   **Title**: Displays the application name and subtitle.
+-   **System Status**: Shows the current system mode (e.g., `DISARMED`, `AWAY`) and running status (`SYSTEM RUNNING` or `SYSTEM STOPPED`).
 -   **LOGS**: Opens the event log viewer to see a history of system activities, including intrusions.
 -   **LOGOUT**: Logs you out and returns to the login screen.
 -   **SETTINGS** (Admin only): Opens the system settings window.
 
-### 32. Live Camera Feeds
-This section displays the live video feeds from the system's cameras. For each camera, you can:
--   **Pan/Tilt/Zoom (PTZ)**: Use the `^`, `v`, `<`, `>` buttons to pan and tilt, and the `+`, `-` buttons to zoom.
--   **Enable/Disable**: Turn individual cameras on or off.
+### 3.2. Live Camera Feeds
+This section displays the live video feeds from the system's cameras.
+
+**Camera Controls:**
+-   **Pan/Tilt/Zoom (PTZ)**: Use the `^`, `v`, `<`, `>` buttons to pan and tilt, and the `+`, `-` buttons to zoom. This is available to both Admin and Guest users.
+-   **Enable/Disable**: Turn individual cameras on or off (Admin only).
+
+**Camera Status Indicators:**
+The camera view will display different statuses to keep you informed:
+-   **Password Required**: (Admin) You need to enter a password to view this feed.
+-   **Password Protected**: (Guest) This camera is password-protected and cannot be viewed by guests.
+-   **Access Denied**: The password you entered was incorrect.
+-   **Disabled**: The camera has been manually turned off.
+-   **No Signal**: The camera is experiencing a connection issue.
+
+**Camera Password Management (Admin only):**
+Below each camera, administrators will find two buttons for managing security:
+-   **Set/Change**: Set a new password for the camera or change an existing one.
+-   **Delete**: Remove the password from the camera.
 
 ### 3.3. System Control
 This panel allows you to change the system's security mode.
@@ -54,13 +69,14 @@ This panel allows you to change the system's security mode.
 -   **OPEN SENSOR SIMULATOR**: Launches a tool that lets you manually trigger sensors to test the system's response.
 
 ### 3.4. Sensor Status
-This table provides a real-time list of all sensors, their type, location, assigned zone, and current status (Armed/Disarmed).
+This table provides a real-time list of all sensors, their type, location, assigned zone, and current status (`● Armed` or `○ Disarmed`).
 
 ### 3.5. Safety Zones
-This box shows a quick overview of the configured safety zones and the number of sensors in each.
+This box shows a quick overview of the configured safety zones. Each zone in the list displays its armed status (`●` or `○`) and the number of sensors it contains.
 -   Click **MANAGE ZONES** to open the Zone Manager.
 
-### 3.6. Quick Actions
+### 3.6. Quick Actions (Admin Only)
+These actions are available only to administrators for immediate response.
 -   **PANIC ALARM**: Immediately triggers the system alarm. Use this in an emergency.
 -   **SILENCE ALARM**: Stops an active alarm siren. Note that this only silences the alarm; it does not disarm the system.
 
@@ -78,7 +94,11 @@ The Zone Manager allows you to organize your sensors into logical groups called 
 The settings window allows administrators to configure core system parameters.
 
 -   **Passwords**: Change the Master (Admin) and Guest passwords.
--   **Timers**: Adjust the `Entry Delay` (time to disarm after entry) and `Exit Delay` (time to leave after arming).
+    -   **Security Note**: When the Master (Admin) password is changed, the system will automatically send a notification email to the configured "Alert Email" address.
+-   **Timers**: Adjust system time-based behaviors:
+    -   `Entry Delay`: The grace period in seconds to disarm the system after an entry sensor is triggered.
+    -   `Exit Delay`: The grace period in seconds to leave the premises after arming the system.
+    -   `Lock Time`: The duration in seconds the system will lock you out after too many failed login attempts.
 -   **Contact Info**: Set phone numbers and email addresses for alerts.
 -   **Reset System**: Click the **Reset System** button to restore all settings to their factory defaults. This includes passwords, zones, and timers. **This action is irreversible.**
 

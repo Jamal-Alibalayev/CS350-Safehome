@@ -1,91 +1,88 @@
-# CS350-Safehome
+# SafeHome Security System
 
-## Alan's Branch
-## note: 
-1. the current comment is in chinese 
+A comprehensive, simulated smart home security system featuring a graphical dashboard for real-time monitoring and control of sensors and cameras.
 
-2. file structure
+## ✨ Key Features
+
+-   **Real-time GUI Dashboard:** A central dashboard to monitor all system activity.
+-   **Multi-User Access:** Role-based access control with **Admin** (full control) and **Guest** (monitoring-only) roles.
+-   **Comprehensive Security Modes:** Includes `Home`, `Away`, `Overnight`, `Extended`, and `Disarmed` modes to suit different scenarios.
+-   **Live Camera Surveillance:** Monitor multiple live camera feeds with Pan-Tilt-Zoom (PTZ) controls and password protection capabilities.
+-   **Sensor Network:** Simulates a network of window/door and motion sensors.
+-   **Safety Zone Management:** Group sensors into logical zones (e.g., "Living Room", "Upstairs") for targeted arming/disarming.
+-   **Event Logging:** View a detailed history of system events, from sensor triggers to mode changes.
+-   **System Configuration:** Admins can configure system timers, user passwords, and alert contacts.
+-   **Emergency Features:** Includes an admin-only **Panic Alarm** for immediate alerts and a **Silence Alarm** function.
+-   **Built-in Sensor Simulator:** A utility to manually trigger virtual sensors to test system responses.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+-   Python 3.x
+
+### Installation & Running
+
+1.  **Clone the repository**
+    ```bash
+    git clone <your-repository-url>
+    ```
+
+2.  **Navigate to the project directory**
+    ```bash
+    cd CS350-Safehome
+    ```
+
+3.  **Install dependencies**
+    Install the required libraries from the `requirements.txt` file.
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Run the application**
+    ```bash
+    python main.py
+    ```
+    Executing this command will start the system and launch the login window.
+
+## 📖 Usage
+
+1.  Log in to the system using the default credentials (see `USER_MANUAL.md` for details).
+2.  Use the main dashboard to monitor camera feeds and sensor statuses.
+3.  Admins can change security modes, manage safety zones, and access system settings.
+
+For a complete guide on how to use the application, please refer to the **[User Manual (USER_MANUAL.md)](USER_MANUAL.md)**.
+
+## 🧪 Testing
+
+This project uses `pytest` for automated testing. The tests are organized into `unit`, `integration`, and `system` directories.
+
+To run all tests, execute the following command in the project root directory:
+```bash
+pytest
 ```
-└─CS350-Safehome
-    │  camera1.jpg
-    │  README.md
-    │  main.py                          # simulation entry point
-    │  safehome_config.json             # config file
-    │  safehome_events.log
-    │
-    ├─safehome
-    │  ├─configuration
-    │  │      configuration_manager.py
-    │  │      log.py
-    │  │      login_interface.py
-    │  │      login_manager.py
-    │  │      log_manager.py
-    │  │      safehome_mode.py
-    │  │      safety_zone.py
-    │  │      storage_manager.py
-    │  │      system_settings.py
-    │  │
-    │  ├─device
-    │  │  │  __init__.py
-    │  │  │
-    │  │  ├─alarm                       # will be implement later
-    │  │  ├─camera
-    │  │  │      device_camera.py
-    │  │  │      interface_camera.py
-    │  │  │
-    │  │  └─sensor
-    │  │          device_motion_detector.py
-    │  │          device_sensor_tester.py
-    │  │          device_windoor_sensor.py
-    │  │          interface_sensor.py
-    │  │          safehome_sensor_test.py
-    │  │          safehome_sensor_test_gui.py
-    │  │
-    │  └─interface
-    │          camera_monitor.py
-    │          device_control_panel_abstract.py
-    │          safehome_control_panel.py
-    │
-    ├─test
-    │      test_configuration.py        # unittest for configuration
-    │
-    └─virtual_device_v3                 # API provied by prof + sample code
-        └─virtual_device_v3
-            │  .DS_Store
-            │  camera1.jpg
-            │  camera2.jpg
-            │  camera3.jpg
-            │  floorplan.png
-            │  README.md
-            │  README.pdf
-            │  requirements.txt
-            │
-            ├─device
-            │      device_camera.py
-            │      device_control_panel_abstract.py
-            │      device_motion_detector.py
-            │      device_sensor_tester.py
-            │      device_windoor_sensor.py
-            │      interface_camera.py
-            │      interface_sensor.py
-            │      safehome_sensor_test.py
-            │      safehome_sensor_test_gui.py
-            │      __init__.py
-            │
-            ├─example
-            │  │  example_all_sensors.py
-            │  │  example_camera.py
-            │  │  example_control_panel.py
-            │  │  __init__.py
-            │  │
-            │  └─__pycache__
-            │          example_camera.cpython-311.pyc
-            │          __init__.cpython-311.pyc
-            │
-            └─img
-                    camera.png
-                    control_panel.png
-                    sensor.png
+
+## 📂 Project Structure
+
 ```
-# User Manual
-[User Manual](USER_MANUAL.md)
+CS350-Safehome/
+├── safehome/               # Main application source code
+│   ├── core/               # Core system logic
+│   ├── interface/          # GUI components (dashboard, windows)
+│   ├── device/             # Simulated device logic (cameras, sensors)
+│   ├── configuration/      # Configuration and data management
+│   └── database/           # Database interaction
+├── tests/                  # Automated tests
+│   ├── unit/
+│   ├── integration/
+│   └── system/
+├── data/                   # Default data and assets
+├── main.py                 # Application entry point
+├── requirements.txt        # Project dependencies
+└── README.md               # This README file
+```
+
+## 📚 Documentation
+
+-   **[User Manual](USER_MANUAL.md):** Provides detailed instructions on how to use the application.
+-   **[Unit Test Documentation](UNITTEST_DOCUMENTATION.md):** Describes the project's unit testing strategy and coverage.
