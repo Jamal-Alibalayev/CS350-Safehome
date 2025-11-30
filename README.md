@@ -81,7 +81,7 @@ CS350-Safehome/
 ├── requirements.txt        # Project dependencies
 └── README.md               # This README file
 ```
-**Note:** The directories `virtual_device_v3/` and `virtual_device_v4/` contain example implementations provided by TAs/professors and are not actively used as part of the main SafeHome project.
+**Note:** The directories `virtual_device_v4/` contain example implementations provided by TAs/professors and are not actively used as part of the main SafeHome project.
 
 
 ## 📚 Documentation
