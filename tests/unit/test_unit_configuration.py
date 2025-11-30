@@ -1,6 +1,8 @@
 import time
 import os
+import smtplib
 import pytest
+from email.message import EmailMessage
 
 from safehome.configuration.configuration_manager import ConfigurationManager
 from safehome.configuration.system_settings import SystemSettings
@@ -57,6 +59,74 @@ def test_configuration_manager_zone_crud(config_mgr):
     deleted = config_mgr.delete_safety_zone(zone.zone_id)
     assert deleted
     assert config_mgr.get_safety_zone(zone.zone_id) is None
+
+
+def test_configuration_manager_callbacks_and_modes(config_mgr):
+    """UT-Conf-Callbacks: notify callbacks, set/get modes, configure mode sensors."""
+    called = []
+    config_mgr.register_zone_update_callback(lambda: called.append(1))
+    config_mgr.reset_configuration()
+    assert called
+    config_mgr.set_mode(config_mgr.current_mode)
+    assert config_mgr.get_mode() == config_mgr.current_mode
+    assert "HOME" in config_mgr.get_safehome_modes()
+    config_mgr.configure_mode_sensors("HOME", [])
+    assert config_mgr.get_sensors_for_mode("HOME") == []
+
+
+def test_configuration_manager_save_configuration(config_mgr):
+    """UT-Conf-Save: save_configuration logs without error."""
+    config_mgr.save_configuration()
+    assert config_mgr.logger.get_recent_logs(1)
+
+
+def test_configuration_manager_send_email_alert(monkeypatch, config_mgr):
+    """UT-Conf-Email: send_email_alert handles success/failure branches."""
+    sent_messages = []
+
+    class DummySMTP:
+        def __init__(self, host, port, timeout):
+            self.host, self.port, self.timeout = host, port, timeout
+        def starttls(self): pass
+        def login(self, user, pw): pass
+        def send_message(self, msg): sent_messages.append(msg)
+        def __enter__(self): return self
+        def __exit__(self, exc_type, exc_val, exc_tb): return False
+
+    monkeypatch.setattr(smtplib, "SMTP", DummySMTP)
+    cfg = config_mgr
+    cfg.settings.alert_email = "to@test"
+    assert cfg.send_email_alert("subj", "body")
+    assert sent_messages and sent_messages[0]["To"] == "to@test"
+    cfg.settings.alert_email = ""
+    assert not cfg.send_email_alert("subj", "body")
+
+
+def test_configuration_manager_load_settings_branch(monkeypatch, tmp_path):
+    """UT-Conf-LoadSettings: load_settings with data updates SystemSettings."""
+    monkeypatch.setattr(StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"))
+    def fake_load(self):
+        return {"entry_delay": 5, "monitoring_phone": "123"}
+    monkeypatch.setattr(StorageManager, "load_settings", fake_load)
+    cm = ConfigurationManager(db_path=str(tmp_path / "safehome.db"))
+    assert cm.settings.entry_delay == 5
+    cm.shutdown()
+
+
+def test_configuration_manager_no_zones(monkeypatch, tmp_path):
+    """UT-Conf-DefaultZones: empty zones triggers default creation."""
+    monkeypatch.setattr(StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"))
+    original_load = StorageManager.load_all_safety_zones
+    calls = {"n": 0}
+    def fake_load(self):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            return []
+        return original_load(self)
+    monkeypatch.setattr(StorageManager, "load_all_safety_zones", fake_load)
+    cm = ConfigurationManager(db_path=str(tmp_path / "safehome.db"))
+    assert len(cm.get_all_safety_zones()) >= 2
+    cm.shutdown()
 
 
 def test_configuration_manager_reset(monkeypatch, tmp_path):
