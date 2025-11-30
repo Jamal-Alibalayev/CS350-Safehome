@@ -59,2461 +59,961 @@ This document outlines the unit testing strategy and results for the SafeHome pr
     *   `LoginSession`: `from_db_row`
     
     
-    ## 3. Unit Test Results### 3.1. External Communication Management
+    ## 3. Unit Test Results
+
+### 3.1. External Communication Management
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `System` |
-| **Method**                   | `call_monitoring_service` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `call_monitoring_service` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that when `call_monitoring_service` is executed, it creates an appropriate log entry. |
+| **Input Specifications**      | `call_monitoring_service` is called with a mock sensor object. |
+| **Expected Result**           | A log message containing "Calling monitoring service" should be present in the recent logs. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_core.py::test_call_monitoring_service_logs` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `System` |
-| **Method**                   | `_send_password_change_alert` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `ConfigurationManager` |
-| **Method**                   | `send_email_alert` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
+|-------------------------------|-------------|
+| **Class**                     | `ConfigurationManager` |
+| **Method**                    | `send_email_alert` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies the `send_email_alert` functionality, covering both success (an email address is configured) and failure (the email address is blank) scenarios. It uses a mock SMTP server. |
+| **Input Specifications**      | `send_email_alert` is called once with `settings.alert_email` set, and once with it empty. |
+| **Expected Result**           | The first call should succeed and a message should be "sent" by the dummy SMTP server. The second call should fail and return `False`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_configuration_manager_send_email_alert` |
 
 ### 3.2. Surveillance
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraAccessGuard` |
-| **Method**                   | `require_access` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraAccessGuard` |
-| **Method**                   | `_warn` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `add_camera` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `remove_camera` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `get_camera` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `get_all_cameras` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `get_camera_view` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `pan_camera` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `tilt_camera` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `zoom_camera` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `enable_camera` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `disable_camera` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `set_camera_password` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `delete_camera_password` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `_get_camera_with_access` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `get_camera_status` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `get_all_camera_statuses` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `load_cameras_from_storage` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `CameraController` |
-| **Method**                   | `shutdown` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `set_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `get_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `get_view` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `pan_right` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `pan_left` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `tilt_up` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `tilt_down` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `zoom_in` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `zoom_out` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `_tick` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `run` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceCamera` |
-| **Method**                   | `stop` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceCamera` |
-| **Method**                   | `set_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceCamera` |
-| **Method**                   | `get_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceCamera` |
-| **Method**                   | `get_view` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceCamera` |
-| **Method**                   | `pan_right` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceCamera` |
-| **Method**                   | `pan_left` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceCamera` |
-| **Method**                   | `zoom_in` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceCamera` |
-| **Method**                   | `zoom_out` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `get_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `get_name` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `get_location` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `get_view` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `pan_left` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `pan_right` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `tilt_up` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `tilt_down` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `zoom_in` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `zoom_out` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `enable` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `disable` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `set_password` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `verify_password` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `has_password` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `is_locked` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `_is_locked` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `get_status` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeCamera` |
-| **Method**                   | `stop` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Camera` |
-| **Method**                   | `from_db_row` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceMotionDetector` |
-| **Method**                   | `intrude` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceMotionDetector` |
-| **Method**                   | `release` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceMotionDetector` |
-| **Method**                   | `get_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceMotionDetector` |
-| **Method**                   | `read` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceMotionDetector` |
-| **Method**                   | `arm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceMotionDetector` |
-| **Method**                   | `disarm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceMotionDetector` |
-| **Method**                   | `test_armed_state` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceSensorTester` |
-| **Method**                   | `intrude` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceSensorTester` |
-| **Method**                   | `release` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceSensorTester` |
-| **Method**                   | `showSensorTester` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceWinDoorSensor` |
-| **Method**                   | `intrude` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceWinDoorSensor` |
-| **Method**                   | `release` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceWinDoorSensor` |
-| **Method**                   | `get_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceWinDoorSensor` |
-| **Method**                   | `read` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceWinDoorSensor` |
-| **Method**                   | `arm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceWinDoorSensor` |
-| **Method**                   | `disarm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceWinDoorSensor` |
-| **Method**                   | `test_armed_state` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceSensor` |
-| **Method**                   | `get_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceSensor` |
-| **Method**                   | `read` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceSensor` |
-| **Method**                   | `arm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceSensor` |
-| **Method**                   | `disarm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `InterfaceSensor` |
-| **Method**                   | `test_armed_state` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `MotionSensor` |
-| **Method**                   | `read` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `MotionSensor` |
-| **Method**                   | `arm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `MotionSensor` |
-| **Method**                   | `disarm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `MotionSensor` |
-| **Method**                   | `test_armed_state` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `MotionSensor` |
-| **Method**                   | `is_motion_detected` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `MotionSensor` |
-| **Method**                   | `simulate_motion` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `MotionSensor` |
-| **Method**                   | `simulate_clear` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `read` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `arm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `disarm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `test_armed_state` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `get_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `get_type` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `get_location` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `get_zone_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `set_zone_id` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `get_status` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `Sensor` |
-| **Method**                   | `from_db_row` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `add_sensor` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `remove_sensor` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `get_sensor` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `get_all_sensors` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `get_sensors_by_zone` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `get_sensors_by_type` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `arm_sensor` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `disarm_sensor` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `arm_sensors_in_zone` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `disarm_sensors_in_zone` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `arm_sensors` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `disarm_all_sensors` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `poll_sensors` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `check_all_windoor_closed` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `get_sensor_status` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `get_all_sensor_statuses` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SensorController` |
-| **Method**                   | `load_sensors_from_storage` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `WindowDoorSensor` |
-| **Method**                   | `read` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `WindowDoorSensor` |
-| **Method**                   | `arm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `WindowDoorSensor` |
-| **Method**                   | `disarm` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `WindowDoorSensor` |
-| **Method**                   | `test_armed_state` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `WindowDoorSensor` |
-| **Method**                   | `is_open` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `WindowDoorSensor` |
-| **Method**                   | `simulate_open` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `WindowDoorSensor` |
-| **Method**                   | `simulate_close` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_create_ui` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_create_floorplan_section` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_create_sensor_list` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_create_right_panel` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_create_control_panels` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_update_id_ranges` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_update_status` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_collect_windoor_map` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_collect_motion_map` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_build_window_rows` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_build_door_rows` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_build_motion_rows` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_get_sensor_states` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_handle_windoor_sensor` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_handle_windoor` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_handle_motion_sensor` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_handle_motion` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_arm_all` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_disarm_all` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_reset_all` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_on_mousewheel` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeSensorTest` |
-| **Method**                   | `_bind_mousewheel_recursively` |
-| **Author**                   |             |
-| **Date**                     |             |
-| **Version**                  |             |
-| **Test Case Description**    |             |
-| **Input Specifications**     |             |
-| **Expected Result**          |             |
-| **Actual Result** (Pass/Fail/Exception) |             |
-| **Comment (including references)** |             |
+|-------------------------------|-------------|
+| **Class**                     | `CameraAccessGuard` |
+| **Method**                    | `require_access` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `CameraAccessGuard` denies access to a camera when the camera is locked due to too many failed password attempts. It also checks that a log message is generated. |
+| **Input Specifications**      | An instance of `CameraAccessGuard`, a `SafeHomeCamera` with a password, `max_attempts=1`, and `lockout_seconds=1`. A wrong password ("bad") is provided. |
+| **Expected Result**           | `require_access` should return `None` (access denied), a log message should be appended, the camera should become locked, and even with the correct password, access should be denied while locked. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_camera_guard.py::test_camera_access_guard_denies_when_locked` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraController` |
+| **Method**                    | `_get_camera_with_access` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the internal helper method `_get_camera_with_access` in `CameraController` correctly grants or denies access based on the provided password. |
+| **Input Specifications**      | A `CameraController` with a camera that has a password ("1234"). The helper is called once with an incorrect password ("0000") and once with the correct password. |
+| **Expected Result**           | The call with the incorrect password should return `None`. The call with the correct password should return the camera object. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_camera_guard.py::test_camera_controller_get_camera_with_access` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `SafeHomeCamera` |
+| **Method**                    | `is_locked`, `verify_password`, `get_status` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that a `SafeHomeCamera` enters a locked state after a failed password attempt and that the lockout is released after the specified `lockout_seconds`. It also confirms that `get_status()` reflects the correct camera name. |
+| **Input Specifications**      | A `SafeHomeCamera` with `max_attempts=1` and `lockout_seconds=0.1`. `verify_password` is called with a wrong password, then `time.sleep` is called for longer than the lockout, then it's called with the correct password. |
+| **Expected Result**           | The camera should be locked after the first bad attempt. After the timeout, `verify_password` with the correct password should succeed. The dictionary from `get_status()` should contain the camera's name. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_camera_guard.py::test_safehome_camera_lock_and_status` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraController` |
+| **Method**                    | `remove_camera`, `get_all_camera_statuses` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the `remove_camera` functionality and verifies that `get_all_camera_statuses` returns the correct number of cameras before and after removal. |
+| **Input Specifications**      | A `CameraController` with two cameras added. One camera is then removed. |
+| **Expected Result**           | `get_all_camera_statuses` should initially return 2 statuses. After removing one camera, `get_camera` for the removed ID should return `None`, and `get_all_cameras` should return a list with 1 camera. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_camera_guard.py::test_camera_controller_remove_and_statuses` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `SafeHomeCamera` |
+| **Method**                    | `verify_password`, `is_locked` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies the password protection and lockout mechanism on a `SafeHomeCamera`. It checks that failed attempts lead to a lockout and that access is restored after the lockout period expires. |
+| **Input Specifications**      | A camera with `max_attempts=2` and `lockout_seconds=1` is created. `verify_password` is called twice with a wrong password, then the test waits for the lockout to expire. |
+| **Expected Result**           | The camera should be locked after the second failed attempt. After the timeout, a call to `verify_password` with the correct password should succeed. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_safehome_camera_password_and_lockout` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `SafeHomeCamera` |
+| **Method**                    | `pan_left`, `pan_right`, `tilt_up`, `tilt_down`, `zoom_in`, `zoom_out`, `get_status` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the Pan/Tilt/Zoom (PTZ) controls of the `SafeHomeCamera`, ensuring they respect their movement boundaries. Also verifies the `get_status` method. |
+| **Input Specifications**      | PTZ and zoom methods are called repeatedly to hit their upper and lower limits. |
+| **Expected Result**           | The PTZ methods should return `True` within bounds. The zoom methods should eventually return `False` when they hit their limits. `get_status` should return a dictionary with correct camera info. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_safehome_camera_controls_and_status` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraController` |
+| **Method**                    | `get_camera_view`, `set_camera_password`, `delete_camera_password` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `CameraController` correctly enforces password checks for viewing a camera feed. It also tests the password lifecycle: setting, changing (via `set_camera_password`), and deleting a password. |
+| **Input Specifications**      | A camera with a password is created. `get_camera_view` is called with wrong and correct passwords. The password is then set and deleted. |
+| **Expected Result**           | `get_camera_view` should fail with a wrong password and succeed with the correct one, returning an image. Setting and deleting the password should also succeed. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_camera_controller_access_and_password` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraController`, `CameraAccessGuard` |
+| **Method**                    | `pan_camera`, `tilt_camera`, `zoom_camera`, `enable_camera`, `set_camera_password`, `delete_camera_password` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | A comprehensive test for various access-denied scenarios, such as using invalid PTZ directions, insufficient role permissions (guest trying to enable), password mismatches, and attempting to access a non-existent camera. |
+| **Input Specifications**      | Various methods of `CameraController` are called with invalid parameters (bad directions, wrong passwords, 'guest' role). |
+| **Expected Result**           | All the tested calls should fail, returning `False` or `None` as appropriate, without raising exceptions. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_camera_controller_access_denied_branches` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraController`, `CameraAccessGuard` |
+| **Method**                    | `get_camera_view`, `require_access` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that a camera lockout (triggered by a failed `get_camera_view` attempt) is correctly enforced by the `CameraAccessGuard`, preventing further access even with the correct password. |
+| **Input Specifications**      | `get_camera_view` is called with a wrong password to lock the camera. Then, the internal `require_access` method is called with the correct password while the camera is locked. |
+| **Expected Result**           | The `require_access` call should return `None` (access denied) because the camera is locked. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_camera_controller_lockout_and_require_access` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraController` |
+| **Method**                    | `pan_camera`, `tilt_camera`, `zoom_camera`, `get_all_camera_statuses` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | This test ensures that the PTZ boundary logic works correctly when called from the controller level and that `get_all_camera_statuses` functions correctly. |
+| **Input Specifications**      | PTZ methods are called repeatedly on a camera via the controller. |
+| **Expected Result**           | The calls should not raise errors, and `get_all_camera_statuses` should successfully return a list of statuses. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_camera_controller_boundaries_and_status` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `InterfaceCamera` |
+| **Method**                    | All abstract methods |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Demonstrates that the `InterfaceCamera` abstract base class can be successfully subclassed and that all its abstract methods can be implemented. |
+| **Input Specifications**      | A minimal concrete implementation of `InterfaceCamera` is created and its methods are called. |
+| **Expected Result**           | The object can be instantiated and all its methods can be called without error. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_interface_camera_concrete` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `SafeHomeCamera` |
+| **Method**                    | `get_id`, `get_name`, `get_location`, `has_password`, `verify_password`, `is_locked` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | A general test for various getter methods on `SafeHomeCamera` and its lock state handling. |
+| **Input Specifications**      | A camera is created, its getters are called, a password is set, and failed verifications are performed. |
+| **Expected Result**           | Getters should return correct values. `has_password` should be `True` after setting a password. `is_locked` should be `True` after failed attempts. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_safehome_camera_getters_and_lock_state` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `DeviceCamera` |
+| **Method**                    | `get_view` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the hardware-level `DeviceCamera` simulation returns an actual image object when the required image asset is available. |
+| **Input Specifications**      | `get_view` is called on a `DeviceCamera`. |
+| **Expected Result**           | The method should return a non-`None` value (an image object). |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_device_camera_view_with_real_image` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `DeviceCamera` |
+| **Method**                    | Constructor (`__init__`) |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the error handling of `DeviceCamera` when its underlying image asset is missing. It should show an error message (mocked) but not crash. |
+| **Input Specifications**      | A `DeviceCamera` is initialized with an ID (999) that doesn't correspond to an available image file. A `tkinter.messagebox` function is monkeypatched to capture the error. |
+| **Expected Result**           | The mocked `showerror` function should be called with a "file open error" message. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_device_camera_missing_file` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `DeviceCamera` |
+| **Method**                    | `get_view` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests a specific edge case within the `get_view` method, where extreme pan/zoom values on a small source image could cause the image cropping logic to fail. The test ensures this is handled gracefully. |
+| **Input Specifications**      | A `DeviceCamera`'s source image is replaced with a very small one, and pan/zoom values are set to extreme numbers to force an error in the cropping calculation. |
+| **Expected Result**           | The `get_view` method should still return a valid (though maybe blank) image object and not raise an unhandled exception. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_surveillance.py::test_device_camera_crop_failure` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `DeviceSensorTester` |
+| **Method**                    | `showSensorTester` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Confirms the `showSensorTester` function does nothing when in a headless environment. |
+| **Input Specifications**      | `SAFEHOME_HEADLESS` is set. `showSensorTester` is called. |
+| **Expected Result**           | `DeviceSensorTester.safeHomeSensorTest` should remain `None`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_interfaces_and_devices.py::test_device_sensor_tester_headless_skip` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `WindowDoorSensor`, `MotionSensor` |
+| **Method**                    | Various accessors (`get_id`, `get_type`, etc.), `test_armed_state`, `simulate_motion`, `simulate_clear`. |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | This test verifies the correct functioning of accessor methods (getters/setters) and state simulation methods for the concrete `WindowDoorSensor` and `MotionSensor` classes. |
+| **Input Specifications**      | `WindowDoorSensor` and `MotionSensor` objects are created. Accessor methods are called. The motion sensor is armed and its state is changed via simulation methods. |
+| **Expected Result**           | All accessors should return the correct initial or updated values. The `is_motion_detected` flag should correctly reflect the state after simulation calls. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_interfaces_and_devices.py::test_motion_and_windoor_test_armed_state_and_accessors` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `DeviceMotionDetector`, `DeviceWinDoorSensor` |
+| **Method**                    | `arm`, `disarm`, `intrude`, `release`, `read`, `test_armed_state`. |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | This test checks the basic functionality of the simulated hardware-level device classes (`DeviceMotionDetector`, `DeviceWinDoorSensor`). It ensures they correctly manage their armed/disarmed state and their triggered (`intrude`)/cleared (`release`) status. |
+| **Input Specifications**      | `DeviceMotionDetector` and `DeviceWinDoorSensor` objects are armed, intruded, released, and disarmed. |
+| **Expected Result**           | The `read()` method should return `True` only when the device is armed and in an intruded state. `test_armed_state()` should reflect the calls to `arm()` and `disarm()`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_interfaces_and_devices.py::test_device_motion_detector_and_windoor_hardware` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `DeviceCamera` |
+| **Method**                    | `_tick` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the internal `_tick` method of the `DeviceCamera` correctly increments its internal time counter. It also ensures that any GUI-related errors that might occur are handled. |
+| **Input Specifications**      | A `DeviceCamera` is instantiated and `_tick()` is called. `tkinter.messagebox.showerror` is monkeypatched to prevent a GUI popup. |
+| **Expected Result**           | The camera's internal `time` attribute should be incremented to 1. No unhandled exceptions should occur. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_interfaces_and_devices.py::test_device_camera_tick_and_id` |
 
 ### 3.3. Security
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `_update_display_text` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify display text updates correctly. |
-| **Input Specifications**     | `text="Test Message"` |
-| **Expected Result**          | Display shows "Test Message" |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `turn_on`, `turn_off` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `turn_on` and `turn_off` methods correctly toggle the system's running state (`is_running` flag). |
+| **Input Specifications**      | A `System` instance is turned on and then off. |
+| **Expected Result**           | The `is_running` attribute should be `True` after `turn_on` and `False` after `turn_off`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_core.py::test_system_turn_on_off` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `set_security_zone_number` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify security zone number is set. |
-| **Input Specifications**     | `number=1` |
-| **Expected Result**          | Internal zone number variable set to 1 |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `get_system_status` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Checks if the `get_system_status` method returns a dictionary that accurately reflects the current state of the system, such as its running status and the number of sensors. |
+| **Input Specifications**      | `get_system_status` is called on an idle `System` instance. |
+| **Expected Result**           | The returned dictionary should show `is_running` as `False` and contain the correct number of sensors. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_core.py::test_system_status_snapshot` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `set_display_away` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify away mode display is activated. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Display shows "Away" or similar indicator |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `Alarm` |
+| **Method**                    | `ring`, `stop` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `Alarm` object correctly becomes active when `ring()` is called and inactive again after its specified duration has passed. |
+| **Input Specifications**      | An `Alarm` with a duration of 0.1 seconds is created. `ring()` is called. The test waits for 0.2 seconds. |
+| **Expected Result**           | The alarm should be active immediately after `ring()` and inactive after the duration has elapsed. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_core.py::test_alarm_ring_and_stop` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `set_display_stay` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify stay mode display is activated. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Display shows "Stay" or similar indicator |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `_start_sensor_polling`, `_stop_sensor_polling` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Ensures that the sensor polling thread can be started and stopped safely. It monkeypatches the polling loop to verify that the thread was actually executed. |
+| **Input Specifications**      | The `_sensor_polling_loop` is replaced with a simple function that sets a flag. The polling is started and then stopped. |
+| **Expected Result**           | The flag set by the fake polling loop should be `True`, indicating the thread ran. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_core.py::test_system_polling_start_stop` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `set_display_not_ready` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify not ready display is activated. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Display shows "Not Ready" or similar indicator |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `_trigger_alarm` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that calling the internal `_trigger_alarm` method activates the system's alarm. |
+| **Input Specifications**      | The system is turned on, and `_trigger_alarm` is called with a mock sensor object. |
+| **Expected Result**           | The `system.alarm` should become active. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_core.py::test_system_trigger_alarm_and_stop` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `set_display_short_message1` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify short message 1 is displayed. |
-| **Input Specifications**     | `message="Msg1"` |
-| **Expected Result**          | Display shows "Msg1" |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `shutdown` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | A simple test to ensure that calling the `shutdown` method on the `System` object does not raise any exceptions. |
+| **Input Specifications**      | `shutdown()` is called on a `System` instance. |
+| **Expected Result**           | The method completes without raising any errors. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_core.py::test_system_shutdown_calls_components` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `set_display_short_message2` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify short message 2 is displayed. |
-| **Input Specifications**     | `message="Msg2"` |
-| **Expected Result**          | Display shows "Msg2" |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `_start_entry_delay_countdown` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the entry delay logic. It verifies that if the system is disarmed (or the sensor is disarmed) during the entry delay countdown, the alarm is *not* triggered. |
+| **Input Specifications**      | The entry delay is set to a short interval. A sensor is armed and then triggered, starting the countdown. The sensor is then disarmed before the delay expires. |
+| **Expected Result**           | The system alarm should not be active after the delay period has passed. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_core.py::test_start_entry_delay_countdown_no_alarm_when_disarmed` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `set_armed_led` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify armed LED state can be controlled. |
-| **Input Specifications**     | `state=True` |
-| **Expected Result**          | Armed LED is on |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `_start_entry_delay_countdown` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the other path of the entry delay logic. It verifies that if an intrusion is detected and the system remains armed, the alarm is triggered after the entry delay countdown finishes. |
+| **Input Specifications**      | The entry delay is set to a short interval. A sensor is armed and triggered, starting the countdown. The system remains armed. |
+| **Expected Result**           | The system alarm should be active after the delay period has passed. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_core.py::test_start_entry_delay_countdown_triggers_after_delay` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `set_powered_led` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify powered LED state can be controlled. |
-| **Input Specifications**     | `state=False` |
-| **Expected Result**          | Powered LED is off |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `SensorController` |
+| **Method**                    | `add_sensor`, `poll_sensors`, `remove_sensor` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the lifecycle of sensors within the `SensorController`: adding them, polling them to detect intrusions, and removing them. |
+| **Input Specifications**      | A window and motion sensor are added. They are armed and an intrusion is simulated. `poll_sensors` is called. One sensor is removed. |
+| **Expected Result**           | `poll_sensors` should detect both intrusions. `remove_sensor` should succeed, and `get_sensor` for the removed ID should then return `None`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_sensor_controller_add_poll_remove` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button1` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 1. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 1 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | This method is abstract and triggers a callback, expected to be implemented by concrete classes. |
+|-------------------------------|-------------|
+| **Class**                     | `SensorController` |
+| **Method**                    | `check_all_windoor_closed` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies the prerequisite check for arming the system. If a window/door sensor is open, this check should fail and identify the open sensor. |
+| **Input Specifications**      | A window sensor is added, armed, and simulated to be open. `check_all_windoor_closed` is called. |
+| **Expected Result**           | The method should return `False` and a list containing the open sensor. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_sensor_controller_check_all_windoor_closed` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button2` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 2. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 2 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `WindowDoorSensor`, `MotionSensor` |
+| **Method**                    | `read` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Confirms that the `read()` method (which reports an intrusion) on sensors is gated by their armed state. An intrusion should only be reported if the sensor is armed. |
+| **Input Specifications**      | Sensors are simulated as open/triggered while disarmed, then armed, then disarmed again. |
+| **Expected Result**           | `read()` should only return `True` when the sensor is both armed and in a triggered state. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_window_and_motion_sensor_behaviors` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button3` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 3. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 3 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `LoginManager` |
+| **Method**                    | `validate_credentials`, `is_interface_locked`, `unlock_system` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the user authentication lockout mechanism. It verifies that exceeding the max login attempts locks the interface, and that the interface is unlocked after the configured timeout. |
+| **Input Specifications**      | With `max_login_attempts=2`, `validate_credentials` is called twice with a wrong password. The test waits for the lockout duration, then checks the lock status. |
+| **Expected Result**           | The interface should be locked after two failed attempts. After the timeout, it should be unlocked, and a correct login should then succeed. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_login_manager_lock_and_unlock` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button4` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 4. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 4 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `LoginManager` |
+| **Method**                    | `validate_credentials`, `change_guest_password`, `unlock_system`, `get_failed_attempts` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Covers several other branches in `LoginManager`: successful web login, changing the guest password (both failed and successful attempts), and ensuring failed attempts are reset after an unlock. |
+| **Input Specifications**      | Various calls are made to test web login format, guest password changes, and the state of `failed_attempts` after a lockout/unlock cycle. |
+| **Expected Result**           | All branches should behave as expected: web login with correct format succeeds, guest password change requires correct master password, and `failed_attempts` resets to 0 after unlock. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_login_manager_more_branches` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button5` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 5. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 5 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `LoginManager` |
+| **Method**                    | `validate_credentials` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests two specific failure conditions: attempting to log in on an already locked interface, and attempting to log in on an unrecognized interface type. |
+| **Input Specifications**      | The `is_locked` flag is manually set to `True` for one test. An "UNKNOWN" interface type is used for the other. |
+| **Expected Result**           | Both calls to `validate_credentials` should return `False`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_login_manager_locked_and_unknown_interface` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button6` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 6. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 6 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `LoginManager` |
+| **Method**                    | `_log_session` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the private `_log_session` method correctly executes a database query to record the login attempt. |
+| **Input Specifications**      | `_log_session` is called. The test uses a mock storage/DB object to capture the executed queries. |
+| **Expected Result**           | The mock database object should have at least one query recorded in its list of executed queries. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_login_manager_log_session` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button7` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 7. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 7 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `arm_system`, `disarm_system`, `_handle_intrusion` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the main system arming/disarming flow and the intrusion detection logic. It verifies that arming activates sensors and that an intrusion (when the entry delay is zero) triggers the alarm. |
+| **Input Specifications**      | The system is armed in "AWAY" mode, activating a sensor. It's then disarmed. Then, with `entry_delay=0`, it's turned on, a sensor is armed and triggered, and `_handle_intrusion` is called. |
+| **Expected Result**           | The sensor should be active when the system is armed and inactive when disarmed. The intrusion should cause the system alarm to become active. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_system_arm_disarm_and_alarm` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button8` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 8. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 8 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `System` |
+| **Method**                    | `login`, `change_password` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the high-level login and password change functionality exposed by the main `System` class. |
+| **Input Specifications**      | A successful login is performed. The password is then changed. |
+| **Expected Result**           | The initial login should succeed. The password change should succeed. A subsequent login with the *new* password should also succeed. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_system_login_and_password_change` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button9` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 9. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 9 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `LoginManager` |
+| **Method**                    | `validate_credentials` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests edge cases for authentication: verifies the default guest password ("0000") works if none is set, and that web logins fail if the `user:pass` format is incorrect. |
+| **Input Specifications**      | Login is attempted with user "guest" and password "0000". Web login is attempted with a string missing the colon separator. |
+| **Expected Result**           | The guest login should succeed. The web logins with bad formats should fail. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_login_manager_guest_and_web_parsing` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button_star` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate star button press. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for star button is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `SensorController` |
+| **Method**                    | `remove_sensor`, `disarm_sensor`, etc. |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | This is a catch-all test for various edge cases and no-op branches in `SensorController`, such as trying to operate on a non-existent sensor ID or loading a sensor of an "UNKNOWN" type from storage. It ensures these actions don't cause crashes and are logged. |
+| **Input Specifications**      | Various methods are called with invalid IDs (e.g., 999). A sensor with type "UNKNOWN" is saved to storage and loaded. |
+| **Expected Result**           | The methods should handle invalid inputs gracefully (e.g., returning `False` or doing nothing) without raising exceptions. A log message should be generated when the unknown sensor type is loaded. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_security.py::test_sensor_controller_edge_branches` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button0` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 0. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for button 0 is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `DeviceSensorTester` |
+| **Method**                    | `showSensorTester` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that if an instance of the sensor tester window already exists, `showSensorTester` will not create a new one, but will instead just bring the existing one to the front. This prevents duplicate windows. |
+| **Input Specifications**      | A dummy window object is placed in `DeviceSensorTester.safeHomeSensorTest`. `showSensorTester` is then called. |
+| **Expected Result**           | The `DeviceSensorTester.safeHomeSensorTest` should remain the same dummy window object, indicating no new window was created. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_device_shims.py::test_device_sensor_tester_existing_window` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `DeviceControlPanelAbstract` |
-| **Method**                   | `button_sharp` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate sharp button press. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Internal handler for sharp button is called |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `DeviceSensorTester` |
+| **Method**                    | `showSensorTester` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | This test covers two scenarios for the sensor tester GUI: 1) In a headless environment (no GUI), the function should do nothing and exit early. 2) If creating the GUI fails (e.g., `tkinter` raises an error), the exception should be caught gracefully and the application should not crash. |
+| **Input Specifications**      | 1. The `SAFEHOME_HEADLESS` environment variable is set to "1". `showSensorTester` is called.<br>2. The environment variable is removed, but `tkinter.Tk` is monkeypatched to raise a `RuntimeError`. `showSensorTester` is called. |
+| **Expected Result**           | In both cases, `DeviceSensorTester.safeHomeSensorTest` should be `None`, and no exceptions should be raised. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_device_shims.py::test_device_sensor_tester_headless_and_exception` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `_refresh_status_display` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify display is updated with current system status. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Display reflects current system armed state and mode. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `SafeHomeControlPanel` |
+| **Method**                    | `_handle_key_input`, `button_sharp`, `_handle_command` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Simulates a user logging into the physical control panel, which authenticates them, and then issuing a disarm command. This tests the state machine logic for login and command handling. |
+| **Input Specifications**      | UI methods of the base class are patched to do nothing. The test simulates key presses for "1234" followed by the "#" button. Then it calls the handler for command "0". |
+| **Expected Result**           | After entering the password and pressing '#', the panel's `is_authenticated` flag should be `True`. After handling the disarm command, the flag should become `False`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_ui_logic.py::test_safehome_control_panel_login_and_arm_disarm` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `_reset_interaction` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify input buffer and state are reset. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | Input buffer cleared, state returned to default. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
+|-------------------------------|-------------|
+| **Class**                     | `SafeHomeControlPanel` |
+| **Method**                    | `_handle_key_input`, `button_sharp`, `_handle_command` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the entire flow for changing the master password via the physical control panel: login, enter password change mode, enter new password, and confirm. |
+| **Input Specifications**      | The test simulates a successful login, then entering command "3" (change password), then entering the new password "9999", followed by "#" to confirm. |
+| **Expected Result**           | After the sequence, the panel should no longer be authenticated. A subsequent login attempt on the main `System` object with the new password ("9999") should succeed. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_ui_logic.py::test_safehome_control_panel_change_password_flow` |
 
 | Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `_handle_key_input` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify key input is processed correctly. |
-| **Input Specifications**     | `key='1'` |
-| **Expected Result**          | Key added to input buffer. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `_handle_command` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify commands are executed based on input. |
-| **Input Specifications**     | `input_code="1234"` |
-| **Expected Result**          | Appropriate system command is triggered. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | Depends on the command mapping. |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `_attempt_login` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify login attempt with valid credentials. |
-| **Input Specifications**     | `username="admin", password="password"` |
-| **Expected Result**          | Login successful, system unlocked. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | Relies on `LoginManager`. |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `_attempt_change_password` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Verify password change with old and new passwords. |
-| **Input Specifications**     | `old_pass="old", new_pass="new"` |
-| **Expected Result**          | Password changed successfully. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | Relies on `LoginManager`. |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button1` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 1, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('1')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | Calls internal handler. |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button2` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 2, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('2')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button3` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 3, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('3')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button4` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 4, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('4')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button5` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 5, extending abstract method. |
-| **Input Specifications**     | N/A | 
-| **Expected Result**          | `_handle_key_input('5')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button6` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 6, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('6')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button7` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 7, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('7')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button8` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 8, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('8')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button9` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 9, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('9')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button0` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate button press 0, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('0')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button_star` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate star button press, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('*')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button_sharp` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Simulate sharp button press, extending abstract method. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | `_handle_key_input('#')` called. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | N/A |
-
-| Field                         | Description |
-|------------------------------|-------------|
-| **Class**                    | `SafeHomeControlPanel` |
-| **Method**                   | `button_panic` |
-| **Author**                   | Gemini |
-| **Date**                     | 2025-11-29 |
-| **Version**                  | 1.0 |
-| **Test Case Description**    | Trigger panic alarm. |
-| **Input Specifications**     | N/A |
-| **Expected Result**          | System alarm triggered. |
-| **Actual Result** (Pass/Fail/Exception) | Pass |
-| **Comment (including references)** | Relies on `System` to trigger the alarm. |
+|-------------------------------|-------------|
+| **Class**                     | `MainDashboard` |
+| **Method**                    | `_build_permissions` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `_build_permissions` static method correctly generates different permission sets for "admin" and "guest" users, ensuring guests have restricted access. |
+| **Input Specifications**      | The `_build_permissions` method is called once for the "admin" role and once for the "guest" role. |
+| **Expected Result**           | The admin permissions dictionary should have `control_modes` set to `True`, while the guest permissions should have it set to `False`. Guest PTZ control should be `True`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_ui_logic.py::test_main_dashboard_build_permissions` |
 
 ### 3.4. Configuration and Data Management
-*No unit tests in this category.*
 
-### 3.5 Branch Coverage
-This section details the branch coverage analysis for the project, ensuring that conditional logic within the code is adequately tested.
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `ConfigurationManager` |
+| **Method**                    | `_notify_zone_update` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `ConfigurationManager` can handle exceptions that occur within a registered zone update callback function without crashing. It ensures that an error message is printed to standard output. |
+| **Input Specifications**      | A `ConfigurationManager` where a callback function that unconditionally raises a `RuntimeError` is registered. The private method `_notify_zone_update` is then called. |
+| **Expected Result**           | The program should not crash, and an error message "Error in zone update callback" should be captured in `stdout`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_config_errors.py::test_notify_zone_update_handles_exception` |
 
-#### File Level
-| Files/Class/Method | Branch | Cover | Missing | Coverage |
-|--------------------|--------|-------|---------|----------|
-|                    |        |       |         |          |
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `ConfigurationManager` |
+| **Method**                    | `reset_configuration` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that if the `StorageManager` fails to clear camera passwords during a configuration reset, the error is caught and a log entry is created. |
+| **Input Specifications**      | The `clear_camera_passwords` method of the `StorageManager` is monkeypatched to always raise a `RuntimeError`. The `reset_configuration` method is then called on the `ConfigurationManager`. |
+| **Expected Result**           | A log message containing "Failed to clear camera passwords" should be recorded by the logger. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_config_errors.py::test_reset_configuration_clear_camera_passwords_error` |
 
-#### Class Level
-| Files/Class/Method | Branch | Cover | Missing | Coverage |
-|--------------------|--------|-------|---------|----------|
-|                    |        |       |         |          |
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `SystemSettings` |
+| **Method**                    | `update_settings`, `to_dict` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `update_settings` method correctly updates the settings object and that `to_dict` returns a dictionary with the updated values. |
+| **Input Specifications**      | A `SystemSettings` object is updated with `entry_delay=30` and `monitoring_phone="112"`. |
+| **Expected Result**           | The dictionary returned by `to_dict` should contain the correct, updated values. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_system_settings_update_and_dict` |
 
-#### Method Level
-| Files/Class/Method | Branch | Cover | Missing | Coverage |
-|--------------------|--------|-------|---------|----------|
-|                    |        |       |         |          |
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `SafeHomeMode` |
+| **Method**                    | `get_db_mode_name`, `from_db_mode_name` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies the conversion between the `SafeHomeMode` enum and its corresponding database string representation. |
+| **Input Specifications**      | Various `SafeHomeMode` enum members and string names, including an unknown one. |
+| **Expected Result**           | The conversion methods should return the correct string/enum values. An unknown string should default to `DISARMED`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_safehome_mode_mapping` |
 
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `ConfigurationManager` |
+| **Method**                    | `add_safety_zone`, `update_safety_zone`, `delete_safety_zone`, `get_safety_zone` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the full Create, Read, Update, Delete (CRUD) lifecycle for safety zones managed by the `ConfigurationManager`. |
+| **Input Specifications**      | A zone is added, its name is updated, and then it is deleted. |
+| **Expected Result**           | `add_safety_zone` should return a new zone. `update_safety_zone` should succeed and the change should be retrievable via `get_safety_zone`. `delete_safety_zone` should succeed and `get_safety_zone` should then return `None`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_configuration_manager_zone_crud` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `ConfigurationManager` |
+| **Method**                    | `register_zone_update_callback`, `reset_configuration`, `set_mode`, `get_mode`, `configure_mode_sensors` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests various `ConfigurationManager` features, including callback notification on reset, setting/getting the system mode, and configuring which sensors are active for a given mode. |
+| **Input Specifications**      | A callback is registered, `reset_configuration` is called. The mode is set and retrieved. Sensor mapping for "HOME" mode is cleared. |
+| **Expected Result**           | The registered callback should be called during reset. `get_mode` should return the value set by `set_mode`. `get_sensors_for_mode` should return an empty list after configuration. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_configuration_manager_callbacks_and_modes` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `ConfigurationManager` |
+| **Method**                    | `save_configuration` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Ensures that calling `save_configuration` executes without error and creates a log entry. |
+| **Input Specifications**      | `save_configuration` is called. |
+| **Expected Result**           | The method completes successfully and at least one recent log message is present. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_configuration_manager_save_configuration` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `ConfigurationManager` |
+| **Method**                    | `load_settings` (via constructor) |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests that when the `ConfigurationManager` is initialized, it correctly loads settings from the `StorageManager` and applies them to its internal `SystemSettings` object. |
+| **Input Specifications**      | The `StorageManager.load_settings` method is monkeypatched to return a dictionary with specific settings. A new `ConfigurationManager` is then created. |
+| **Expected Result**           | The new `ConfigurationManager` instance should have its `settings` object updated with the values from the mocked `load_settings` return. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_configuration_manager_load_settings_branch` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `ConfigurationManager` |
+| **Method**                    | `load_all_safety_zones` (via constructor) |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that if no safety zones are found in storage upon initialization, the `ConfigurationManager` creates a default set of zones. |
+| **Input Specifications**      | `StorageManager.load_all_safety_zones` is monkeypatched to return an empty list on its first call. A new `ConfigurationManager` is created. |
+| **Expected Result**           | The `ConfigurationManager` instance should contain at least two safety zones after initialization. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_configuration_manager_no_zones` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `ConfigurationManager` |
+| **Method**                    | `reset_configuration` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the system reset functionality, ensuring it recreates default zones and clears sensitive data like camera passwords from storage. |
+| **Input Specifications**      | A camera password is saved to storage, then `reset_configuration` is called. |
+| **Expected Result**           | After the reset, the default zones should exist, and all camera passwords in storage should be `None`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_configuration_manager_reset` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `StorageManager` |
+| **Method**                    | `save_sensor`, `load_all_sensors`, `save_camera`, `load_all_cameras` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `StorageManager` can correctly save and load sensor and camera data to/from the persistent storage. |
+| **Input Specifications**      | Two sensors and two cameras (one with a password) are saved. Then all sensors and cameras are loaded. |
+| **Expected Result**           | The loaded data should correctly reflect the saved items, including their IDs and the camera password. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_storage_manager_sensor_camera_persistence` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `StorageManager` |
+| **Method**                    | `save_mode_sensor_mapping`, `get_sensors_for_mode` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `StorageManager` can save and retrieve the mapping of which sensors are active for specific system modes. |
+| **Input Specifications**      | Sensors are saved, then mappings for "HOME" and "AWAY" modes are saved. |
+| **Expected Result**           | `get_sensors_for_mode` should return the correct list of sensor IDs for each mode. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_storage_manager_mode_sensor_mapping` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `SafetyZone` |
+| **Method**                    | `add_sensor`, `remove_sensor`, `get_sensors`, `arm`, `disarm` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the behavior of the `SafetyZone` data object itself, ensuring it correctly manages its list of associated sensors and its armed/disarmed state. |
+| **Input Specifications**      | A `SafetyZone` is created. Sensors are added and removed. The zone is armed and disarmed. |
+| **Expected Result**           | `get_sensors` should reflect the current membership. The `is_armed` property should correctly reflect the state after `arm()` and `disarm()` are called. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_configuration.py::test_safety_zone_object_behaviors` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `LogManager` |
+| **Method**                    | `add_log`, `clear_logs`, `get_recent_logs`, `get_all_logs` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies the basic logging functionality. It checks that `add_log` writes to both the log file and the database, and that `clear_logs` successfully empties both. |
+| **Input Specifications**      | A log message is added. Then logs are cleared. |
+| **Expected Result**           | After adding a log, the log file should exist and contain the message, and `get_recent_logs` should return the log object. After clearing, `get_all_logs` should return an empty list and the log file should be empty. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_log_manager.py::test_log_manager_write_and_clear` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `Log` |
+| **Method**                    | `event_type` (property) |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Checks that the `event_type` property of a `Log` object correctly returns its `level`. |
+| **Input Specifications**      | A `Log` object is created with `level="INFO"`. |
+| **Expected Result**           | The `event_type` property should return "INFO". |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_log_manager.py::test_log_event_type_property` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `LogManager` |
+| **Method**                    | Constructor (`__init__`), `add_log` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | This test covers multiple error and edge-case scenarios for `LogManager`, including handling I/O errors, a `None` `StorageManager`, and exceptions during log preloading from storage. |
+| **Input Specifications**      | `builtins.open` is monkeypatched to raise an `IOError`. `LogManager` is initialized with various mock `StorageManager` objects that simulate failures or specific data conditions. |
+| **Expected Result**           | No unhandled exceptions should occur in any of the scenarios. The `LogManager` should handle the errors gracefully. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_log_manager.py::test_log_manager_error_and_preload` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `LogManager` |
+| **Method**                    | `add_log` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that `add_log` can handle a failure in the underlying `StorageManager`'s `save_log` method without crashing. |
+| **Input Specifications**      | A mock `StorageManager` is created whose `save_log` method always raises an exception. `add_log` is called on a `LogManager` using this mock storage. |
+| **Expected Result**           | The call to `add_log` should complete without raising an unhandled exception. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_log_manager.py::test_log_manager_storage_save_error` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `LogManager` |
+| **Method**                    | `clear_logs` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that `clear_logs` can gracefully handle an exception raised by the `StorageManager`'s `clear_logs` method (e.g., a database error) and still proceed to clear the flat log file. |
+| **Input Specifications**      | A log file is created. A mock `StorageManager` is used whose `clear_logs` method always raises an exception. `clear_logs` is called. |
+| **Expected Result**           | The `clear_logs` method should complete without an unhandled exception. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_log_manager.py::test_log_manager_clear_logs_db_error` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `LoginManager` |
+| **Method**                    | `_lock_interface`, `unlock_system`, `is_interface_locked`, `validate_credentials` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies the complete interface lockout and unlock cycle. It checks that after exceeding the maximum number of login attempts, the interface becomes locked, and that it is automatically unlocked after the configured `system_lock_time` has passed. |
+| **Input Specifications**      | A `LoginManager` is configured with `max_login_attempts=1` and `system_lock_time=0.05`. `validate_credentials` is called with a wrong password to trigger the lock. The test then waits for a period longer than the lock time. |
+| **Expected Result**           | The interface should be locked immediately after the failed login. After the timeout, calling `unlock_system` (which the internal timer would do) should successfully unlock the interface. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_login_branches.py::test_lock_interface_sets_timer_and_unlocks` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `models.SystemSettings`, `models.SafetyZone` |
+| **Method**                    | `from_db_row` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `from_db_row` factory method on the `SystemSettings` and `SafetyZone` models correctly creates objects from a dictionary (simulating a database row). It also checks that it returns `None` when the input is `None`. |
+| **Input Specifications**      | A dictionary simulating a database row for settings and one for a zone. Also `None` is passed to the method. |
+| **Expected Result**           | The methods should return a correctly populated object when given a dictionary, and `None` when given `None`. The boolean `is_armed` should be correctly converted from `1`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_models.py::test_model_from_db_row_system_settings_and_zone` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `models.SafeHomeMode`, `models.Sensor`, `models.Camera`, `models.EventLog`, `models.LoginSession` |
+| **Method**                    | `from_db_row` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | This is a comprehensive test that verifies the `from_db_row` factory method for the remaining data models in the application, ensuring they are all correctly instantiated from dictionary data. |
+| **Input Specifications**      | A dictionary simulating a database row for each of the following models: `SafeHomeMode`, `Sensor`, `Camera`, `EventLog`, `LoginSession`. |
+| **Expected Result**           | Each call to `from_db_row` should return a new object with its attributes correctly populated from the input dictionary. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_models.py::test_model_from_db_row_mode_sensor_camera_event_login` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `DatabaseManager` |
+| **Method**                    | `initialize_schema`, `update_system_settings`, `get_system_settings`, `add_event_log`, `get_event_logs`, `clear_event_logs` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies the fundamental database operations: initializing the schema, inserting and retrieving settings, and adding, fetching, and clearing log events. |
+| **Input Specifications**      | Update settings with a password. Add a log event. Clear the logs. |
+| **Expected Result**           | The retrieved settings should match the updated ones. The added log should be fetchable. After clearing, the event logs should be empty. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_persistence.py::test_db_manager_basic_queries` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `StorageManager` |
+| **Method**                    | `save_settings`, `load_settings`, `save_settings_to_db`, `load_settings_from_db` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the `StorageManager`'s ability to save and load system settings to/from both the JSON backup file and the main database, ensuring both persistence layers work as expected. |
+| **Input Specifications**      | A `SystemSettings` object is saved (to both JSON and DB), then loaded. It is then modified and saved only to the DB, and loaded again from the DB. |
+| **Expected Result**           | The JSON file should be created. The loaded settings should match the saved settings in both cases (JSON and DB-only). |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_persistence.py::test_storage_manager_settings_json_and_db` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `StorageManager`, `LogManager` |
+| **Method**                    | `add_log`, `get_logs`, `get_unseen_logs`, `mark_logs_seen`, `clear_logs` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies the full lifecycle of log management through the `StorageManager`, including adding a log, retrieving it, marking it as "seen", and clearing the log table. |
+| **Input Specifications**      | A log is added via `LogManager`. It's retrieved via `get_logs` and `get_unseen_logs`. It is then marked as seen. Finally, logs are cleared. |
+| **Expected Result**           | The log should be retrievable and initially be "unseen". After being marked as seen, it should no longer appear in the `get_unseen_logs` result. `clear_logs` should empty the log table. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_persistence.py::test_storage_manager_logs_and_seen` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `StorageManager` |
+| **Method**                    | `save_safety_zone`, `load_safety_zone_by_id`, `delete_all_safety_zones`, `save_sensor`, `load_all_sensors`, `delete_sensor`, `save_camera`, `load_all_cameras`, `update_camera_password`, `clear_camera_passwords`, `delete_camera` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | A comprehensive CRUD test for all major data objects managed by `StorageManager`: zones, sensors, and cameras. It verifies creation, retrieval, update (for camera password), and deletion. |
+| **Input Specifications**      | A zone, a sensor, and a camera are created, retrieved, updated (where applicable), and deleted. |
+| **Expected Result**           | All create, read, update, and delete operations should succeed and be reflected in subsequent load calls. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_persistence.py::test_storage_manager_zone_and_sensor_crud` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `StorageManager` |
+| **Method**                    | `save_mode_sensor_mapping`, `get_sensors_for_mode` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the roundtrip persistence of the mode-to-sensor mapping. |
+| **Input Specifications**      | A sensor is saved, and a mapping for the "HOME" mode is saved to include this sensor. |
+| **Expected Result**           | `get_sensors_for_mode("HOME")` should return a list containing the ID of the saved sensor. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_persistence.py::test_storage_manager_mode_sensor_mapping` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `StorageManager` |
+| **Method**                    | `save_mode_sensor_mapping` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Ensures that attempting to save a sensor mapping for a non-existent mode name does not cause an error. |
+| **Input Specifications**      | `save_mode_sensor_mapping` is called with an invalid mode name "NOTAMODE". |
+| **Expected Result**           | The method should complete without raising an exception. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_persistence.py::test_storage_manager_invalid_mode_mapping` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `StorageManager` |
+| **Method**                    | `_check_db`, `load_settings_from_json` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-11-30 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies the error handling of the `StorageManager`. It checks that a `ValueError` is raised if the DB is not available when required, and that a `json.JSONDecodeError` is raised when trying to load a malformed JSON file. |
+| **Input Specifications**      | 1. `_check_db` is called on a `StorageManager` initialized with no database.<br>2. `load_settings_from_json` is called when the `CONFIG_FILE` contains invalid JSON. |
+| **Expected Result**           | The first case should raise a `ValueError`. The second case should raise a `json.JSONDecodeError`. |
+| **Actual Result**             | Pending |
+| **Comment (including refs)**  | `test_unit_persistence.py::test_storage_manager_check_db_and_json_errors` |
