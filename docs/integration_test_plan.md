@@ -4,7 +4,7 @@ Each entry mirrors the course template fields (ID, Class/Function, Author/Date T
 ---
 
 ### IT-Login-Sys-Su — System master login success  
-| Class/Modules | Function | Author | Date |  
+| Class/Modules | Function | Author | Date | 
 | --- | --- | --- | --- |  
 | System, LoginManager, StorageManager | System.login | TBD | TBD |  
 **Test Case Description** Validate master login succeeds and session is recorded.  
