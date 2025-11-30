@@ -31,7 +31,7 @@ Select the user type, enter the password, and click "Login". After too many fail
 
 The main dashboard is the central hub for monitoring and controlling your SafeHome system.
 
-![Main Dashboard](docs\images\main_dashborad_win.png) (*Note: this screenshot is for windows system*)
+![Main Dashboard](https://github.com/Jamal-Alibalayev/CS350-Safehome/blob/alan/docs/images/main_dashborad_win.png) (*Note: this screenshot is for windows system*)
 
 ### 3.1. Header Bar
 -   **Title**: Displays the application name and subtitle.
