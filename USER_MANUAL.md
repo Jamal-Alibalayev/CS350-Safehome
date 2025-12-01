@@ -34,7 +34,7 @@ The main dashboard is the central hub for monitoring and controlling your SafeHo
 ![Main Dashboard](https://github.com/Jamal-Alibalayev/CS350-Safehome/blob/alan/docs/images/main_dashborad_win.png) 
 (*Note: this screenshot is for windows system*)
 
-![Main Dashboard](link for image)
+![Main Dashboard](https://github.com/Jamal-Alibalayev/CS350-Safehome/blob/alan/docs/images/main_dashborad_mac.png)
 (*Note: this screenshot is for MacOS system*)
 
 ### 3.1. Header Bar
