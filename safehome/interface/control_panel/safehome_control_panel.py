@@ -108,7 +108,9 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
                 success = True
             else:
                 msg = "Cannot Arm"
+                self.set_display_short_message1(msg)
                 self.set_display_short_message2("Windows/Doors Open")
+                return  # Exit early to preserve the specific error message
 
         elif key == "2":  # 2 = Arm Stay (Home)
             arm_success = self.system.arm_system(SafeHomeMode.HOME)
@@ -117,7 +119,9 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
                 success = True
             else:
                 msg = "Cannot Arm"
+                self.set_display_short_message1(msg)
                 self.set_display_short_message2("Windows/Doors Open")
+                return  # Exit early to preserve the specific error message
 
         elif key == "0":  # 0 = Disarm
             self.system.disarm_system()
