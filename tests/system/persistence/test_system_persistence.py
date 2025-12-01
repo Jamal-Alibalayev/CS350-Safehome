@@ -13,9 +13,7 @@ def headless_env(monkeypatch):
 
 def _new_system(tmp_path, monkeypatch, db_name="safehome.db"):
     db_path = tmp_path / db_name
-    monkeypatch.setattr(
-        StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"), raising=False
-    )
+    monkeypatch.setattr(StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"), raising=False)
     return System(db_path=str(db_path))
 
 

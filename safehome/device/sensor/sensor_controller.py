@@ -216,12 +216,12 @@ class SensorController:
         for sensor in self.sensors.values():
             if isinstance(sensor, WindowDoorSensor):
                 sensor.simulate_close()
-
+        
         if self.logger:
             self.logger.add_log(
-                "All window/door sensors set to 'closed' state",
-                source="SensorController",
+                "All window/door sensors set to 'closed' state", source="SensorController"
             )
+
 
     def poll_sensors(self) -> List[Tuple[int, Sensor]]:
         """

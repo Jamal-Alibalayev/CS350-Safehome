@@ -20,24 +20,18 @@ def config_mgr(tmp_path, monkeypatch):
 
 def test_notify_zone_update_handles_exception(config_mgr, capsys):
     """Cover _notify_zone_update branch where callback raises."""
-
     def bad_cb():
         raise RuntimeError("boom")
-
     config_mgr.register_zone_update_callback(bad_cb)
     config_mgr._notify_zone_update()
     captured = capsys.readouterr()
     assert "Error in zone update callback" in captured.out
 
 
-def test_reset_configuration_clear_camera_passwords_error(
-    monkeypatch, config_mgr, capsys
-):
+def test_reset_configuration_clear_camera_passwords_error(monkeypatch, config_mgr, capsys):
     """Force clear_camera_passwords error path in reset_configuration."""
-
     def raise_err():
         raise RuntimeError("fail")
-
     monkeypatch.setattr(config_mgr.storage, "clear_camera_passwords", raise_err)
     config_mgr.reset_configuration()
     logs = config_mgr.logger.get_recent_logs(3)

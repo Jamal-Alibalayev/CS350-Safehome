@@ -36,3 +36,4 @@ def test_st_power_cycle(tmp_path, monkeypatch):
     assert sys.arm_system(SafeHomeMode.AWAY)
     sys.disarm_system()
     sys.shutdown()
+
