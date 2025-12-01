@@ -28,3 +28,4 @@ data/**/*.png
 *.png
 data/safehome.db
 data/safehome_events.log
+docs/Implementation_and_Testing_template_v4 (3).pdf
