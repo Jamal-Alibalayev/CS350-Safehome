@@ -638,12 +638,16 @@ def test_dashboard_open_helpers(monkeypatch, system):
         def __init__(self, *_):
             calls["lv"] = True
 
-    class FakeSim:
-        def __init__(self, *_):
-            calls["sim"] = True
+    FakeSim = type(
+        "FakeSim",
+        (),
+        {"showSensorTester": staticmethod(lambda system: calls.setdefault("sim", True))},
+    )
 
     monkeypatch.setattr("safehome.interface.dashboard.log_viewer.LogViewerWindow", FakeLV)
-    monkeypatch.setattr("safehome.device.sensor.device_sensor_tester.DeviceSensorTester", FakeSim, raising=False)
+    monkeypatch.setattr(
+        "safehome.device.sensor.device_sensor_tester.DeviceSensorTester", FakeSim, raising=False
+    )
     dash._open_log_viewer()
     dash._open_sensor_simulator()
     assert calls.get("lv")
