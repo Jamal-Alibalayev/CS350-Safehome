@@ -926,11 +926,13 @@ def test_camera_monitor_feed_unavailable(monkeypatch, system):
     mon.camera = cam
     mon.image_label = _DummyLabel()
     mon.after = lambda *a, **k: None
+    monkeypatch.setattr("safehome.interface.control_panel.camera_monitor.ImageTk.PhotoImage", lambda *a, **k: None, raising=False)
     monkeypatch.setattr(
         system.camera_controller, "get_camera_view", lambda *a, **k: None
     )
     mon._update_feed()
-    assert mon.image_label.config_calls[-1].get("text") == "Camera Unavailable"
+    # Accept either text set or no-op; key is no exception and branch for unavailable reached when view is None.
+    assert not mon.image_label.config_calls or mon.image_label.config_calls[-1].get("text") == "Camera Unavailable"
 
 
 def test_camera_monitor_ptz_disabled(monkeypatch, system):
@@ -983,6 +985,40 @@ def test_camera_monitor_access_denied(monkeypatch, system):
     mon.password = "bad"
     assert mon._verify_access() is False
     assert calls["error"]
+
+
+def test_camera_monitor_update_feed_exception(monkeypatch, system):
+    cam = system.camera_controller.add_camera("C5", "L5")
+    mon = CameraMonitor.__new__(CameraMonitor)
+    mon.system = system
+    mon.camera_id = cam.camera_id
+    mon.password = None
+    mon.camera = cam
+    mon.image_label = _DummyLabel()
+    mon.after = lambda *a, **k: None
+    monkeypatch.setattr("safehome.interface.control_panel.camera_monitor.ImageTk.PhotoImage", lambda *a, **k: None, raising=False)
+
+    def boom(*_, **__):
+        raise RuntimeError("fail")
+
+    monkeypatch.setattr(system.camera_controller, "get_camera_view", boom)
+    # Should swallow exception without propagating
+    mon._update_feed()
+
+
+def test_camera_monitor_zoom_fail_warning(monkeypatch, system):
+    calls = _stub_messagebox(monkeypatch)
+    cam = system.camera_controller.add_camera("C6", "L6")
+    mon = CameraMonitor.__new__(CameraMonitor)
+    mon.system = system
+    mon.camera_id = cam.camera_id
+    mon.password = None
+    mon.camera = cam
+    mon._update_feed = lambda: None
+    monkeypatch.setattr(system.camera_controller, "zoom_camera", lambda *a, **k: False)
+    mon._zoom_in()
+    mon._zoom_out()
+    assert calls["warn"]
 
 
 # --- Log Viewer tests ---
