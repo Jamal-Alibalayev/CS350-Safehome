@@ -131,6 +131,7 @@ def test_it_log_persistence(tmp_path, monkeypatch):
     # Phase 1: Manually write a log to the database file to bypass application logic
     import sqlite3
     import datetime
+    con = None
     try:
         con = sqlite3.connect(str(db_path))
         cur = con.cursor()
@@ -139,14 +140,17 @@ def test_it_log_persistence(tmp_path, monkeypatch):
             ("INFO", log_message, "ManualTest", datetime.datetime.now().isoformat())
         )
         con.commit()
-        con.close()
     except Exception as e:
         pytest.fail(f"Manual DB write failed: {e}")
+    finally:
+        if con:
+            con.close()
 
     # Phase 2: Create a new system instance and read from the same DB
     sys2 = System(db_path=str(db_path))
-    rows = sys2.config.db_manager.get_event_logs(event_type="INFO", limit=10)
-    sys2.shutdown()
-
-    # Assert that the manually written log was loaded by the application
-    assert any(row["event_message"] == log_message for row in rows), "Log manually written to DB was not found by the application's read logic"
+    try:
+        rows = sys2.config.db_manager.get_event_logs(event_type="INFO", limit=10)
+        # Assert that the manually written log was loaded by the application
+        assert any(row["event_message"] == log_message for row in rows), "Log manually written to DB was not found by the application's read logic"
+    finally:
+        sys2.shutdown()

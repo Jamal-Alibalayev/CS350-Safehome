@@ -5,6 +5,7 @@ from .log import Log
 class LogManager:
     """
     管理系统的日志记录
+    manages in-memory logs, file logging, and optional DB storage
     """
 
     def __init__(self, storage_manager=None):

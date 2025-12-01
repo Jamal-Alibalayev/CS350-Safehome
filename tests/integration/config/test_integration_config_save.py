@@ -23,33 +23,41 @@ def test_it_config_save_restore(tmp_path, monkeypatch):
     """IT-Config-Save-Restore: save settings then reload via new System."""
     monkeypatch.setattr(StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"))
     sys1 = System(db_path=str(tmp_path / "safehome.db"))
-    sys1.config.settings.entry_delay = 42
-    sys1.config.save_configuration()
-    sys1.shutdown()
+    try:
+        sys1.config.settings.entry_delay = 42
+        sys1.config.save_configuration()
+    finally:
+        sys1.shutdown()
 
     # New instance should pick up saved entry_delay
     sys2 = System(db_path=str(tmp_path / "safehome.db"))
-    assert sys2.config.settings.entry_delay == 42
-    sys2.shutdown()
+    try:
+        assert sys2.config.settings.entry_delay == 42
+    finally:
+        sys2.shutdown()
 
 
 def test_it_reset_and_reinit(tmp_path, monkeypatch):
     """IT-Reset-And-Reinit: reset, then new System has default zones and cleared passwords."""
     monkeypatch.setattr(StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"))
     sys1 = System(db_path=str(tmp_path / "safehome.db"))
-    # seed camera password and custom zone
-    sys1.config.storage.save_camera(1, "Cam", "Loc", password="pw")
-    sys1.config.add_safety_zone("Custom")
-    sys1.config.reset_configuration()
-    sys1.shutdown()
+    try:
+        # seed camera password and custom zone
+        sys1.config.storage.save_camera(1, "Cam", "Loc", password="pw")
+        sys1.config.add_safety_zone("Custom")
+        sys1.config.reset_configuration()
+    finally:
+        sys1.shutdown()
 
     sys2 = System(db_path=str(tmp_path / "safehome.db"))
-    zones = sys2.config.get_all_safety_zones()
-    assert len(zones) >= 2
-    cams = sys2.config.storage.load_all_cameras()
-    for c in cams:
-        assert c.get("camera_password") is None
-    sys2.shutdown()
+    try:
+        zones = sys2.config.get_all_safety_zones()
+        assert len(zones) >= 2
+        cams = sys2.config.storage.load_all_cameras()
+        for c in cams:
+            assert c.get("camera_password") is None
+    finally:
+        sys2.shutdown()
 
 
 def test_it_db_disconnect_reconnect(tmp_path):

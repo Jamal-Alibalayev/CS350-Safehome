@@ -51,7 +51,9 @@ def test_st_camera_enable_persist_behavior(system):
     db_path = system.config.db_manager.db_path
     system.shutdown()
     sys2 = System(db_path=db_path)
-    sys2.camera_controller.load_cameras_from_storage()
-    view = sys2.camera_controller.get_camera_view(cam.camera_id)
-    assert view is not None  # enabled on restart
-    sys2.shutdown()
+    try:
+        sys2.camera_controller.load_cameras_from_storage()
+        view = sys2.camera_controller.get_camera_view(cam.camera_id)
+        assert view is not None  # enabled on restart
+    finally:
+        sys2.shutdown()

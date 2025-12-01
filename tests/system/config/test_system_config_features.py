@@ -53,13 +53,16 @@ def test_st_settings_persist_entry_delay(system):
     cm.settings.entry_delay = 12
     cm.settings.exit_delay = 34
     cm.save_configuration()
+    db_path = cm.db_manager.db_path
     system.shutdown()
 
     # Restart
-    sys2 = System(db_path=cm.db_manager.db_path)
-    assert sys2.config.settings.entry_delay == 12
-    assert sys2.config.settings.exit_delay == 34
-    sys2.shutdown()
+    sys2 = System(db_path=db_path)
+    try:
+        assert sys2.config.settings.entry_delay == 12
+        assert sys2.config.settings.exit_delay == 34
+    finally:
+        sys2.shutdown()
 
 
 def test_st_email_alert_failover(monkeypatch, tmp_path):
@@ -68,29 +71,32 @@ def test_st_email_alert_failover(monkeypatch, tmp_path):
     """
     monkeypatch.setenv("SAFEHOME_HEADLESS", "1")
     sys = System(db_path=str(tmp_path / "email.db"))
+    try:
+        class FailingSMTP:
+            def __init__(self, *args, **kwargs):
+                raise RuntimeError("smtp down")
 
-    class FailingSMTP:
-        def __init__(self, *args, **kwargs):
-            raise RuntimeError("smtp down")
-
-    monkeypatch.setattr("smtplib.SMTP", FailingSMTP)
-    sys.config.settings.alert_email = "user@example.com"
-    sent = sys.config.send_email_alert("subject", "body")
-    assert sent is False
-    sys.shutdown()
+        monkeypatch.setattr("smtplib.SMTP", FailingSMTP)
+        sys.config.settings.alert_email = "user@example.com"
+        sent = sys.config.send_email_alert("subject", "body")
+        assert sent is False
+    finally:
+        sys.shutdown()
 
 def test_st_db_rollback_recover(system):
     """
     ST-DB-Rollback-Recover: uncommitted insert rolled back leaves no residue.
     """
     db = system.config.db_manager
-    db.connect()
     db.connection.execute("BEGIN")
-    db.execute_query(
-        "INSERT INTO event_logs (event_type, event_message, source) VALUES (?, ?, ?)",
-        ("TEST", "rollback-check", "Test"),
-    )
-    db.rollback()
+    try:
+        db.execute_query(
+            "INSERT INTO event_logs (event_type, event_message, source) VALUES (?, ?, ?)",
+            ("TEST", "rollback-check", "Test"),
+        )
+    finally:
+        db.rollback()
+    
     rows = db.get_event_logs(event_type="TEST", limit=5)
     assert not any(row["event_message"] == "rollback-check" for row in rows)
 
