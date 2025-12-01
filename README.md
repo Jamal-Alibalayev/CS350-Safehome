@@ -55,7 +55,7 @@ A comprehensive, simulated smart home security system featuring a graphical dash
 2.  Use the main dashboard to monitor camera feeds and sensor statuses.
 3.  Admins can change security modes, manage safety zones, and access system settings.
 
-For a complete guide on how to use the application, please refer to the **[User Manual (USER_MANUAL.md)](USER_MANUAL.md)**.
+For a complete guide on how to use the application, please refer to the **[User Manual (USER_MANUAL.md)](https://github.com/Jamal-Alibalayev/CS350-Safehome/blob/alan/docs/USER_MANUAL.md)**.
 
 ## 🧪 Testing
 
