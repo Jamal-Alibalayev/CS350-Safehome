@@ -2,6 +2,7 @@
 import unittest
 from unittest.mock import MagicMock, patch, ANY
 import tkinter as tk
+from tkinter import messagebox # Added this line
 from PIL import Image
 
 # To prevent tkinter from trying to create a root window
