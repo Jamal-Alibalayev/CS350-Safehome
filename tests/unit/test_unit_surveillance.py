@@ -36,7 +36,12 @@ def camera_controller(tmp_path, monkeypatch):
 def test_safehome_camera_password_and_lockout():
     """UT-Cam-Pwd (SDS seq p68/p69): password verify + lockout behavior."""
     cam = SafeHomeCamera(
-        camera_id=1, name="Lab", location="Lab", password="pw", max_attempts=2, lockout_seconds=1
+        camera_id=1,
+        name="Lab",
+        location="Lab",
+        password="pw",
+        max_attempts=2,
+        lockout_seconds=1,
     )
     assert not cam.verify_password("bad")
     assert not cam.verify_password("bad")
@@ -98,7 +103,10 @@ def test_camera_controller_access_denied_branches(tmp_path, monkeypatch):
     assert cc.tilt_camera(cam.camera_id, "noop", password="1234") is False
     assert cc.zoom_camera(cam.camera_id, "noop", password="1234") is False
     assert cc.enable_camera(cam.camera_id, role="guest") is False
-    assert cc.set_camera_password(cam.camera_id, new_password="5678", old_password="wrong") is False
+    assert (
+        cc.set_camera_password(cam.camera_id, new_password="5678", old_password="wrong")
+        is False
+    )
     assert cc.delete_camera_password(cam.camera_id, old_password="bad") is False
     guard = cc.access_guard
     assert guard.require_access(None, 99, None, "view") is None
@@ -123,7 +131,9 @@ def test_camera_controller_lockout_and_require_access(monkeypatch, tmp_path):
     cam.max_attempts = 1
     cc.get_camera_view(cam.camera_id, password="bad")
     guard = cc.access_guard
-    assert guard.require_access(cam, cam.camera_id, password="pw", action="view") is None
+    assert (
+        guard.require_access(cam, cam.camera_id, password="pw", action="view") is None
+    )
     cc.shutdown()
     cm.shutdown()
 
@@ -154,16 +164,32 @@ def test_camera_controller_boundaries_and_status(monkeypatch, tmp_path):
 
 def test_interface_camera_concrete():
     """UT-InterfaceCam: minimal subclass covers abstract methods."""
+
     class DummyCam(InterfaceCamera):
         def __init__(self):
             self._id = 0
-        def set_id(self, id_): self._id = id_
-        def get_id(self): return self._id
-        def get_view(self): return None
-        def pan_right(self): return True
-        def pan_left(self): return True
-        def zoom_in(self): return True
-        def zoom_out(self): return True
+
+        def set_id(self, id_):
+            self._id = id_
+
+        def get_id(self):
+            return self._id
+
+        def get_view(self):
+            return None
+
+        def pan_right(self):
+            return True
+
+        def pan_left(self):
+            return True
+
+        def zoom_in(self):
+            return True
+
+        def zoom_out(self):
+            return True
+
     cam = DummyCam()
     cam.set_id(5)
     assert cam.get_id() == 5 and cam.pan_right() and cam.zoom_out()
@@ -195,8 +221,10 @@ def test_device_camera_view_with_real_image():
 def test_device_camera_missing_file(monkeypatch):
     """UT-DeviceCam-Missing: missing asset logs error but stays usable."""
     shown = {}
+
     def fake_showerror(title, msg):
         shown["msg"] = msg
+
     monkeypatch.setattr("tkinter.messagebox.showerror", fake_showerror)
     cam = DeviceCamera()
     cam.set_id(999)
@@ -209,6 +237,7 @@ def test_device_camera_crop_failure(monkeypatch):
     cam = DeviceCamera()
     # Provide an imgSource too small and extreme pan/zoom to trigger crop exception
     from PIL import Image
+
     cam.imgSource = Image.new("RGB", (10, 10), "black")
     cam.centerWidth = 5
     cam.centerHeight = 5

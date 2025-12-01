@@ -87,11 +87,21 @@ def test_configuration_manager_send_email_alert(monkeypatch, config_mgr):
     class DummySMTP:
         def __init__(self, host, port, timeout):
             self.host, self.port, self.timeout = host, port, timeout
-        def starttls(self): pass
-        def login(self, user, pw): pass
-        def send_message(self, msg): sent_messages.append(msg)
-        def __enter__(self): return self
-        def __exit__(self, exc_type, exc_val, exc_tb): return False
+
+        def starttls(self):
+            pass
+
+        def login(self, user, pw):
+            pass
+
+        def send_message(self, msg):
+            sent_messages.append(msg)
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            return False
 
     monkeypatch.setattr(smtplib, "SMTP", DummySMTP)
     cfg = config_mgr
@@ -105,8 +115,10 @@ def test_configuration_manager_send_email_alert(monkeypatch, config_mgr):
 def test_configuration_manager_load_settings_branch(monkeypatch, tmp_path):
     """UT-Conf-LoadSettings: load_settings with data updates SystemSettings."""
     monkeypatch.setattr(StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"))
+
     def fake_load(self):
         return {"entry_delay": 5, "monitoring_phone": "123"}
+
     monkeypatch.setattr(StorageManager, "load_settings", fake_load)
     cm = ConfigurationManager(db_path=str(tmp_path / "safehome.db"))
     assert cm.settings.entry_delay == 5
@@ -118,11 +130,13 @@ def test_configuration_manager_no_zones(monkeypatch, tmp_path):
     monkeypatch.setattr(StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"))
     original_load = StorageManager.load_all_safety_zones
     calls = {"n": 0}
+
     def fake_load(self):
         calls["n"] += 1
         if calls["n"] == 1:
             return []
         return original_load(self)
+
     monkeypatch.setattr(StorageManager, "load_all_safety_zones", fake_load)
     cm = ConfigurationManager(db_path=str(tmp_path / "safehome.db"))
     assert len(cm.get_all_safety_zones()) >= 2

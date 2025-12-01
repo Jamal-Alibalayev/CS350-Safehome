@@ -31,7 +31,9 @@ def fetch_one(db_conn: sqlite3.Connection, query: str, params=()):
 def test_it_login_web(system):
     """IT-Login-Web: web interface two-level password accepted and session recorded."""
     cm = system.config
-    assert system.login("user", f"{cm.settings.web_password_1}:{cm.settings.web_password_2}", "WEB")
+    assert system.login(
+        "user", f"{cm.settings.web_password_1}:{cm.settings.web_password_2}", "WEB"
+    )
     row = fetch_one(
         cm.db_manager.connection,
         "SELECT interface_type, login_successful FROM login_sessions ORDER BY session_id DESC LIMIT 1",
@@ -83,11 +85,21 @@ def test_it_email_alert(monkeypatch, system):
     class DummySMTP:
         def __init__(self, host, port, timeout):
             self.host, self.port, self.timeout = host, port, timeout
-        def starttls(self): pass
-        def login(self, u, p): pass
-        def send_message(self, msg): sent.append(msg)
-        def __enter__(self): return self
-        def __exit__(self, exc_type, exc_val, exc_tb): return False
+
+        def starttls(self):
+            pass
+
+        def login(self, u, p):
+            pass
+
+        def send_message(self, msg):
+            sent.append(msg)
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            return False
 
     monkeypatch.setattr("smtplib.SMTP", DummySMTP)
     cfg = system.config
@@ -100,11 +112,17 @@ def test_it_email_alert(monkeypatch, system):
 
 def test_it_cp_login_arm_headless(monkeypatch, system):
     """IT-CP-Login-Arm (headless): simulate CP input for login then arm/disarm."""
-    from safehome.interface.control_panel.safehome_control_panel import SafeHomeControlPanel
-    from safehome.interface.control_panel.device_control_panel_abstract import DeviceControlPanelAbstract
+    from safehome.interface.control_panel.safehome_control_panel import (
+        SafeHomeControlPanel,
+    )
+    from safehome.interface.control_panel.device_control_panel_abstract import (
+        DeviceControlPanelAbstract,
+    )
 
     # Patch UI methods to no-op for headless
-    monkeypatch.setattr(DeviceControlPanelAbstract, "__init__", lambda self, master=None: None)
+    monkeypatch.setattr(
+        DeviceControlPanelAbstract, "__init__", lambda self, master=None: None
+    )
     for name in [
         "set_display_short_message1",
         "set_display_short_message2",

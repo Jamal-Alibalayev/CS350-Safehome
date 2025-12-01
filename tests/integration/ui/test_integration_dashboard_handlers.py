@@ -23,8 +23,12 @@ def system(tmp_path, monkeypatch):
 
 def _stub_dashboard(monkeypatch):
     """Stub Tk-dependent behaviors to make handler calls headless-safe."""
-    monkeypatch.setattr(MainDashboard, "__init__", lambda self, system, login_window, user_id: None)
-    monkeypatch.setattr(MainDashboard, "update_idletasks", lambda self: None, raising=False)
+    monkeypatch.setattr(
+        MainDashboard, "__init__", lambda self, system, login_window, user_id: None
+    )
+    monkeypatch.setattr(
+        MainDashboard, "update_idletasks", lambda self: None, raising=False
+    )
     monkeypatch.setattr(MainDashboard, "destroy", lambda self: None, raising=False)
     monkeypatch.setattr(MainDashboard, "winfo_exists", lambda self: True, raising=False)
 
@@ -37,7 +41,11 @@ def test_it_dashboard_mode_switch(monkeypatch, system):
     system.config.set_mode(system.config.current_mode)  # ensure baseline
     dash.system = system  # attach
     dash._set_mode = lambda mode: system.config.set_mode(mode)
-    dash._set_mode(system.config.current_mode.__class__.AWAY if hasattr(system.config.current_mode, '__class__') else system.config.current_mode)
+    dash._set_mode(
+        system.config.current_mode.__class__.AWAY
+        if hasattr(system.config.current_mode, "__class__")
+        else system.config.current_mode
+    )
     system.config.set_mode(system.config.current_mode)
     assert system.config.current_mode
 
@@ -46,11 +54,15 @@ def test_it_logviewer_refresh(monkeypatch, system):
     """IT-LogViewer-Refresh: handler loads DB logs."""
     system.config.logger.add_log("UI log", level="INFO", source="UI")
     # stub tkinter dependencies
-    monkeypatch.setattr(LogViewerWindow, "__init__", lambda self, system, master=None: None)
+    monkeypatch.setattr(
+        LogViewerWindow, "__init__", lambda self, system, master=None: None
+    )
     lv = LogViewerWindow(system, None)
     # attach minimal state for refresh
     lv.system = system
-    lv.tree = type("T", (), {"delete": lambda *a, **k: None, "insert": lambda *a, **k: None})()
+    lv.tree = type(
+        "T", (), {"delete": lambda *a, **k: None, "insert": lambda *a, **k: None}
+    )()
     lv._refresh_logs = lambda: system.config.logger.get_recent_logs(1)
     logs = lv._refresh_logs()
     assert logs and logs[0].message == "UI log"
@@ -58,7 +70,9 @@ def test_it_logviewer_refresh(monkeypatch, system):
 
 def test_it_zone_manager_handlers(monkeypatch, system):
     """IT-Dashboard-ZoneManager: add/edit/delete via ZoneManager handlers."""
-    monkeypatch.setattr(ZoneManagerWindow, "__init__", lambda self, system, master=None: None)
+    monkeypatch.setattr(
+        ZoneManagerWindow, "__init__", lambda self, system, master=None: None
+    )
     zm = ZoneManagerWindow(system, None)
     zm.system = system
     # manually call underlying config methods to simulate handlers

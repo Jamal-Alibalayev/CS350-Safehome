@@ -117,16 +117,21 @@ def test_login_manager_locked_and_unknown_interface():
 def test_login_manager_log_session(monkeypatch):
     """UT-Login-LogSession: DB insert path executes."""
     calls = {}
+
     class FakeDB:
         def __init__(self):
             self.queries = []
+
         def execute_query(self, q, params):
             self.queries.append((q, params))
+
         def commit(self):
             calls["commit"] = True
+
     class FakeStorage:
         def __init__(self):
             self.db = FakeDB()
+
     storage = FakeStorage()
     lm = LoginManager(SystemSettings(), storage_manager=storage)
     lm._log_session("CONTROL_PANEL", "admin", True)
@@ -183,11 +188,14 @@ def test_login_manager_guest_and_web_parsing():
 def test_sensor_controller_edge_branches(system):
     """UT-Sensor-Edges: no-op branches and unknown type load."""
     sc = system.sensor_controller
+
     class DummyLogger:
         def __init__(self):
             self.logged = []
+
         def add_log(self, msg, **kwargs):
             self.logged.append(msg)
+
     sc.logger = DummyLogger()
     assert sc.remove_sensor(999) is False
     assert sc.get_sensor_status(999) is None

@@ -1,6 +1,7 @@
 """
 Pytest configuration to ensure project root is on sys.path for imports like `import safehome`.
 """
+
 import sys
 from pathlib import Path
 
