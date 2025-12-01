@@ -28,7 +28,7 @@ This document outlines the unit testing strategy and results for the SafeHome pr
     *   `SafeHomeSensorTest`: `_create_ui`, `_create_floorplan_section`, `_create_sensor_list`, `_create_right_panel`, `_create_control_panels`, `_update_id_ranges`, `_update_status`, `_collect_windoor_map`, `_collect_motion_map`, `_build_window_rows`, `_build_door_rows`, `_build_motion_rows`, `_get_sensor_states`, `_handle_windoor_sensor`, `_handle_windoor`, `_handle_motion_sensor`, `_handle_motion`, `_arm_all`, `_disarm_all`, `_reset_all`, `_on_mousewheel`, `_bind_mousewheel_recursively`
 
 ### 2.3. Security
-*   **Classes:** `System`, `LoginInterface`, `LoginManager`, `Alarm`, `DeviceControlPanelAbstract`, `SafeHomeControlPanel`, `LoginWindow`, `LogViewerWindow`, `MainDashboard`, `ZoneManagerWindow`, `AddZoneDialog`, `EditZoneDialog`, `AssignSensorDialog`
+*   **Classes:** `System`, `LoginInterface`, `LoginManager`, `Alarm`, `DeviceControlPanelAbstract`, `SafeHomeControlPanel`, `CameraMonitor`, `LoginWindow`, `LogViewerWindow`, `MainDashboard`, `ZoneManagerWindow`, `AddZoneDialog`, `EditZoneDialog`, `AssignSensorDialog`
 *   **Methods:**
     *   `System`: `turn_on`, `turn_off`, `reset`, `shutdown`, `_start_sensor_polling`, `_stop_sensor_polling`, `_sensor_polling_loop`, `_handle_intrusion`, `_start_entry_delay_countdown`, `_trigger_alarm`, `call_monitoring_service`, `arm_system`, `disarm_system`, `arm_zone`, `disarm_zone`, `login`, `change_password`, `_send_password_change_alert`, `_get_sensors_for_mode`, `get_system_status`, `countdown`
     *   `LoginInterface`: `validate_credentials`, `change_password`
@@ -36,6 +36,7 @@ This document outlines the unit testing strategy and results for the SafeHome pr
     *   `Alarm`: `ring`, `_ring_for_duration`, `stop`, `is_active`, `set_duration`, `get_duration`, `get_status`
     *   `DeviceControlPanelAbstract`: `_update_display_text`, `set_security_zone_number`, `set_display_away`, `set_display_stay`, `set_display_not_ready`, `set_display_short_message1`, `set_display_short_message2`, `set_armed_led`, `set_powered_led`, `button1`, `button2`, `button3`, `button4`, `button5`, `button6`, `button7`, `button8`, `button9`, `button_star`, `button0`, `button_sharp`
     *   `SafeHomeControlPanel`: `_refresh_status_display`, `_reset_interaction`, `_handle_key_input`, `_handle_command`, `_attempt_login`, `_attempt_change_password`, `button1`, `button2`, `button3`, `button4`, `button5`, `button6`, `button7`, `button8`, `button9`, `button0`, `button_star`, `button_sharp`, `button_panic`
+    *   `CameraMonitor`: `__init__`, `_update_feed`, `_pan_left`, `_pan_right`, `_zoom_in`, `_zoom_out`, `_on_close`
     *   `LoginWindow`: `_center_window`, `_create_ui`, `_attempt_login`, `_open_dashboard`
     *   `LogViewerWindow`: `_center_window`, `_create_ui`, `_refresh_logs`, `_toggle_auto_refresh`, `_start_auto_refresh`, `_clear_logs`, `_ts`
     *   `MainDashboard`: `_build_permissions`, `_create_ui`, `_create_header`, `_create_camera_section`, `_create_control_buttons`, `_create_sensor_section`, `_create_zone_section`, `_create_quick_actions`, `_update_loop`, `_update_cameras`, `_update_sensors`, `_update_zones`, `_update_header`, `_prompt_camera_password`, `_set_mode`, `_pan_camera`, `_tilt_camera`, `_zoom_camera`, `_toggle_camera`, `_set_camera_password`, `_delete_camera_password`, `_open_zone_manager`, `_open_log_viewer`, `_trigger_panic`, `_silence_alarm`, `_open_settings`, `_reset_system`, `_save_settings`, `_open_sensor_simulator`, `_logout`, `_on_close`, `add_row`
@@ -642,15 +643,210 @@ Actual Result             | Pass
 | Field                         | Description |
 |-------------------------------|-------------|
 | **Class**                     | `MainDashboard` |
-| **Method**                    | `_build_permissions` |
+| **Method**                    | `_logout` |
 | **Author**                    | Gemini |
-| **Date**                      | 2025-11-30 |
+| **Date**                      | 2025-12-01 |
 | **Version**                   | 1.0 |
-| **Test Case Description**     | Verifies that the `_build_permissions` static method correctly generates different permission sets for "admin" and "guest" users, ensuring guests have restricted access. |
-| **Input Specifications**      | The `_build_permissions` method is called once for the "admin" role and once for the "guest" role. |
-| **Expected Result**           | The admin permissions dictionary should have `control_modes` set to `True`, while the guest permissions should have it set to `False`. Guest PTZ control should be `True`. |
-Actual Result             | Pass
-| **Comment (including refs)**  | `test_unit_ui_logic.py::test_main_dashboard_build_permissions` |
+| **Test Case Description**     | `UT-Dashboard-LogoutForce`: Verifies that a forced logout immediately destroys the dashboard window and shows the login window, without a confirmation prompt. |
+| **Input Specifications**      | `_logout` is called with `force_logout=True`. |
+| **Expected Result**           | The `destroy` and `login_window.deiconify` methods are called once. `messagebox.askyesno` is not called. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_main_dashboard.py::test_dashboard_logout_force` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `MainDashboard` |
+| **Method**                    | `_logout` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | `UT-Dashboard-LogoutConfirm`: Verifies the user-confirmed logout path. It checks that a confirmation dialog is shown and that the logout proceeds only if the user confirms. |
+| **Input Specifications**      | `_logout` is called with `force_logout=False`, and the mocked `messagebox.askyesno` returns `True`. |
+| **Expected Result**           | `messagebox.askyesno` is called once. The `destroy` and `login_window.deiconify` methods are also called once. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_main_dashboard.py::test_dashboard_logout_confirm` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `MainDashboard` |
+| **Method**                    | `_logout` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | `UT-Dashboard-LogoutCancel`: Verifies that the logout process is aborted if the user cancels the confirmation dialog. |
+| **Input Specifications**      | `_logout` is called with `force_logout=False`, and the mocked `messagebox.askyesno` returns `False`. |
+| **Expected Result**           | `messagebox.askyesno` is called once, but the `destroy` and `login_window.deiconify` methods are not called. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_main_dashboard.py::test_dashboard_logout_cancel` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `MainDashboard` |
+| **Method**                    | `_on_close` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | `UT-Dashboard-OnClose`: Tests the handler for the window's close button, covering both cases where the user confirms and cancels quitting the application. |
+| **Input Specifications**      | `_on_close` is called twice. The first time, `messagebox.askokcancel` returns `True`. The second time, it returns `False`. |
+| **Expected Result**           | When confirmed, `system.shutdown` and `login_window.destroy` are called. When canceled, they are not called. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_main_dashboard.py::test_dashboard_on_close` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `MainDashboard` |
+| **Method**                    | Multiple (`_set_mode`, `_trigger_panic`, etc.) |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | `UT-Dashboard-Permissions`: Verifies that a user with the 'guest' role is blocked from performing privileged actions, and that an appropriate warning message is shown. |
+| **Input Specifications**      | A `MainDashboard` is created for a 'guest' user. Various administrative methods are then called. |
+| **Expected Result**           | Each action should be blocked, and `messagebox.showwarning` should be called with a specific permission-denied message for each action. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_main_dashboard.py::test_dashboard_permission_denied_actions` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `MainDashboard` |
+| **Method**                    | `_set_mode` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | `UT-Dashboard-SetMode`: Verifies the system mode setting logic for an admin user, covering disarming, successful arming, and failed arming scenarios. |
+| **Input Specifications**      | `_set_mode` is called for `DISARMED`, `AWAY`, and `HOME` modes. The underlying `system.arm_system` is mocked to return `True` and then `False`. |
+| **Expected Result**           | The correct system methods (`disarm_system`, `arm_system`) are called, and the correct `showinfo` or `showwarning` message is displayed based on the outcome. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_main_dashboard.py::test_set_mode_admin` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `MainDashboard` |
+| **Method**                    | `_trigger_panic` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | `UT-Dashboard-Panic`: Verifies the logic for the panic button for an admin user, covering both user confirmation and cancellation. |
+| **Input Specifications**      | `_trigger_panic` is called once with the confirmation dialog returning `False`, and once with it returning `True`. |
+| **Expected Result**           | If canceled, no action is taken. If confirmed, the system mode is set to `PANIC`, the alarm rings, and a warning is shown. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_main_dashboard.py::test_trigger_panic_admin` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `MainDashboard` |
+| **Method**                    | `_silence_alarm` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | `UT-Dashboard-Silence`: Verifies the alarm silencing logic for an admin user. |
+| **Input Specifications**      | `_silence_alarm` is called. |
+| **Expected Result**           | The `system.alarm.stop` method is called, and an `showinfo` message is displayed. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_main_dashboard.py::test_silence_alarm_admin` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraMonitor` |
+| **Method**                    | `__init__` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies successful initialization of the `CameraMonitor` window when provided with a valid system and camera ID. |
+| **Input Specifications**      | `CameraMonitor` is instantiated with a mock system and a valid camera ID. The camera does not require a password. |
+| **Expected Result**           | The camera is fetched from the controller, the GUI setup method is called, and the feed update process is initiated. No errors are shown. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_camera_monitor.py::test_init_success` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraMonitor` |
+| **Method**                    | `__init__` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests that `CameraMonitor` initialization fails gracefully with an error message if no system object is provided. |
+| **Input Specifications**      | `CameraMonitor` is instantiated with `system=None`. |
+| **Expected Result**           | `messagebox.showerror` is called with the message "System not initialized". |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_camera_monitor.py::test_init_no_system` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraMonitor` |
+| **Method**                    | `__init__` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests that `CameraMonitor` initialization fails gracefully if the requested camera ID is not found in the system. |
+| **Input Specifications**      | `CameraMonitor` is instantiated with a camera ID that the mock `camera_controller` will not find. |
+| **Expected Result**           | `messagebox.showerror` is called with the message "Camera 1 not found". |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_camera_monitor.py::test_init_camera_not_found` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraMonitor` |
+| **Method**                    | `__init__` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests that `CameraMonitor` denies access if an incorrect password is provided for a password-protected camera. |
+| **Input Specifications**      | A password-protected camera is used, and `CameraMonitor` is instantiated with an incorrect password. |
+| **Expected Result**           | `messagebox.showerror` is called with the message "Invalid camera password". |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_camera_monitor.py::test_init_invalid_password` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraMonitor` |
+| **Method**                    | `_update_feed` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the camera feed successfully updates by displaying a new image received from the controller. |
+| **Input Specifications**      | `_update_feed` is called after mocking `camera_controller.get_camera_view` to return a valid image object. |
+| **Expected Result**           | `ImageTk.PhotoImage` is called with the new image, and the image label in the UI is updated. The method schedules itself to run again. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_camera_monitor.py::test_update_feed_success` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraMonitor` |
+| **Method**                    | `_update_feed` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the UI displays a "Camera Unavailable" message if the controller does not return an image for the feed. |
+| **Input Specifications**      | `_update_feed` is called after mocking `camera_controller.get_camera_view` to return `None`. |
+| **Expected Result**           | The image label in the UI is updated with the text "Camera Unavailable". The method schedules itself to run again. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_camera_monitor.py::test_update_feed_unavailable` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraMonitor` |
+| **Method**                    | `_pan_left`, `_pan_right`, `_zoom_in`, `_zoom_out` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Tests the Pan/Tilt/Zoom (PTZ) control methods, verifying both successful commands and failures (e.g., when a movement limit is reached). |
+| **Input Specifications**      | The PTZ methods are called when the underlying mock controller method is set to return `True` (success) and then `False` (failure). |
+| **Expected Result**           | The corresponding `camera_controller` methods are called with the correct parameters. On failure, `messagebox.showwarning` is called with an appropriate message. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_camera_monitor.py::test_ptz_controls` |
+
+| Field                         | Description |
+|-------------------------------|-------------|
+| **Class**                     | `CameraMonitor` |
+| **Method**                    | `_on_close` |
+| **Author**                    | Gemini |
+| **Date**                      | 2025-12-01 |
+| **Version**                   | 1.0 |
+| **Test Case Description**     | Verifies that the `_on_close` handler correctly triggers the destruction of the window. |
+| **Input Specifications**      | The `destroy` method of the monitor object is replaced with a spy mock, and `_on_close` is called. |
+| **Expected Result**           | The spy mock for the `destroy` method is called exactly once. |
+| **Actual Result**             | Pass |
+| **Comment (including refs)**  | `test_unit_camera_monitor.py::test_on_close` |
 
 ### 3.4. Configuration and Data Management
 
