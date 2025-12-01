@@ -29,7 +29,7 @@ A comprehensive, simulated smart home security system featuring a graphical dash
 
 1.  **Clone the repository**
     ```bash
-    git clone <https://github.com/Jamal-Alibalayev/CS350-Safehome.git>
+    git clone https://github.com/Jamal-Alibalayev/CS350-Safehome.git
     ```
 
 2.  **Navigate to the project directory**
