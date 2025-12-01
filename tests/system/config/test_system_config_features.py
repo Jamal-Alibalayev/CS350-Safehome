@@ -79,7 +79,6 @@ def test_st_email_alert_failover(monkeypatch, tmp_path):
     assert sent is False
     sys.shutdown()
 
-
 def test_st_db_rollback_recover(system):
     """
     ST-DB-Rollback-Recover: uncommitted insert rolled back leaves no residue.
@@ -94,7 +93,6 @@ def test_st_db_rollback_recover(system):
     db.rollback()
     rows = db.get_event_logs(event_type="TEST", limit=5)
     assert not any(row["event_message"] == "rollback-check" for row in rows)
-
 
 def test_st_backup_fallback_json(tmp_path, monkeypatch):
     """

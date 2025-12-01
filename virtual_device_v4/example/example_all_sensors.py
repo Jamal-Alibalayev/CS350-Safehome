@@ -39,53 +39,49 @@ def main():
     print("=" * 60)
     print("SafeHome Sensor Test - All Sensors")
     print("=" * 60)
-
+    
     # Create Window/Door Sensors
     print("\n[1] Creating Window/Door sensors...")
     wd_sensor1 = DeviceWinDoorSensor()
     print(f"    ✓ WinDoor Sensor 1 created with ID: {wd_sensor1.get_id()}")
-
+    
     wd_sensor2 = DeviceWinDoorSensor()
     print(f"    ✓ WinDoor Sensor 2 created with ID: {wd_sensor2.get_id()}")
-
+    
     wd_sensor3 = DeviceWinDoorSensor()
     print(f"    ✓ WinDoor Sensor 3 created with ID: {wd_sensor3.get_id()}")
-
+    
     # arm Window/Door sensors
     wd_sensor1.arm()
     wd_sensor2.arm()
     wd_sensor3.arm()
     print("    ✓ All Window/Door sensors armed!")
-
+    
     # Create Motion Detectors
     print("\n[2] Creating Motion Detector sensors...")
     motion1 = DeviceMotionDetector()
     print(f"    ✓ Motion Detector 1 created with ID: {motion1.get_id()}")
-
+    
     motion2 = DeviceMotionDetector()
     print(f"    ✓ Motion Detector 2 created with ID: {motion2.get_id()}")
-
+    
     motion3 = DeviceMotionDetector()
     print(f"    ✓ Motion Detector 3 created with ID: {motion3.get_id()}")
-
+    
     # arm Motion detectors
     motion1.arm()
     motion2.arm()
     motion3.arm()
     print("    ✓ All Motion detectors armed!")
-
+    
     # Display initial states
     print("\n" + "=" * 60)
     print("Initial Sensor States:")
     print("-" * 60)
-    print(
-        f"Window/Door Sensors: S1={wd_sensor1.read()}, S2={wd_sensor2.read()}, S3={wd_sensor3.read()}"
-    )
-    print(
-        f"Motion Detectors:    D1={motion1.read()}, D2={motion2.read()}, D3={motion3.read()}"
-    )
+    print(f"Window/Door Sensors: S1={wd_sensor1.read()}, S2={wd_sensor2.read()}, S3={wd_sensor3.read()}")
+    print(f"Motion Detectors:    D1={motion1.read()}, D2={motion2.read()}, D3={motion3.read()}")
     print("=" * 60)
-
+    
     # Display test instructions
     print("\n📋 Test Instructions:")
     print("\n  Window/Door Sensors (IDs: 1-3):")
@@ -97,21 +93,17 @@ def main():
     print("    • Click 'detect' to simulate motion")
     print("    • Click 'clear' to clear detection")
     print("\n" + "=" * 60)
-
+    
     # Update GUI with sensor ID ranges
     gui = DeviceSensorTester.safeHomeSensorTest
     if gui:
-        gui.rangeSensorID_WinDoorSensor.set(
-            f"{wd_sensor1.get_id()}-{wd_sensor3.get_id()}"
-        )
+        gui.rangeSensorID_WinDoorSensor.set(f"{wd_sensor1.get_id()}-{wd_sensor3.get_id()}")
         gui.rangeSensorID_MotionDetector.set(f"{motion1.get_id()}-{motion3.get_id()}")
         print("✅ GUI initialized successfully! Starting main loop...")
         print("=" * 60)
         gui.mainloop()
     else:
-        print(
-            "⚠️  Warning: GUI not initialized (running in headless mode or tkinter not available)"
-        )
+        print("⚠️  Warning: GUI not initialized (running in headless mode or tkinter not available)")
 
 
 if __name__ == "__main__":
