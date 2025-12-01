@@ -24,12 +24,12 @@ def mock_system():
 @pytest.fixture(scope="function")
 def admin_dashboard(mock_system):
     """Fixture to create a MainDashboard instance for an admin user."""
-    with patch('tkinter.Toplevel'), \
-         patch('tkinter.Frame'), \
-         patch('tkinter.Label'), \
-         patch('tkinter.Button'), \
-         patch('tkinter.Listbox'), \
-         patch('tkinter.ttk.Treeview'), \
+    with patch('safehome.interface.dashboard.main_dashboard.tk.Toplevel'), \
+         patch('safehome.interface.dashboard.main_dashboard.tk.Frame'), \
+         patch('safehome.interface.dashboard.main_dashboard.tk.Label'), \
+         patch('safehome.interface.dashboard.main_dashboard.tk.Button'), \
+         patch('safehome.interface.dashboard.main_dashboard.tk.Listbox'), \
+         patch('safehome.interface.dashboard.main_dashboard.ttk.Treeview'), \
          patch('safehome.interface.dashboard.main_dashboard.ImageTk'), \
          patch('safehome.interface.dashboard.main_dashboard.messagebox') as mock_messagebox, \
          patch('safehome.interface.dashboard.main_dashboard.simpledialog') as mock_simpledialog:
@@ -44,12 +44,12 @@ def admin_dashboard(mock_system):
 @pytest.fixture(scope="function")
 def guest_dashboard(mock_system):
     """Fixture to create a MainDashboard instance for a guest user."""
-    with patch('tkinter.Toplevel'), \
-         patch('tkinter.Frame'), \
-         patch('tkinter.Label'), \
-         patch('tkinter.Button'), \
-         patch('tkinter.Listbox'), \
-         patch('tkinter.ttk.Treeview'), \
+    with patch('safehome.interface.dashboard.main_dashboard.tk.Toplevel'), \
+         patch('safehome.interface.dashboard.main_dashboard.tk.Frame'), \
+         patch('safehome.interface.dashboard.main_dashboard.tk.Label'), \
+         patch('safehome.interface.dashboard.main_dashboard.tk.Button'), \
+         patch('safehome.interface.dashboard.main_dashboard.tk.Listbox'), \
+         patch('safehome.interface.dashboard.main_dashboard.ttk.Treeview'), \
          patch('safehome.interface.dashboard.main_dashboard.ImageTk'), \
          patch('safehome.interface.dashboard.main_dashboard.messagebox') as mock_messagebox, \
          patch('safehome.interface.dashboard.main_dashboard.simpledialog') as mock_simpledialog:
