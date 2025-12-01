@@ -87,4 +87,4 @@ CS350-Safehome/
 ```
 
 ## 📚 Documentation
--   **[User Manual](USER_MANUAL.md):** Provides detailed instructions on how to use the application.
+-   **[User Manual](docs\USER_MANUAL.md):** Provides detailed instructions on how to use the application.
