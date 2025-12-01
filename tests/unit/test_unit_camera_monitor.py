@@ -1,19 +1,67 @@
-
 import unittest
 from unittest.mock import MagicMock, patch, ANY
 import tkinter as tk
 from tkinter import messagebox # Added this line
 from PIL import Image
 
-# To prevent tkinter from trying to create a root window
-# we need to mock it for all tests in this file.
-tk.Tk = MagicMock()
-
 from safehome.interface.control_panel.camera_monitor import CameraMonitor
+
+# This boilerplate is to make CameraMonitor testable without a real GUI loop.
+# These functions are used to patch the real methods.
+def mock_init(self, master=None, system=None, camera_id=1, password=None):
+    # The call to super().__init__ would hang the test because it initializes a
+    # Tkinter window without a running event loop.
+    # super(CameraMonitor, self).__init__(master)
+    
+    # We need to mock the Tkinter methods that are used.
+    self.title = MagicMock()
+    self.geometry = MagicMock()
+    self.resizable = MagicMock()
+    self.protocol = MagicMock()
+    self.after = MagicMock()
+    self.destroy = MagicMock()
+
+    self.title(f"SafeHome Monitor - Camera {camera_id}")
+    self.geometry("520x750")
+    self.resizable(False, False)
+
+    self.system = system
+    self.camera_id = camera_id
+    self.password = password
+    
+    self._setup_gui_called = False
+    if not self._verify_access():
+        self.destroy()
+        return
+
+    self.camera = self.system.camera_controller.get_camera(camera_id)
+    if not self.camera:
+        messagebox.showerror("Error", f"Camera {camera_id} not found")
+        self.destroy()
+        return
+
+    self._setup_gui()
+    self._update_feed()
+    self.protocol("WM_DELETE_WINDOW", self._on_close)
+
+def mock_setup_gui(self):
+    self._setup_gui_called = True
+    self.image_label = MagicMock()
+
 
 class TestCameraMonitor(unittest.TestCase):
 
     def setUp(self):
+        # Start patchers to isolate mocking from other test files
+        self.tk_patcher = patch('tkinter.Tk', new_callable=MagicMock)
+        self.init_patcher = patch.object(CameraMonitor, '__init__', mock_init)
+        self.gui_patcher = patch.object(CameraMonitor, '_setup_gui', mock_setup_gui)
+        
+        self.mock_tk = self.tk_patcher.start()
+        self.init_patcher.start()
+        self.gui_patcher.start()
+        
+        # Original setUp content
         self.mock_system = MagicMock()
         self.mock_camera = MagicMock()
         self.mock_camera.name = "Test Cam"
@@ -24,6 +72,12 @@ class TestCameraMonitor(unittest.TestCase):
         
         # This is needed because CameraMonitor is a Toplevel, which needs a master
         self.master = tk.Tk()
+
+    def tearDown(self):
+        # Stop patchers in reverse order to clean up
+        self.gui_patcher.stop()
+        self.init_patcher.stop()
+        self.tk_patcher.stop()
 
     @patch('safehome.interface.control_panel.camera_monitor.messagebox')
     @patch('safehome.interface.control_panel.camera_monitor.ImageTk')
@@ -148,51 +202,6 @@ class TestCameraMonitor(unittest.TestCase):
         monitor._on_close()
         destroy_spy.assert_called_once()
 
-
-# This boilerplate is to make CameraMonitor testable without a real GUI loop
-def mock_init(self, master=None, system=None, camera_id=1, password=None):
-    # The call to super().__init__ would hang the test because it initializes a
-    # Tkinter window without a running event loop.
-    # super(CameraMonitor, self).__init__(master)
-    
-    # We need to mock the Tkinter methods that are used.
-    self.title = MagicMock()
-    self.geometry = MagicMock()
-    self.resizable = MagicMock()
-    self.protocol = MagicMock()
-    self.after = MagicMock()
-    self.destroy = MagicMock()
-
-    self.title(f"SafeHome Monitor - Camera {camera_id}")
-    self.geometry("520x750")
-    self.resizable(False, False)
-
-    self.system = system
-    self.camera_id = camera_id
-    self.password = password
-    
-    self._setup_gui_called = False
-    if not self._verify_access():
-        self.destroy()
-        return
-
-    self.camera = self.system.camera_controller.get_camera(camera_id)
-    if not self.camera:
-        messagebox.showerror("Error", f"Camera {camera_id} not found")
-        self.destroy()
-        return
-
-    self._setup_gui()
-    self._update_feed()
-    self.protocol("WM_DELETE_WINDOW", self._on_close)
-
-def mock_setup_gui(self):
-    self._setup_gui_called = True
-    self.image_label = MagicMock()
-
-
-CameraMonitor.__init__ = mock_init
-CameraMonitor._setup_gui = mock_setup_gui
 
 if __name__ == '__main__':
     unittest.main()
