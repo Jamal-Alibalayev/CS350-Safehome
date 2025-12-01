@@ -20,6 +20,10 @@ A comprehensive, simulated smart home security system featuring a graphical dash
 ### Prerequisites
 
 -   Python 3.x
+-   Python Library Requirnments:
+    -   Pillow
+    -   Flask
+    -   pytest
 
 ### Installation & Running
 
@@ -81,10 +85,6 @@ CS350-Safehome/
 ├── requirements.txt        # Project dependencies
 └── README.md               # This README file
 ```
-**Note:** The directories `virtual_device_v4/` contain example implementations provided by TAs/professors and are not actively used as part of the main SafeHome project.
-
 
 ## 📚 Documentation
-
 -   **[User Manual](USER_MANUAL.md):** Provides detailed instructions on how to use the application.
--   **[Unit Test Documentation](UNITTEST_DOCUMENTATION.md):** Describes the project's unit testing strategy and coverage.
