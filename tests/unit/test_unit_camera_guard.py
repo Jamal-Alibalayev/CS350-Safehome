@@ -38,7 +38,9 @@ def test_camera_access_guard_denies_when_locked(monkeypatch):
             log_msgs.append(msg)
 
     guard = CameraAccessGuard(logger=DummyLogger())
-    cam = SafeHomeCamera(1, "Lab", "Lab", password="pw", max_attempts=1, lockout_seconds=1)
+    cam = SafeHomeCamera(
+        1, "Lab", "Lab", password="pw", max_attempts=1, lockout_seconds=1
+    )
     assert guard.require_access(cam, 1, "bad", "view") is None
     assert log_msgs
     cam.verify_password("bad")
@@ -50,16 +52,22 @@ def test_camera_access_guard_denies_when_locked(monkeypatch):
 def test_camera_controller_get_camera_with_access(controller):
     """UT-CamCtrl-AccessHelper: internal access helper honors passwords."""
     cam = controller.add_camera("Front", "Door", password="1234")
-    helper = controller._get_camera_with_access(cam.camera_id, password="0000", action="view")
+    helper = controller._get_camera_with_access(
+        cam.camera_id, password="0000", action="view"
+    )
     assert helper is None
-    helper_ok = controller._get_camera_with_access(cam.camera_id, password="1234", action="view")
+    helper_ok = controller._get_camera_with_access(
+        cam.camera_id, password="1234", action="view"
+    )
     assert helper_ok is not None
     controller.shutdown()
 
 
 def test_safehome_camera_lock_and_status():
     """UT-Cam-LockStatus: lockout resets after timeout and status reflects fields."""
-    cam = SafeHomeCamera(2, "Kitchen", "Kitchen", password="pw", max_attempts=1, lockout_seconds=0.1)
+    cam = SafeHomeCamera(
+        2, "Kitchen", "Kitchen", password="pw", max_attempts=1, lockout_seconds=0.1
+    )
     assert not cam.verify_password("bad")
     assert cam.is_locked()
     time.sleep(0.11)

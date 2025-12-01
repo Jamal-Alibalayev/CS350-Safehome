@@ -10,6 +10,7 @@ from pathlib import Path
 from safehome.device.sensor.windoor_sensor import WindowDoorSensor
 from safehome.device.sensor.motion_sensor import MotionSensor
 
+
 class SafeHomeSensorTest(tk.Toplevel):
     """
     현대적인 센서 시뮬레이터 GUI
@@ -155,7 +156,11 @@ class SafeHomeSensorTest(tk.Toplevel):
         canvas.configure(yscrollcommand=scrollbar.set)
 
         def _on_mousewheel(event):
-            delta = event.delta // 120 if hasattr(event, "delta") else -1 if event.num == 4 else 1
+            delta = (
+                event.delta // 120
+                if hasattr(event, "delta")
+                else -1 if event.num == 4 else 1
+            )
             canvas.yview_scroll(-delta, "units")
 
         def _bind_mousewheel_recursively(widget):
@@ -190,26 +195,50 @@ class SafeHomeSensorTest(tk.Toplevel):
             row=0, column=0, sticky="w", pady=5
         )
         self.id_var = tk.StringVar()
-        tk.Entry(main_content, textvariable=self.id_var, font=("Arial", 11), width=15).grid(
-            row=0, column=1, padx=5, pady=5
-        )
+        tk.Entry(
+            main_content, textvariable=self.id_var, font=("Arial", 11), width=15
+        ).grid(row=0, column=1, padx=5, pady=5)
 
-        tk.Label(main_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white").grid(
-            row=1, column=0, columnspan=2, sticky="w", pady=(10, 5)
-        )
+        tk.Label(
+            main_content, text="Sensor Control:", font=("Arial", 10, "bold"), bg="white"
+        ).grid(row=1, column=0, columnspan=2, sticky="w", pady=(10, 5))
         btn_frame1 = tk.Frame(main_content, bg="white")
         btn_frame1.grid(row=2, column=0, columnspan=2, pady=5)
-        tk.Button(btn_frame1, text="🟢 ARM", command=lambda: self._handle_sensor("arm"), width=15, height=2).pack(side="left", padx=5)
-        tk.Button(btn_frame1, text="🔴 DISARM", command=lambda: self._handle_sensor("disarm"), width=15, height=2).pack(side="left", padx=5)
+        tk.Button(
+            btn_frame1,
+            text="🟢 ARM",
+            command=lambda: self._handle_sensor("arm"),
+            width=15,
+            height=2,
+        ).pack(side="left", padx=5)
+        tk.Button(
+            btn_frame1,
+            text="🔴 DISARM",
+            command=lambda: self._handle_sensor("disarm"),
+            width=15,
+            height=2,
+        ).pack(side="left", padx=5)
 
-        tk.Label(main_content, text="Physical State:", font=("Arial", 10, "bold"), bg="white").grid(
-            row=3, column=0, columnspan=2, sticky="w", pady=(10, 5)
-        )
+        tk.Label(
+            main_content, text="Physical State:", font=("Arial", 10, "bold"), bg="white"
+        ).grid(row=3, column=0, columnspan=2, sticky="w", pady=(10, 5))
         btn_frame2 = tk.Frame(main_content, bg="white")
         btn_frame2.grid(row=4, column=0, columnspan=2, pady=5)
-        tk.Button(btn_frame2, text="🚪 OPEN / DETECT", command=lambda: self._handle_sensor("trigger"), width=15, height=2).pack(side="left", padx=5)
-        tk.Button(btn_frame2, text="⚪ CLOSE / CLEAR", command=lambda: self._handle_sensor("release"), width=15, height=2).pack(side="left", padx=5)
-        
+        tk.Button(
+            btn_frame2,
+            text="🚪 OPEN / DETECT",
+            command=lambda: self._handle_sensor("trigger"),
+            width=15,
+            height=2,
+        ).pack(side="left", padx=5)
+        tk.Button(
+            btn_frame2,
+            text="⚪ CLOSE / CLEAR",
+            command=lambda: self._handle_sensor("release"),
+            width=15,
+            height=2,
+        ).pack(side="left", padx=5)
+
         # Quick Actions
         quick_frame = tk.LabelFrame(
             parent,
@@ -221,9 +250,15 @@ class SafeHomeSensorTest(tk.Toplevel):
         quick_frame.pack(fill="x", padx=10)
         quick_content = tk.Frame(quick_frame, bg="white")
         quick_content.pack(padx=15, pady=15, fill="x")
-        tk.Button(quick_content, text="🟢 ARM ALL", command=self._arm_all, height=2).pack(pady=5, fill="x")
-        tk.Button(quick_content, text="🔴 DISARM ALL", command=self._disarm_all, height=2).pack(pady=5, fill="x")
-        tk.Button(quick_content, text="🔄 CLOSE/CLEAR ALL", command=self._reset_all, height=2).pack(pady=5, fill="x")
+        tk.Button(
+            quick_content, text="🟢 ARM ALL", command=self._arm_all, height=2
+        ).pack(pady=5, fill="x")
+        tk.Button(
+            quick_content, text="🔴 DISARM ALL", command=self._disarm_all, height=2
+        ).pack(pady=5, fill="x")
+        tk.Button(
+            quick_content, text="🔄 CLOSE/CLEAR ALL", command=self._reset_all, height=2
+        ).pack(pady=5, fill="x")
 
     def _update_status(self):
         """Periodically update the sensor status tree from the live system controller."""
@@ -238,18 +273,26 @@ class SafeHomeSensorTest(tk.Toplevel):
             for sensor in sorted(all_sensors, key=lambda s: s.sensor_id):
                 sensor_type = sensor.sensor_type
                 armed_state = "🟢 Armed" if sensor.is_active else "🔴 Disarmed"
-                
+
                 if isinstance(sensor, WindowDoorSensor):
                     physical_state = "🚪 Open" if sensor.is_open() else "🚪 Closed"
                 elif isinstance(sensor, MotionSensor):
-                    physical_state = "👁️ Detected" if sensor.is_motion_detected() else "⚪ Clear"
+                    physical_state = (
+                        "👁️ Detected" if sensor.is_motion_detected() else "⚪ Clear"
+                    )
                 else:
                     physical_state = "N/A"
-                
+
                 self.sensor_tree.insert(
                     "",
                     "end",
-                    values=(sensor.sensor_id, sensor_type, sensor.location, armed_state, physical_state),
+                    values=(
+                        sensor.sensor_id,
+                        sensor_type,
+                        sensor.location,
+                        armed_state,
+                        physical_state,
+                    ),
                 )
         except Exception as e:
             # Handle case where window is closed while loop is running
@@ -269,7 +312,9 @@ class SafeHomeSensorTest(tk.Toplevel):
             sensor_id = int(id_str)
             sensor = self.system.sensor_controller.get_sensor(sensor_id)
             if not sensor:
-                messagebox.showerror("Not Found", f"Sensor with ID {sensor_id} not found in the system.")
+                messagebox.showerror(
+                    "Not Found", f"Sensor with ID {sensor_id} not found in the system."
+                )
                 return None
             return sensor
         except ValueError:

@@ -28,3 +28,4 @@ data/**/*.png
 *.png
 data/safehome.db
 data/safehome_events.log
+.vscode/settings.json

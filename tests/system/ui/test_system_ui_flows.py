@@ -22,7 +22,9 @@ def test_st_login_cp_success(system):
     """
     ST-Login-CP-Su: control panel login scenario (logic-level).
     """
-    assert system.login("admin", system.config.settings.master_password, "CONTROL_PANEL")
+    assert system.login(
+        "admin", system.config.settings.master_password, "CONTROL_PANEL"
+    )
     assert system.config.login_manager.failed_attempts["CONTROL_PANEL"] == 0
 
 
@@ -83,45 +85,47 @@ def test_st_log_viewer_logic(tmp_path, monkeypatch):
     sys_init.shutdown()
 
     # Phase 1: Manually write logs
-    con = None
     try:
         con = sqlite3.connect(str(db_path))
         cur = con.cursor()
-        cur.execute("INSERT INTO event_logs (event_type, event_message, source, event_timestamp) VALUES (?, ?, ?, ?)", ("INFO", "Log A", "UI", datetime.datetime.now().isoformat()))
-        cur.execute("INSERT INTO event_logs (event_type, event_message, source, event_timestamp) VALUES (?, ?, ?, ?)", ("INFO", "Log B", "UI", datetime.datetime.now().isoformat()))
+        cur.execute(
+            "INSERT INTO event_logs (event_type, event_message, source, event_timestamp) VALUES (?, ?, ?, ?)",
+            ("INFO", "Log A", "UI", datetime.datetime.now().isoformat()),
+        )
+        cur.execute(
+            "INSERT INTO event_logs (event_type, event_message, source, event_timestamp) VALUES (?, ?, ?, ?)",
+            ("INFO", "Log B", "UI", datetime.datetime.now().isoformat()),
+        )
         con.commit()
+        con.close()
     except Exception as e:
         pytest.fail(f"Manual DB write failed: {e}")
-    finally:
-        if con:
-            con.close()
 
     # Phase 2: App reads, verifies, then clears
     sys2 = System(db_path=str(db_path))
-    try:
-        logs1 = sys2.config.storage.get_logs(limit=5)
-        assert any("Log A" in row["event_message"] for row in logs1)
-        assert any("Log B" in row["event_message"] for row in logs1)
-        
-        sys2.config.storage.clear_logs()
-    finally:
-        sys2.shutdown()
+    logs1 = sys2.config.storage.get_logs(limit=5)
+    assert any("Log A" in row["event_message"] for row in logs1)
+    assert any("Log B" in row["event_message"] for row in logs1)
+
+    sys2.config.storage.clear_logs()
+    sys2.shutdown()
 
     # Phase 3: Manually verify that the specific logs were cleared
-    con = None
     try:
         con = sqlite3.connect(str(db_path))
         cur = con.cursor()
         # Check that the specific logs we cleared are gone, not that the table is empty,
         # as teardown logic from other fixtures might add new logs.
-        cur.execute("SELECT * FROM event_logs WHERE event_message IN ('Log A', 'Log B')")
+        cur.execute(
+            "SELECT * FROM event_logs WHERE event_message IN ('Log A', 'Log B')"
+        )
         rows = cur.fetchall()
-        assert rows == [], "Logs 'Log A' and 'Log B' should have been cleared, but were found."
+        con.close()
+        assert (
+            rows == []
+        ), "Logs 'Log A' and 'Log B' should have been cleared, but were found."
     except Exception as e:
         pytest.fail(f"Manual DB read/verify failed: {e}")
-    finally:
-        if con:
-            con.close()
 
 
 def test_st_logout_session_logic(system):
@@ -134,4 +138,6 @@ def test_st_logout_session_logic(system):
     assert lm.is_interface_locked("CONTROL_PANEL")
     lm.unlock_system("CONTROL_PANEL")
     assert not lm.is_interface_locked("CONTROL_PANEL")
-    assert system.login("admin", system.config.settings.master_password, "CONTROL_PANEL")
+    assert system.login(
+        "admin", system.config.settings.master_password, "CONTROL_PANEL"
+    )

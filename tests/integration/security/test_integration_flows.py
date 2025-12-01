@@ -66,7 +66,9 @@ def test_it_arm_blocks_when_window_open_and_logs(system):
     assert not armed
     # Check logger captured warning
     logs = system.config.logger.get_recent_logs(1)
-    assert any("Cannot arm" in log.message or "windows/doors" in log.message for log in logs)
+    assert any(
+        "Cannot arm" in log.message or "windows/doors" in log.message for log in logs
+    )
 
 
 def test_it_entry_delay_triggers_alarm(system):
@@ -131,26 +133,25 @@ def test_it_log_persistence(tmp_path, monkeypatch):
     # Phase 1: Manually write a log to the database file to bypass application logic
     import sqlite3
     import datetime
-    con = None
+
     try:
         con = sqlite3.connect(str(db_path))
         cur = con.cursor()
         cur.execute(
             "INSERT INTO event_logs (event_type, event_message, source, event_timestamp) VALUES (?, ?, ?, ?)",
-            ("INFO", log_message, "ManualTest", datetime.datetime.now().isoformat())
+            ("INFO", log_message, "ManualTest", datetime.datetime.now().isoformat()),
         )
         con.commit()
+        con.close()
     except Exception as e:
         pytest.fail(f"Manual DB write failed: {e}")
-    finally:
-        if con:
-            con.close()
 
     # Phase 2: Create a new system instance and read from the same DB
     sys2 = System(db_path=str(db_path))
-    try:
-        rows = sys2.config.db_manager.get_event_logs(event_type="INFO", limit=10)
-        # Assert that the manually written log was loaded by the application
-        assert any(row["event_message"] == log_message for row in rows), "Log manually written to DB was not found by the application's read logic"
-    finally:
-        sys2.shutdown()
+    rows = sys2.config.db_manager.get_event_logs(event_type="INFO", limit=10)
+    sys2.shutdown()
+
+    # Assert that the manually written log was loaded by the application
+    assert any(
+        row["event_message"] == log_message for row in rows
+    ), "Log manually written to DB was not found by the application's read logic"

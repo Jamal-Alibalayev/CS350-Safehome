@@ -40,7 +40,9 @@ def test_st_login_cp_lockout_and_recover(system):
     assert system.config.login_manager.is_interface_locked("CONTROL_PANEL")
 
     time.sleep(0.15)
-    assert system.login("admin", system.config.settings.master_password, "CONTROL_PANEL")
+    assert system.login(
+        "admin", system.config.settings.master_password, "CONTROL_PANEL"
+    )
     assert not system.config.login_manager.is_interface_locked("CONTROL_PANEL")
 
 
@@ -54,7 +56,9 @@ def test_st_password_change_alert(system, monkeypatch):
         called["sent"] = True
         return True
 
-    monkeypatch.setattr(system.config, "send_email_alert", lambda *args, **kwargs: fake_alert())
+    monkeypatch.setattr(
+        system.config, "send_email_alert", lambda *args, **kwargs: fake_alert()
+    )
     assert system.change_password("1234", "4321", interface_type="CONTROL_PANEL")
     assert called.get("sent")
     # new password works, old fails
