@@ -1,5 +1,3 @@
-import pytest
-
 from safehome.database import models
 
 
@@ -78,4 +76,3 @@ def test_model_from_db_row_mode_sensor_camera_event_login():
     }
     sess = models.LoginSession.from_db_row(sess_row)
     assert sess.interface_type == "CONTROL_PANEL"
-

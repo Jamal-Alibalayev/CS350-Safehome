@@ -1,6 +1,7 @@
 from typing import Optional
-from .sensor import Sensor
+
 from .device_motion_detector import DeviceMotionDetector
+from .sensor import Sensor
 
 
 class MotionSensor(Sensor):

@@ -4,7 +4,7 @@ Manage safety zones and sensor assignments
 """
 
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox, ttk
 
 
 class ZoneManagerWindow(tk.Toplevel):

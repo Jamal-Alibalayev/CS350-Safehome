@@ -1,11 +1,11 @@
-import time
 import sqlite3
-import pytest
-from PIL import Image
+import time
 
-from safehome.core.system import System
+import pytest
+
 from safehome.configuration.safehome_mode import SafeHomeMode
 from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 
 
 @pytest.fixture(autouse=True)

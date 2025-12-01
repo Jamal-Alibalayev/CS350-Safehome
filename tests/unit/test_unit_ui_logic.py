@@ -1,13 +1,12 @@
-import types
 import pytest
 
-from safehome.interface.control_panel.safehome_control_panel import SafeHomeControlPanel
+from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 from safehome.interface.control_panel.device_control_panel_abstract import (
     DeviceControlPanelAbstract,
 )
+from safehome.interface.control_panel.safehome_control_panel import SafeHomeControlPanel
 from safehome.interface.dashboard.main_dashboard import MainDashboard
-from safehome.core.system import System
-from safehome.configuration.storage_manager import StorageManager
 
 
 @pytest.fixture(autouse=True)
@@ -26,7 +25,9 @@ def system(tmp_path, monkeypatch):
 
 def _patch_control_panel_base(monkeypatch):
     """Patch DeviceControlPanelAbstract UI methods to no-op for headless testing."""
-    monkeypatch.setattr(DeviceControlPanelAbstract, "__init__", lambda self, master=None: None)
+    monkeypatch.setattr(
+        DeviceControlPanelAbstract, "__init__", lambda self, master=None: None
+    )
     for name in [
         "set_display_short_message1",
         "set_display_short_message2",
@@ -38,7 +39,9 @@ def _patch_control_panel_base(monkeypatch):
         "set_security_zone_number",
         "_update_display_text",
     ]:
-        monkeypatch.setattr(DeviceControlPanelAbstract, name, lambda *args, **kwargs: None)
+        monkeypatch.setattr(
+            DeviceControlPanelAbstract, name, lambda *args, **kwargs: None
+        )
 
 
 def test_safehome_control_panel_login_and_arm_disarm(monkeypatch, system):

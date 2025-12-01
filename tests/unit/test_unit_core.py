@@ -1,6 +1,7 @@
 import time
-import pytest
 import types
+
+import pytest
 
 from safehome.configuration.storage_manager import StorageManager
 from safehome.core.system import System

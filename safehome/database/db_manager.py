@@ -1,7 +1,6 @@
 import sqlite3
-import os
 from pathlib import Path
-from typing import Optional, List, Tuple, Any
+from typing import Any, List, Optional, Tuple
 
 
 class DatabaseManager:

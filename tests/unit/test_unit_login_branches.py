@@ -1,5 +1,4 @@
 import time
-import pytest
 
 from safehome.configuration.login_manager import LoginManager
 from safehome.configuration.system_settings import SystemSettings

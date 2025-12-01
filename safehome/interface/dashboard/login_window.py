@@ -4,7 +4,7 @@ Initial entry point for the application
 """
 
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 
 
 class LoginWindow(tk.Tk):

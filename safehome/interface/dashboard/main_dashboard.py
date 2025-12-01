@@ -4,9 +4,10 @@ Unified monitoring and control interface
 """
 
 import tkinter as tk
-from tkinter import ttk, messagebox, simpledialog
-from typing import Optional
+from tkinter import messagebox, simpledialog, ttk
+
 from PIL import Image, ImageTk
+
 from safehome.configuration.safehome_mode import SafeHomeMode
 
 

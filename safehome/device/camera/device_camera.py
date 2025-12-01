@@ -1,8 +1,9 @@
 import threading
 import time
-from PIL import Image, ImageDraw, ImageFont
-import tkinter as tk
 from tkinter import messagebox
+
+from PIL import Image, ImageDraw, ImageFont
+
 from .interface_camera import InterfaceCamera
 
 

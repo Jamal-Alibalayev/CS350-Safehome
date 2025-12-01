@@ -1,8 +1,9 @@
 import json
 import os
-from typing import Optional, List
-from .system_settings import SystemSettings
+from typing import List, Optional
+
 from .safety_zone import SafetyZone
+from .system_settings import SystemSettings
 
 
 class StorageManager:

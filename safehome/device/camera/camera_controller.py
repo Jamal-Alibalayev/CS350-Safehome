@@ -1,7 +1,8 @@
 from typing import Dict, List, Optional
+
 from PIL import Image
+
 from .safehome_camera import SafeHomeCamera
-from safehome.configuration.login_manager import LoginManager
 
 
 class CameraAccessGuard:

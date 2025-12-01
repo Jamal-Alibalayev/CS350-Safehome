@@ -1,9 +1,10 @@
 import time
+
 import pytest
 
-from safehome.core.system import System
 from safehome.configuration.safehome_mode import SafeHomeMode
 from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 
 
 @pytest.fixture(autouse=True)

@@ -1,7 +1,8 @@
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Optional, Tuple
+
+from .motion_sensor import MotionSensor
 from .sensor import Sensor
 from .windoor_sensor import WindowDoorSensor
-from .motion_sensor import MotionSensor
 
 
 class SensorController:
@@ -216,12 +217,12 @@ class SensorController:
         for sensor in self.sensors.values():
             if isinstance(sensor, WindowDoorSensor):
                 sensor.simulate_close()
-        
+
         if self.logger:
             self.logger.add_log(
-                "All window/door sensors set to 'closed' state", source="SensorController"
+                "All window/door sensors set to 'closed' state",
+                source="SensorController",
             )
-
 
     def poll_sensors(self) -> List[Tuple[int, Sensor]]:
         """

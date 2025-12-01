@@ -1,8 +1,8 @@
 import pytest
 from PIL import Image
 
-from safehome.core.system import System
 from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 
 
 @pytest.fixture(autouse=True)

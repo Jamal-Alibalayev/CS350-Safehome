@@ -1,12 +1,12 @@
 import pytest
 from PIL import Image
 
-from safehome.core.system import System
-from safehome.configuration.storage_manager import StorageManager
 from safehome.configuration.safehome_mode import SafeHomeMode
+from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
+from safehome.device.sensor import device_sensor_tester as tester_module
 from safehome.interface.dashboard import main_dashboard as dashboard_module
 from safehome.interface.dashboard.main_dashboard import MainDashboard
-from safehome.device.sensor import device_sensor_tester as tester_module
 
 
 @pytest.fixture(autouse=True)
@@ -17,7 +17,9 @@ def headless_env(monkeypatch):
 @pytest.fixture
 def system(tmp_path, monkeypatch):
     db_path = tmp_path / "ui_enhance.db"
-    monkeypatch.setattr(StorageManager, "CONFIG_FILE", str(tmp_path / "ui_enhance.json"))
+    monkeypatch.setattr(
+        StorageManager, "CONFIG_FILE", str(tmp_path / "ui_enhance.json")
+    )
     sys = System(db_path=str(db_path))
     yield sys
     sys.shutdown()
@@ -52,7 +54,9 @@ def test_st_camera_password_dashboard_flow(system):
     cam = cc.add_camera("Garage", "Garage Entry")
 
     # Set initial password
-    assert cc.set_camera_password(cam.camera_id, new_password="firstPwd", confirm_password="firstPwd")
+    assert cc.set_camera_password(
+        cam.camera_id, new_password="firstPwd", confirm_password="firstPwd"
+    )
     assert cc.get_camera_view(cam.camera_id) is None
     assert cc.get_camera_view(cam.camera_id, password="firstPwd") is not None
 
@@ -140,7 +144,9 @@ def test_st_zone_list_refresh_callbacks(system):
     new_zone = system.config.add_safety_zone("Temp Zone")
     assert any("Temp Zone" in names for names in zone_snapshots)
 
-    system.config.update_safety_zone(new_zone.zone_id, zone_name="Renamed Zone", is_armed=True)
+    system.config.update_safety_zone(
+        new_zone.zone_id, zone_name="Renamed Zone", is_armed=True
+    )
     assert any("Renamed Zone" in names for names in zone_snapshots)
 
     system.config.delete_safety_zone(new_zone.zone_id)

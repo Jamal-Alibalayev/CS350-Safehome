@@ -1,6 +1,6 @@
 import tkinter as tk
-from tkinter import Label, Button, Text
 from abc import ABC, abstractmethod
+from tkinter import Button, Text
 
 
 class DeviceControlPanelAbstract(tk.Toplevel, ABC):

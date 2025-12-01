@@ -1,9 +1,10 @@
 import time
+
 import pytest
 
-from safehome.core.system import System
 from safehome.configuration.safehome_mode import SafeHomeMode
 from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 
 
 @pytest.fixture(autouse=True)
@@ -28,7 +29,9 @@ def test_st_mode_stay_vs_away(system):
     door = sc.add_sensor("WINDOOR", "Front Door")
     motion = sc.add_sensor("MOTION", "Hall Motion")
     system.config.storage.save_mode_sensor_mapping("HOME", [door.sensor_id])  # Stay
-    system.config.storage.save_mode_sensor_mapping("AWAY", [door.sensor_id, motion.sensor_id])
+    system.config.storage.save_mode_sensor_mapping(
+        "AWAY", [door.sensor_id, motion.sensor_id]
+    )
 
     system.turn_on()
     assert system.arm_system(SafeHomeMode.HOME)

@@ -1,11 +1,12 @@
 import threading
 import time
-from typing import Optional, List
+from typing import List, Optional
+
 from ..configuration.configuration_manager import ConfigurationManager
 from ..configuration.safehome_mode import SafeHomeMode
-from ..device.sensor.sensor_controller import SensorController
-from ..device.camera.camera_controller import CameraController
 from ..device.alarm.alarm import Alarm
+from ..device.camera.camera_controller import CameraController
+from ..device.sensor.sensor_controller import SensorController
 
 
 class System:

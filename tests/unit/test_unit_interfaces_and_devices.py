@@ -1,12 +1,13 @@
-import pytest
 from unittest.mock import Mock
 
-from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
+import pytest
+
+from safehome.device.camera.device_camera import DeviceCamera
 from safehome.device.sensor.device_motion_detector import DeviceMotionDetector
+from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
 from safehome.device.sensor.device_windoor_sensor import DeviceWinDoorSensor
 from safehome.device.sensor.motion_sensor import MotionSensor
 from safehome.device.sensor.windoor_sensor import WindowDoorSensor
-from safehome.device.camera.device_camera import DeviceCamera
 
 
 @pytest.fixture

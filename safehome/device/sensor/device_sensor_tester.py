@@ -49,6 +49,7 @@ class DeviceSensorTester(ABC):
             if os.environ.get("SAFEHOME_HEADLESS") == "1":
                 return
             import tkinter as tk
+
             from safehome.interface.tools.sensor_simulator import SafeHomeSensorTest
 
             root = tk._default_root

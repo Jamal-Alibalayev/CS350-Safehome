@@ -1,8 +1,8 @@
 import pytest
 
-from safehome.core.system import System
-from safehome.configuration.storage_manager import StorageManager
 from safehome.configuration.safehome_mode import SafeHomeMode
+from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 
 
 @pytest.fixture(autouse=True)
@@ -13,7 +13,9 @@ def headless_env(monkeypatch):
 
 def _new_system(tmp_path, monkeypatch, db_name="safehome.db"):
     db_path = tmp_path / db_name
-    monkeypatch.setattr(StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"), raising=False)
+    monkeypatch.setattr(
+        StorageManager, "CONFIG_FILE", str(tmp_path / "config.json"), raising=False
+    )
     return System(db_path=str(db_path))
 
 
@@ -26,7 +28,9 @@ def test_st_power_loss_recover(tmp_path, monkeypatch):
         cm1 = sys1.config
 
         zone = cm1.add_safety_zone("Garage")
-        sensor = sys1.sensor_controller.add_sensor("WINDOOR", "Garage Door", zone.zone_id)
+        sensor = sys1.sensor_controller.add_sensor(
+            "WINDOOR", "Garage Door", zone.zone_id
+        )
         cm1.storage.save_mode_sensor_mapping("AWAY", [sensor.sensor_id])
         cm1.settings.entry_delay = 0
 
@@ -57,7 +61,9 @@ def test_st_config_save_load_roundtrip(tmp_path, monkeypatch):
         cm1 = sys1.config
 
         zone = cm1.add_safety_zone("Office")
-        sensor = sys1.sensor_controller.add_sensor("MOTION", "Office Motion", zone.zone_id)
+        sensor = sys1.sensor_controller.add_sensor(
+            "MOTION", "Office Motion", zone.zone_id
+        )
         cm1.storage.save_mode_sensor_mapping("HOME", [sensor.sensor_id])
         cm1.settings.alarm_duration = 7
         cm1.save_configuration()

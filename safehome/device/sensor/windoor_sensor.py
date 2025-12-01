@@ -1,6 +1,7 @@
 from typing import Optional
-from .sensor import Sensor
+
 from .device_windoor_sensor import DeviceWinDoorSensor
+from .sensor import Sensor
 
 
 class WindowDoorSensor(Sensor):

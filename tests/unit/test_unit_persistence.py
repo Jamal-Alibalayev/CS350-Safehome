@@ -1,13 +1,12 @@
-import os
-import sqlite3
 import json
+import os
+
 import pytest
 
-from safehome.database.db_manager import DatabaseManager
+from safehome.configuration.log_manager import LogManager
 from safehome.configuration.storage_manager import StorageManager
 from safehome.configuration.system_settings import SystemSettings
-from safehome.configuration.log_manager import LogManager
-from safehome.configuration.log import Log
+from safehome.database.db_manager import DatabaseManager
 
 
 @pytest.fixture(autouse=True)

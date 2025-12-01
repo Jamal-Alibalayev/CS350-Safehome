@@ -1,8 +1,8 @@
 import pytest
 
-from safehome.core.system import System
-from safehome.configuration.storage_manager import StorageManager
 from safehome.configuration.safehome_mode import SafeHomeMode
+from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 
 
 @pytest.fixture(autouse=True)
@@ -72,6 +72,7 @@ def test_st_email_alert_failover(monkeypatch, tmp_path):
     monkeypatch.setenv("SAFEHOME_HEADLESS", "1")
     sys = System(db_path=str(tmp_path / "email.db"))
     try:
+
         class FailingSMTP:
             def __init__(self, *args, **kwargs):
                 raise RuntimeError("smtp down")
@@ -82,6 +83,7 @@ def test_st_email_alert_failover(monkeypatch, tmp_path):
         assert sent is False
     finally:
         sys.shutdown()
+
 
 def test_st_db_rollback_recover(system):
     """
@@ -96,9 +98,10 @@ def test_st_db_rollback_recover(system):
         )
     finally:
         db.rollback()
-    
+
     rows = db.get_event_logs(event_type="TEST", limit=5)
     assert not any(row["event_message"] == "rollback-check" for row in rows)
+
 
 def test_st_backup_fallback_json(tmp_path, monkeypatch):
     """

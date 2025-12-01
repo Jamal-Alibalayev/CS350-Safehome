@@ -1,8 +1,8 @@
 import pytest
 
-from safehome.core.system import System
 from safehome.configuration.safehome_mode import SafeHomeMode
 from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 
 
 @pytest.fixture(autouse=True)
@@ -36,4 +36,3 @@ def test_st_power_cycle(tmp_path, monkeypatch):
     assert sys.arm_system(SafeHomeMode.AWAY)
     sys.disarm_system()
     sys.shutdown()
-

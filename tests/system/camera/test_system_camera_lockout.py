@@ -1,8 +1,9 @@
 import time
+
 import pytest
 
-from safehome.core.system import System
 from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 
 
 @pytest.fixture(autouse=True)
@@ -27,8 +28,12 @@ def test_st_camera_lockout_recover(system):
     ST-Camera-Lockout-Recover: wrong password causes lockout, then unlocks after timeout.
     """
     cam = system.camera_controller.add_camera("Porch", "Front Porch", password="9999")
-    assert system.camera_controller.get_camera_view(cam.camera_id, password="0000") is None
-    assert system.camera_controller.get_camera_view(cam.camera_id, password="0000") is None
+    assert (
+        system.camera_controller.get_camera_view(cam.camera_id, password="0000") is None
+    )
+    assert (
+        system.camera_controller.get_camera_view(cam.camera_id, password="0000") is None
+    )
     assert cam.is_locked()
 
     time.sleep(0.15)

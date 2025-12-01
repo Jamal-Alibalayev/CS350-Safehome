@@ -1,11 +1,11 @@
 import pytest
 
-from safehome.core.system import System
 from safehome.configuration.storage_manager import StorageManager
-from safehome.interface.control_panel.safehome_control_panel import SafeHomeControlPanel
+from safehome.core.system import System
 from safehome.interface.control_panel.device_control_panel_abstract import (
     DeviceControlPanelAbstract,
 )
+from safehome.interface.control_panel.safehome_control_panel import SafeHomeControlPanel
 
 
 @pytest.fixture(autouse=True)
@@ -24,7 +24,9 @@ def system(tmp_path, monkeypatch):
 
 def _patch_cp_display(monkeypatch, recorder: dict):
     """Patch DeviceControlPanelAbstract display methods to record messages."""
-    monkeypatch.setattr(DeviceControlPanelAbstract, "__init__", lambda self, master=None: None)
+    monkeypatch.setattr(
+        DeviceControlPanelAbstract, "__init__", lambda self, master=None: None
+    )
     for name in [
         "set_display_short_message1",
         "set_display_short_message2",
@@ -72,6 +74,8 @@ def test_it_cp_invalid_command_headless(monkeypatch, system):
     panel.button_sharp()  # login
     panel._handle_command("7")  # invalid
     # Expect message recorded as "Invalid Cmd"
-    assert any("Invalid" in msg for msg in recorder.get("set_display_short_message1", []))
+    assert any(
+        "Invalid" in msg for msg in recorder.get("set_display_short_message1", [])
+    )
     # Session may remain active; ensure no exception and panel still exists
     assert panel is not None

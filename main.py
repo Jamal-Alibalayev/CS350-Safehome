@@ -3,10 +3,8 @@ SafeHome System Main Entry Point
 Initializes and runs the complete SafeHome security system with all components
 """
 
-import tkinter as tk
 from safehome.core.system import System
 from safehome.interface.dashboard import LoginWindow
-from safehome.device.sensor.device_sensor_tester import DeviceSensorTester
 
 
 def setup_hardware(system: System):

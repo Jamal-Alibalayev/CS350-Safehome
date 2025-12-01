@@ -1,12 +1,13 @@
+import smtplib
+from email.message import EmailMessage
 from typing import List, Optional
-from .system_settings import SystemSettings
-from .storage_manager import StorageManager
+
 from .log_manager import LogManager
 from .login_manager import LoginManager
 from .safehome_mode import SafeHomeMode
 from .safety_zone import SafetyZone
-import smtplib
-from email.message import EmailMessage
+from .storage_manager import StorageManager
+from .system_settings import SystemSettings
 
 
 class ConfigurationManager:

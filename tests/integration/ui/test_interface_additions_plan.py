@@ -1,24 +1,25 @@
 import types
+
 import pytest
 
-from safehome.core.system import System
-from safehome.configuration.storage_manager import StorageManager
 from safehome.configuration.safehome_mode import SafeHomeMode
-from safehome.device.sensor.windoor_sensor import WindowDoorSensor
+from safehome.configuration.storage_manager import StorageManager
+from safehome.core.system import System
 from safehome.device.sensor.motion_sensor import MotionSensor
-from safehome.interface.control_panel.safehome_control_panel import SafeHomeControlPanel
+from safehome.device.sensor.windoor_sensor import WindowDoorSensor
+from safehome.interface.control_panel.camera_monitor import CameraMonitor
 from safehome.interface.control_panel.device_control_panel_abstract import (
     DeviceControlPanelAbstract,
 )
+from safehome.interface.control_panel.safehome_control_panel import SafeHomeControlPanel
+from safehome.interface.dashboard.log_viewer import LogViewerWindow
 from safehome.interface.dashboard.login_window import LoginWindow
 from safehome.interface.dashboard.main_dashboard import MainDashboard
 from safehome.interface.dashboard.zone_manager import (
-    ZoneManagerWindow,
-    AssignSensorDialog,
     AddZoneDialog,
+    AssignSensorDialog,
+    ZoneManagerWindow,
 )
-from safehome.interface.dashboard.log_viewer import LogViewerWindow
-from safehome.interface.control_panel.camera_monitor import CameraMonitor
 from safehome.interface.tools.sensor_simulator import SafeHomeSensorTest
 
 
@@ -61,12 +62,23 @@ def _stub_messagebox(monkeypatch):
 
     modules = [
         __import__("tkinter.messagebox", fromlist=["messagebox"]),
-        __import__("safehome.interface.dashboard.main_dashboard", fromlist=["messagebox"]),
-        __import__("safehome.interface.dashboard.zone_manager", fromlist=["messagebox"]),
+        __import__(
+            "safehome.interface.dashboard.main_dashboard", fromlist=["messagebox"]
+        ),
+        __import__(
+            "safehome.interface.dashboard.zone_manager", fromlist=["messagebox"]
+        ),
         __import__("safehome.interface.dashboard.log_viewer", fromlist=["messagebox"]),
-        __import__("safehome.interface.control_panel.safehome_control_panel", fromlist=["messagebox"]),
-        __import__("safehome.interface.control_panel.camera_monitor", fromlist=["messagebox"]),
-        __import__("safehome.interface.tools.sensor_simulator", fromlist=["messagebox"]),
+        __import__(
+            "safehome.interface.control_panel.safehome_control_panel",
+            fromlist=["messagebox"],
+        ),
+        __import__(
+            "safehome.interface.control_panel.camera_monitor", fromlist=["messagebox"]
+        ),
+        __import__(
+            "safehome.interface.tools.sensor_simulator", fromlist=["messagebox"]
+        ),
     ]
     for mod in modules:
         monkeypatch.setattr(mod, "showinfo", info, raising=False)
@@ -131,7 +143,9 @@ class _DummyEntry:
 
 
 def _patch_cp_display(monkeypatch, recorder: dict):
-    monkeypatch.setattr(DeviceControlPanelAbstract, "__init__", lambda self, master=None: None)
+    monkeypatch.setattr(
+        DeviceControlPanelAbstract, "__init__", lambda self, master=None: None
+    )
     for name in ["set_display_short_message1", "set_display_short_message2"]:
         monkeypatch.setattr(
             DeviceControlPanelAbstract,
@@ -278,8 +292,12 @@ def test_cp_not_ready_gate(monkeypatch, system):
         panel._handle_key_input(ch)
     panel.button_sharp()
     panel._handle_command("1")
-    assert any("Cannot Arm" in msg for msg in recorder.get("set_display_short_message1", []))
-    assert any("Windows/Doors" in msg for msg in recorder.get("set_display_short_message2", []))
+    assert any(
+        "Cannot Arm" in msg for msg in recorder.get("set_display_short_message1", [])
+    )
+    assert any(
+        "Windows/Doors" in msg for msg in recorder.get("set_display_short_message2", [])
+    )
 
 
 def test_cp_change_password_invalid_format(monkeypatch, system):
@@ -312,7 +330,9 @@ def test_cp_login_fail_message(monkeypatch, system):
     for ch in "9999":
         panel._handle_key_input(ch)
     panel.button_sharp()
-    assert any("Login Failed" in msg for msg in recorder.get("set_display_short_message1", []))
+    assert any(
+        "Login Failed" in msg for msg in recorder.get("set_display_short_message1", [])
+    )
 
 
 def test_cp_lockout_ui(monkeypatch, system):
@@ -325,7 +345,9 @@ def test_cp_lockout_ui(monkeypatch, system):
         panel._handle_key_input(ch)
     panel.button_sharp()
     assert system.config.login_manager.is_locked["CONTROL_PANEL"] is True
-    assert any("SYSTEM LOCKED" in msg for msg in recorder.get("set_display_short_message1", []))
+    assert any(
+        "SYSTEM LOCKED" in msg for msg in recorder.get("set_display_short_message1", [])
+    )
 
 
 def test_cp_change_password_success(monkeypatch, system):
@@ -360,12 +382,19 @@ def test_cp_zone_cycle(monkeypatch, system):
     recorder = {}
     _patch_cp_display(monkeypatch, recorder)
     panel = SafeHomeControlPanel(system=system)
-    monkeypatch.setattr(system.config, "next_zone", lambda: types.SimpleNamespace(name="Extra"), raising=False)
+    monkeypatch.setattr(
+        system.config,
+        "next_zone",
+        lambda: types.SimpleNamespace(name="Extra"),
+        raising=False,
+    )
     for ch in "1234":
         panel._handle_key_input(ch)
     panel.button_sharp()
     panel._handle_command("9")
-    assert any("Zone Changed" in msg for msg in recorder.get("set_display_short_message1", []))
+    assert any(
+        "Zone Changed" in msg for msg in recorder.get("set_display_short_message1", [])
+    )
 
 
 def test_cp_reset_interaction(monkeypatch, system):
@@ -490,7 +519,9 @@ def test_zone_manager_assign_preselect(monkeypatch, system):
     dialog.sensor_ids = [10, 11]
     dialog.result = False
     dialog.destroy = lambda: None
-    monkeypatch.setattr(system.config, "save_configuration", lambda: saved.setdefault("saved", True))
+    monkeypatch.setattr(
+        system.config, "save_configuration", lambda: saved.setdefault("saved", True)
+    )
     dialog._assign()
     assert sensor_a.zone_id == zone.zone_id and sensor_b.zone_id == zone.zone_id
     assert dialog.result is True
@@ -601,12 +632,17 @@ def test_dashboard_not_ready_blocks_arm(monkeypatch, system):
     sensor.simulate_open()
     system.sensor_controller.sensors[sensor.sensor_id] = sensor
     dash._set_mode(SafeHomeMode.AWAY)
-    assert any("Cannot arm" in msg[1] or "Cannot Arm" in msg[1] for msg in calls["warn"])
+    assert any(
+        "Cannot arm" in msg[1] or "Cannot Arm" in msg[1] for msg in calls["warn"]
+    )
 
 
 def test_dashboard_panic_and_silence(monkeypatch, system):
     calls = _stub_messagebox(monkeypatch)
-    monkeypatch.setattr("safehome.interface.dashboard.main_dashboard.messagebox.askyesno", lambda *a, **k: True)
+    monkeypatch.setattr(
+        "safehome.interface.dashboard.main_dashboard.messagebox.askyesno",
+        lambda *a, **k: True,
+    )
     dash = _mk_dash(monkeypatch, system)
     dash._trigger_panic()
     assert system.alarm.is_active()
@@ -617,11 +653,17 @@ def test_dashboard_panic_and_silence(monkeypatch, system):
 
 def test_dashboard_logout_stops_loops(monkeypatch, system):
     calls = _stub_messagebox(monkeypatch)
-    monkeypatch.setattr("safehome.interface.dashboard.main_dashboard.messagebox.askyesno", lambda *a, **k: True)
+    monkeypatch.setattr(
+        "safehome.interface.dashboard.main_dashboard.messagebox.askyesno",
+        lambda *a, **k: True,
+    )
     dash = _mk_dash(monkeypatch, system)
     dash.login_window = types.SimpleNamespace(
         deiconify=lambda: calls.setdefault("deiconify", True),
-        password_entry=types.SimpleNamespace(delete=lambda *a, **k: calls.setdefault("pwd_deleted", True), focus=lambda: calls.setdefault("pwd_focus", True)),
+        password_entry=types.SimpleNamespace(
+            delete=lambda *a, **k: calls.setdefault("pwd_deleted", True),
+            focus=lambda: calls.setdefault("pwd_focus", True),
+        ),
     )
     dash.destroy = lambda: calls.setdefault("destroyed", True)
     dash._logout()
@@ -641,12 +683,20 @@ def test_dashboard_open_helpers(monkeypatch, system):
     FakeSim = type(
         "FakeSim",
         (),
-        {"showSensorTester": staticmethod(lambda system: calls.setdefault("sim", True))},
+        {
+            "showSensorTester": staticmethod(
+                lambda system: calls.setdefault("sim", True)
+            )
+        },
     )
 
-    monkeypatch.setattr("safehome.interface.dashboard.log_viewer.LogViewerWindow", FakeLV)
     monkeypatch.setattr(
-        "safehome.device.sensor.device_sensor_tester.DeviceSensorTester", FakeSim, raising=False
+        "safehome.interface.dashboard.log_viewer.LogViewerWindow", FakeLV
+    )
+    monkeypatch.setattr(
+        "safehome.device.sensor.device_sensor_tester.DeviceSensorTester",
+        FakeSim,
+        raising=False,
     )
     dash._open_log_viewer()
     dash._open_sensor_simulator()
@@ -756,7 +806,9 @@ def test_dashboard_save_settings_success(monkeypatch, system):
         "home": types.SimpleNamespace(get=lambda: "333-4444"),
         "alert": types.SimpleNamespace(get=lambda: "a@b.com"),
     }
-    monkeypatch.setattr(system.config, "save_configuration", lambda: calls.setdefault("saved", True))
+    monkeypatch.setattr(
+        system.config, "save_configuration", lambda: calls.setdefault("saved", True)
+    )
     dash._save_settings(popup, entries)
     assert s.master_password == "9999"
     assert calls.get("saved")
@@ -767,10 +819,21 @@ def test_dashboard_reset_system_confirm(monkeypatch, system):
     calls = _stub_messagebox(monkeypatch)
     dash = _mk_dash(monkeypatch, system)
     popup = types.SimpleNamespace(destroy=lambda: calls.setdefault("destroy", True))
-    monkeypatch.setattr("safehome.interface.dashboard.main_dashboard.messagebox.askyesno", lambda *a, **k: True)
-    monkeypatch.setattr(system.config, "reset_configuration", lambda: calls.setdefault("reset", True))
-    monkeypatch.setattr(system.camera_controller, "load_cameras_from_storage", lambda: calls.setdefault("cams", True))
-    dash._logout = lambda force_logout=False: calls.setdefault("logout", force_logout or True)
+    monkeypatch.setattr(
+        "safehome.interface.dashboard.main_dashboard.messagebox.askyesno",
+        lambda *a, **k: True,
+    )
+    monkeypatch.setattr(
+        system.config, "reset_configuration", lambda: calls.setdefault("reset", True)
+    )
+    monkeypatch.setattr(
+        system.camera_controller,
+        "load_cameras_from_storage",
+        lambda: calls.setdefault("cams", True),
+    )
+    dash._logout = lambda force_logout=False: calls.setdefault(
+        "logout", force_logout or True
+    )
     dash._reset_system(popup)
     assert calls.get("reset")
     assert calls.get("cams")
@@ -781,9 +844,14 @@ def test_dashboard_reset_system_confirm(monkeypatch, system):
 def test_dashboard_reset_system_cancel(monkeypatch, system):
     dash = _mk_dash(monkeypatch, system)
     popup = types.SimpleNamespace(destroy=lambda: None)
-    monkeypatch.setattr("safehome.interface.dashboard.main_dashboard.messagebox.askyesno", lambda *a, **k: False)
+    monkeypatch.setattr(
+        "safehome.interface.dashboard.main_dashboard.messagebox.askyesno",
+        lambda *a, **k: False,
+    )
     called = {}
-    monkeypatch.setattr(system.config, "reset_configuration", lambda: called.setdefault("reset", True))
+    monkeypatch.setattr(
+        system.config, "reset_configuration", lambda: called.setdefault("reset", True)
+    )
     dash._reset_system(popup)
     assert "reset" not in called
 
@@ -802,7 +870,11 @@ def test_dashboard_password_change_email_fail(monkeypatch, system):
         "home": types.SimpleNamespace(get=lambda: ""),
         "alert": types.SimpleNamespace(get=lambda: ""),
     }
-    monkeypatch.setattr(system, "_send_password_change_alert", lambda: (_ for _ in ()).throw(RuntimeError("fail")))
+    monkeypatch.setattr(
+        system,
+        "_send_password_change_alert",
+        lambda: (_ for _ in ()).throw(RuntimeError("fail")),
+    )
     monkeypatch.setattr(system.config, "save_configuration", lambda: None)
     dash._save_settings(popup, entries)
     assert system.config.settings.master_password == "8888"
@@ -869,7 +941,9 @@ def test_sensorsim_update_status_closed_window(monkeypatch, system):
     sim.system = system
     sim.sensor_tree = None
     sim.winfo_exists = lambda: False
-    sim.after = lambda *a, **k: (_ for _ in ()).throw(AssertionError("after should not be called"))
+    sim.after = lambda *a, **k: (_ for _ in ()).throw(
+        AssertionError("after should not be called")
+    )
     sim._update_status()
 
 
@@ -930,13 +1004,20 @@ def test_camera_monitor_feed_unavailable(monkeypatch, system):
     mon.camera = cam
     mon.image_label = _DummyLabel()
     mon.after = lambda *a, **k: None
-    monkeypatch.setattr("safehome.interface.control_panel.camera_monitor.ImageTk.PhotoImage", lambda *a, **k: None, raising=False)
+    monkeypatch.setattr(
+        "safehome.interface.control_panel.camera_monitor.ImageTk.PhotoImage",
+        lambda *a, **k: None,
+        raising=False,
+    )
     monkeypatch.setattr(
         system.camera_controller, "get_camera_view", lambda *a, **k: None
     )
     mon._update_feed()
     # Accept either text set or no-op; key is no exception and branch for unavailable reached when view is None.
-    assert not mon.image_label.config_calls or mon.image_label.config_calls[-1].get("text") == "Camera Unavailable"
+    assert (
+        not mon.image_label.config_calls
+        or mon.image_label.config_calls[-1].get("text") == "Camera Unavailable"
+    )
 
 
 def test_camera_monitor_ptz_disabled(monkeypatch, system):
@@ -1000,7 +1081,11 @@ def test_camera_monitor_update_feed_exception(monkeypatch, system):
     mon.camera = cam
     mon.image_label = _DummyLabel()
     mon.after = lambda *a, **k: None
-    monkeypatch.setattr("safehome.interface.control_panel.camera_monitor.ImageTk.PhotoImage", lambda *a, **k: None, raising=False)
+    monkeypatch.setattr(
+        "safehome.interface.control_panel.camera_monitor.ImageTk.PhotoImage",
+        lambda *a, **k: None,
+        raising=False,
+    )
 
     def boom(*_, **__):
         raise RuntimeError("fail")
@@ -1039,8 +1124,14 @@ def test_logviewer_autorefresh_toggle(monkeypatch, system):
 
 def test_logviewer_clear_logs_button(monkeypatch, system):
     calls = _stub_messagebox(monkeypatch)
-    monkeypatch.setattr("tkinter.messagebox.askyesno", lambda *a, **k: True, raising=False)
-    monkeypatch.setattr("tkinter.messagebox.showinfo", lambda *a, **k: calls["info"].append(a), raising=False)
+    monkeypatch.setattr(
+        "tkinter.messagebox.askyesno", lambda *a, **k: True, raising=False
+    )
+    monkeypatch.setattr(
+        "tkinter.messagebox.showinfo",
+        lambda *a, **k: calls["info"].append(a),
+        raising=False,
+    )
     lv = LogViewerWindow.__new__(LogViewerWindow)
     lv.system = system
     lv.log_tree = _dummy_tree([])
@@ -1127,7 +1218,11 @@ def test_logviewer_filter_search(monkeypatch, system):
     lv.search_entry = types.SimpleNamespace(get=lambda: "door")
     lv.status_label = types.SimpleNamespace(config=lambda **k: inserted.append(k))
     lv._refresh_logs()
-    assert inserted and any("door open" in i.get("values", [""])[-1] for i in inserted if isinstance(i, dict))
+    assert inserted and any(
+        "door open" in i.get("values", [""])[-1]
+        for i in inserted
+        if isinstance(i, dict)
+    )
 
 
 def test_logviewer_autorefresh_startstop(monkeypatch, system):
@@ -1151,7 +1246,9 @@ def test_logviewer_autorefresh_startstop(monkeypatch, system):
 def test_logviewer_clear_cancel(monkeypatch, system):
     calls = _stub_messagebox(monkeypatch)
     system.config.logger.add_log("persist", level="INFO", source="UI")
-    monkeypatch.setattr("tkinter.messagebox.askyesno", lambda *a, **k: False, raising=False)
+    monkeypatch.setattr(
+        "tkinter.messagebox.askyesno", lambda *a, **k: False, raising=False
+    )
     lv = LogViewerWindow.__new__(LogViewerWindow)
     lv.system = system
     lv.log_tree = _dummy_tree([])

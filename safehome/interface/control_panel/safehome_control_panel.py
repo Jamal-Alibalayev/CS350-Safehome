@@ -1,7 +1,8 @@
 # safehome/interface/control_panel/safehome_control_panel.py
 
-from safehome.core.system import System
 from safehome.configuration.safehome_mode import SafeHomeMode
+from safehome.core.system import System
+
 from .device_control_panel_abstract import DeviceControlPanelAbstract
 
 
@@ -137,7 +138,7 @@ class SafeHomeControlPanel(DeviceControlPanelAbstract):
 
         elif key == "9":  # 9 = Change Zone
             new_zone = self.system.config.next_zone()
-            self.set_display_short_message1(f"Zone Changed:")
+            self.set_display_short_message1("Zone Changed:")
             self.set_display_short_message2(new_zone.name if new_zone else "None")
             self._refresh_status_display()
             return  # Don't end session
