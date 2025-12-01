@@ -13,7 +13,6 @@ def setup_hardware(system: System):
     This function now calls the system's reset configuration to ensure a clean slate.
     """
     print("\n[Setup] Resetting system to default hardware configuration...")
-    # This single call robustly clears the DB, resets ID counters, and creates default zones.
     system.config.reset_configuration()
     print("  [Zones] System reset. Default zones created.")
 
@@ -146,7 +145,7 @@ def main():
         print("\n[System Information - Fixed Floor Plan]")
         print(f"  - Cameras: {len(system.camera_controller.cameras)} (DR, Kitchen, LR)")
         print(
-            f"  - Sensors: {len(system.sensor_controller.sensors)} (6 Win, 2 Door, 2 Motion)"
+            f"-Sensors:{len(system.sensor_controller.sensors)}(6 Win, 2 Door, 2 Motion)"
         )
         print(
             f"  - Safety Zones: {len(system.config.get_all_zones())} (DR, Kitchen, LR)"
