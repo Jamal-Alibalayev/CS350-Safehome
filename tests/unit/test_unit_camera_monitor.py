@@ -26,14 +26,15 @@ class TestCameraMonitor(unittest.TestCase):
         self.master = tk.Tk()
 
     @patch('safehome.interface.control_panel.camera_monitor.messagebox')
-    def test_init_success(self, mock_messagebox):
+    @patch('safehome.interface.control_panel.camera_monitor.ImageTk')
+    def test_init_success(self, mock_imagetk, mock_messagebox):
         """Test successful initialization of CameraMonitor."""
         self.mock_camera.has_password.return_value = False
         monitor = CameraMonitor(master=self.master, system=self.mock_system, camera_id=1, password=None)
         
         self.mock_system.camera_controller.get_camera.assert_called_with(1)
         self.assertTrue(monitor._setup_gui_called)
-        self.assertTrue(monitor._update_feed_called)
+        self.mock_system.camera_controller.get_camera_view.assert_called_with(1, None)
         mock_messagebox.showerror.assert_not_called()
         monitor.destroy() # clean up
 
@@ -150,21 +151,27 @@ class TestCameraMonitor(unittest.TestCase):
 
 # This boilerplate is to make CameraMonitor testable without a real GUI loop
 def mock_init(self, master=None, system=None, camera_id=1, password=None):
-    super(CameraMonitor, self).__init__(master)
-    self.title(f"SafeHome Monitor - Camera {camera_id}")
-    self.geometry("520x750")
-    self.resizable(False, False)
+    # The call to super().__init__ would hang the test because it initializes a
+    # Tkinter window without a running event loop.
+    # super(CameraMonitor, self).__init__(master)
+    
+    # We need to mock the Tkinter methods that are used.
+    self.title = MagicMock()
+    self.geometry = MagicMock()
+    self.resizable = MagicMock()
     self.protocol = MagicMock()
     self.after = MagicMock()
     self.destroy = MagicMock()
+
+    self.title(f"SafeHome Monitor - Camera {camera_id}")
+    self.geometry("520x750")
+    self.resizable(False, False)
 
     self.system = system
     self.camera_id = camera_id
     self.password = password
     
     self._setup_gui_called = False
-    self._update_feed_called = False
-
     if not self._verify_access():
         self.destroy()
         return
@@ -183,13 +190,9 @@ def mock_setup_gui(self):
     self._setup_gui_called = True
     self.image_label = MagicMock()
 
-def mock_update_feed(self):
-    self._update_feed_called = True
-
 
 CameraMonitor.__init__ = mock_init
 CameraMonitor._setup_gui = mock_setup_gui
-CameraMonitor._update_feed = mock_update_feed
 
 if __name__ == '__main__':
     unittest.main()
